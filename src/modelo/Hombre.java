@@ -6,11 +6,14 @@ public class Hombre extends Persona
 	private double ingresos;
 	
 	public Hombre(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos) throws AssertionError
+			String contraseÃ±a, String correo, String fechaNacimiento, char estado, double pIngresos) throws AssertionError
 	{
-		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, estado);
+		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseÃ±a, correo, fechaNacimiento, estado);
 		ingresos = pIngresos;
 		verificarInvariante();
+		// TODO Auto-generated constructor stub
+	}
+	public Hombre() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -34,7 +37,7 @@ public class Hombre extends Persona
 		assert(sexo=='H'||sexo=='M'):"El sexo solo adimite el valor de H o M";
 		assert(usuario!=null || usuario!=" "): "El usuario no es valido";
 		assert(!usuario.contains(";")): "El usuario no puede tener caracteres especiales";
-		assert(contraseña!=null || contraseña!=" "): "La contrasela no es valida";
+		assert(contraseÃ±a!=null || contraseÃ±a!=" "): "La contrasela no es valida";
 		assert(correo.contains("@")): "El correo no es valido";
 		assert(!correo.contains(";")): "El correo no es valido";
 		assert(fechaNacimiento.contains("[0-9\\/]"));

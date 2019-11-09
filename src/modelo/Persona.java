@@ -10,16 +10,19 @@ public class Persona
 	protected String apellido2;
 	protected char sexo;
 	protected String usuario;
-	protected String contraseña;
+	protected String contraseÃ±a;
 	protected String correo;
 	protected String fechaNacimiento;
 	protected int likesRecibidos;
 	protected int likesOtorgados;
 	protected int matches;
 	protected char estado;
+	public Persona() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Persona(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado) 
+			String contraseÃ±a, String correo, String fechaNacimiento, char estado) 
 	{
 		this.nombre = nombre;
 		this.edad = edad;
@@ -28,7 +31,7 @@ public class Persona
 		this.apellido2 = apellido2;
 		this.sexo = sexo;
 		this.usuario = usuario;
-		this.contraseña = contraseña;
+		this.contraseÃ±a = contraseÃ±a;
 		this.correo = correo;
 		this.fechaNacimiento = fechaNacimiento;
 		this.estado = estado;
@@ -90,12 +93,12 @@ public class Persona
 		this.usuario = usuario;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContraseÃ±a() {
+		return contraseÃ±a;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContraseÃ±a(String contraseÃ±a) {
+		this.contraseÃ±a = contraseÃ±a;
 	}
 
 	public String getCorreo() {
@@ -149,7 +152,7 @@ public class Persona
 	@Override
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", apellido1=" + apellido1
-				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseña=" + contraseña
+				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseï¿½a=" + contraseÃ±a
 				+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + ", likesRecibidos=" + likesRecibidos
 				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]";
 	}

@@ -4,16 +4,17 @@ public class Mujer extends Persona
 {
 
 	private int divorcios;
-	
 	public Mujer(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado, int pDivorcios) 
+			String contraseÃ±a, String correo, String fechaNacimiento, char estado, int pDivorcios) 
 	{
-		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, estado);
+		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseÃ±a, correo, fechaNacimiento, estado);
 		divorcios = pDivorcios;
 		verificarInvariante();
 		// TODO Auto-generated constructor stub
 	}
-
+	public Mujer() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getDivorcios() {
 		return divorcios;
 	}
@@ -21,7 +22,7 @@ public class Mujer extends Persona
 	public void setDivorcios(int divorcios) {
 		this.divorcios = divorcios;
 	}
-	
+
 	public void verificarInvariante() throws AssertionError {
 		assert(nombre!=null || nombre!=" "): "El nombre no puede estar vacio";
 		assert(!nombre.contains(";")):"El nombre no puede contener caracteres especiales";
@@ -33,7 +34,7 @@ public class Mujer extends Persona
 		assert(sexo=='H'||sexo=='M'):"El sexo solo adimite el valor de H o M";
 		assert(usuario!=null || usuario!=" "): "El usuario no es valido";
 		assert(!usuario.contains(";")): "El usuario no puede tener caracteres especiales";
-		assert(contraseña!=null || contraseña!=" "): "La contrasela no es valida";
+		assert(contraseÃ±a!=null || contraseÃ±a!=" "): "La contrasela no es valida";
 		assert(correo.contains("@")): "El correo no es valido";
 		assert(!correo.contains(";")): "El correo no es valido";
 		assert(fechaNacimiento.contains("[0-9\\/]"));
