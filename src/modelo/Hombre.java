@@ -1,14 +1,16 @@
 package modelo;
 
-public class Hombre extends Persona 
+import java.io.Serializable;
+
+public class Hombre extends Persona implements Serializable
 {
 
 	private double ingresos;
-	
+	// 	JFreeChart
 	public Hombre(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseÃ±a, String correo, String fechaNacimiento, char estado, double pIngresos) throws AssertionError
+			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos) throws AssertionError
 	{
-		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseÃ±a, correo, fechaNacimiento, estado);
+		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, estado);
 		ingresos = pIngresos;
 		verificarInvariante();
 		// TODO Auto-generated constructor stub
@@ -27,19 +29,18 @@ public class Hombre extends Persona
 	
 	public void verificarInvariante() throws AssertionError
 	{
-		assert(nombre!=null || nombre!=" "): "El nombre no puede estar vacio";
+		assert(nombre!=null && !nombre.equals(" ")): "El nombre no puede estar vacio";
 		assert(!nombre.contains(";")):"El nombre no puede contener caracteres especiales";
 		assert(edad>18):"La edad debe ser mayor a 18";
-		assert(apellido1!=null || apellido1!=" "): "El apellido no puede estar vacio";
+		assert(apellido1!=null && !apellido1.equals(" ")): "El apellido no puede estar vacio";
 		assert(!apellido1.contains(";")):"El apellido no puede contener caracteres especiales";
-		assert(apellido2!=null || apellido2!=" "): "El apellido no puede estar vacio";
+		assert(apellido2!=null && !apellido2.equals(" ")): "El apellido no puede estar vacio";
 		assert(!apellido2.contains(";")):"El apellido no puede contener caracteres especiales";
 		assert(sexo=='H'||sexo=='M'):"El sexo solo adimite el valor de H o M";
-		assert(usuario!=null || usuario!=" "): "El usuario no es valido";
+		assert(usuario!=null && !usuario.equals(" ")): "El usuario no es valido";
 		assert(!usuario.contains(";")): "El usuario no puede tener caracteres especiales";
-		assert(contraseÃ±a!=null || contraseÃ±a!=" "): "La contrasela no es valida";
-		assert(correo.contains("@")): "El correo no es valido";
-		assert(!correo.contains(";")): "El correo no es valido";
+		assert(contraseña!=null && !contraseña.equals(" ")): "La contrasela no es valida";
+		assert(correo.contains("@") && !correo.contains(";")): "El correo no es valido";
 		assert(fechaNacimiento.contains("[0-9\\/]"));
 		assert(estado=='D' || estado=='I'): "El estado solo admite valores de D o I";
 	}

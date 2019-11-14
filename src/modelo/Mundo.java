@@ -1,5 +1,6 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -9,7 +10,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class Mundo {
+public class Mundo implements Serializable {
 	private Mujer mu;
 	private Hombre ho;
 	public Mundo() {

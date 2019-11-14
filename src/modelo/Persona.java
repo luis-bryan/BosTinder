@@ -1,6 +1,8 @@
 package modelo;
 
-public class Persona
+import java.io.Serializable;
+
+public class Persona implements Serializable
 {
 
 	protected String nombre;
@@ -10,7 +12,7 @@ public class Persona
 	protected String apellido2;
 	protected char sexo;
 	protected String usuario;
-	protected String contraseÃ±a;
+	protected String contraseña;
 	protected String correo;
 	protected String fechaNacimiento;
 	protected int likesRecibidos;
@@ -22,7 +24,7 @@ public class Persona
 	}
 	
 	public Persona(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseÃ±a, String correo, String fechaNacimiento, char estado) 
+			String contraseña, String correo, String fechaNacimiento, char estado) 
 	{
 		this.nombre = nombre;
 		this.edad = edad;
@@ -31,7 +33,7 @@ public class Persona
 		this.apellido2 = apellido2;
 		this.sexo = sexo;
 		this.usuario = usuario;
-		this.contraseÃ±a = contraseÃ±a;
+		this.contraseña = contraseña;
 		this.correo = correo;
 		this.fechaNacimiento = fechaNacimiento;
 		this.estado = estado;
@@ -93,12 +95,12 @@ public class Persona
 		this.usuario = usuario;
 	}
 
-	public String getContraseÃ±a() {
-		return contraseÃ±a;
+	public String getContraseña() {
+		return contraseña;
 	}
 
-	public void setContraseÃ±a(String contraseÃ±a) {
-		this.contraseÃ±a = contraseÃ±a;
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
 	}
 
 	public String getCorreo() {
@@ -152,7 +154,7 @@ public class Persona
 	@Override
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", apellido1=" + apellido1
-				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseï¿½a=" + contraseÃ±a
+				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contrase?a=" + contraseña
 				+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + ", likesRecibidos=" + likesRecibidos
 				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]";
 	}
