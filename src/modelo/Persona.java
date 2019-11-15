@@ -1,6 +1,8 @@
 package modelo;
 
-public class Persona
+import java.io.Serializable;
+
+public class Persona implements Serializable
 {
 
 	protected String nombre;
@@ -152,7 +154,7 @@ public class Persona
 	@Override
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", apellido1=" + apellido1
-				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseña=" + contraseña
+				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contrase?a=" + contraseña
 				+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + ", likesRecibidos=" + likesRecibidos
 				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]";
 	}

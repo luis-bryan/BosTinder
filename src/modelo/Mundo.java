@@ -1,6 +1,10 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.mail.*;
+import javax.mail.internet.*;
 
 public class Mundo
 {
@@ -18,6 +22,34 @@ public class Mundo
 		per = new Persona();
 		muj = new Mujer();
 		usuarios = new ArrayList<Persona>();
+	}
+	
+	public void enviarConGMail(String destinatario, String cuerpo) {
+	    
+	    String remitente = "tinderbos";  
+	    Properties props = System.getProperties();
+	    props.put("mail.smtp.host", "smtp.gmail.com");  
+	    props.put("mail.smtp.user", remitente);
+	    props.put("mail.smtp.clave", "bostinder123");    
+	    props.put("mail.smtp.auth", "true");    
+	    props.put("mail.smtp.starttls.enable", "true"); 
+	    props.put("mail.smtp.port", "587"); 
+	    Session session = Session.getDefaultInstance(props);
+	    MimeMessage message = new MimeMessage(session);
+
+	    try {
+	        message.setFrom(new InternetAddress(remitente));
+	        message.addRecipients(Message.RecipientType.TO, destinatario);   
+	        message.setSubject("Usuario registrado correctamente en BOSTINDER");
+	        message.setText(cuerpo);
+	        Transport transport = session.getTransport("smtp");
+	        transport.connect("smtp.gmail.com", remitente, "bostinder123");
+	        transport.sendMessage(message, message.getAllRecipients());
+	        transport.close();
+	    }
+	    catch (MessagingException me) {
+	        me.printStackTrace();   
+	    }
 	}
 	
 	public Persona buscarUsuario(String usuario)
@@ -64,7 +96,7 @@ public class Mundo
 	}
 	
 	public void agregarMujer(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura, int pDivorcios)
+			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura, boolean pDivorcios)
 	{
 		Persona nueva = buscarUsuario(usuario);
 		if(nueva == null)
