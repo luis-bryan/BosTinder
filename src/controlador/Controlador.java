@@ -1,12 +1,14 @@
 package controlador;
 
+import java.io.IOException;
+
 import modelo.Mundo;
 
 public class Controlador {
 	private Mundo m;
-	public Controlador() {
+	public Controlador() throws ClassNotFoundException, IOException {
 		m = new Mundo();
-		m.enviarConGMail("storresar@unbosque.edu.co", "sasdasdasdas");
+		m.enviarConGMail("dhidalgod@unbosque.edu.co", "sasdasdasdas");
 		
 	}
 

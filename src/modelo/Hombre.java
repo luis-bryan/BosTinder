@@ -10,7 +10,6 @@ public class Hombre extends Persona implements Serializable
 	private double estatura;
 	
 	// 	JFreeChart
-	
 	public Hombre(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
 			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura) throws AssertionError
 	{

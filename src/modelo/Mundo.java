@@ -1,10 +1,13 @@
 package modelo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+
+import controlador.ControlLectura;
 
 public class Mundo
 {
@@ -16,12 +19,9 @@ public class Mundo
 	private int numero;
 	private int aux;
 	
-	public Mundo()
+	public Mundo() throws ClassNotFoundException, IOException
 	{
-		hom = new Hombre();
-		per = new Persona();
-		muj = new Mujer();
-		usuarios = new ArrayList<Persona>();
+		usuarios = ControlLectura.lectura();
 	}
 	
 	public void enviarConGMail(String destinatario, String cuerpo) {
@@ -50,6 +50,7 @@ public class Mundo
 	    catch (MessagingException me) {
 	        me.printStackTrace();   
 	    }
+	    System.out.println("Enviado");
 	}
 	
 	public Persona buscarUsuario(String usuario)
@@ -140,9 +141,14 @@ public class Mundo
 		return usuarios.get(numero);
 	}
 	
-	public void ordenarBurbuja()
+	public ArrayList ordenarQuickSort()
 	{
-		
+		return usuarios;
+	}
+	
+	public ArrayList ordenarQuickSort2()
+	{
+		return usuarios;
 	}
 	
 	public void ordenarSeleccion()

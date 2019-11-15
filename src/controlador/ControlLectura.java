@@ -12,17 +12,15 @@ public class ControlLectura {
   private static final String ubicacionBinario = "Data/binario.txt";
   public ControlLectura(){
     try{
+    	//lecturaInicial();
       ArrayList<Persona> arreglo = lectura();
-      for (Persona a:arreglo){
-        System.out.println(a.toString());
-      }
     } catch (IOException | ClassNotFoundException e){
       e.printStackTrace();
     }
 
 }
 
-  public ArrayList<Persona> lectura() throws IOException, ClassNotFoundException{
+  public static ArrayList<Persona> lectura() throws IOException, ClassNotFoundException{
     ArrayList<Persona> lista = new ArrayList<>();
     ObjectInputStream file = new ObjectInputStream(new FileInputStream(ubicacionBinario));
     lista = (ArrayList<Persona>)file.readObject();
