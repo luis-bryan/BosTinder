@@ -1,16 +1,24 @@
 package modelo;
 
-public class Hombre extends Persona 
+import java.io.Serializable;
+
+public class Hombre extends Persona implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
 	private double ingresos;
+	private double estatura;
 	
 	public Hombre(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos) throws AssertionError
+			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura) throws AssertionError
 	{
 		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, estado);
 		ingresos = pIngresos;
+		estatura = pEstatura;
 		verificarInvariante();
+		// TODO Auto-generated constructor stub
+	}
+	public Hombre() {
 		// TODO Auto-generated constructor stub
 	}
 

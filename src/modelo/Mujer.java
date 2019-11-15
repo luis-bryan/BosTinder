@@ -1,8 +1,11 @@
 package modelo;
 
-public class Mujer extends Persona
+import java.io.Serializable;
+
+public class Mujer extends Persona implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
 	private int divorcios;
 	
 	public Mujer(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
@@ -11,6 +14,9 @@ public class Mujer extends Persona
 		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, estado);
 		divorcios = pDivorcios;
 		verificarInvariante();
+		// TODO Auto-generated constructor stub
+	}
+	public Mujer() {
 		// TODO Auto-generated constructor stub
 	}
 

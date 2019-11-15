@@ -33,6 +33,9 @@ public class Persona
 		this.fechaNacimiento = fechaNacimiento;
 		this.estado = estado;
 	}
+	public Persona() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getNombre() {
 		return nombre;
