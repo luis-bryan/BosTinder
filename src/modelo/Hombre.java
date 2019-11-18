@@ -2,6 +2,8 @@ package modelo;
 
 import java.io.Serializable;
 
+import javax.swing.Icon;
+
 public class Hombre extends Persona implements Serializable
 {
 
@@ -9,7 +11,6 @@ public class Hombre extends Persona implements Serializable
 	private double ingresos;
 	private double estatura;
 	
-	// 	JFreeChart
 	public Hombre(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
 			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura) throws AssertionError
 	{
@@ -19,10 +20,19 @@ public class Hombre extends Persona implements Serializable
 		verificarInvariante();
 		// TODO Auto-generated constructor stub
 	}
-	public Hombre() {
-		// TODO Auto-generated constructor stub
-	}
 
+	public Hombre(Icon icono)
+	{
+		// TODO Auto-generated constructor stub
+		super(icono);
+	}
+	
+	public Hombre(int r, int o, int m)
+	{
+		// TODO Auto-generated constructor stub
+		super(r,o,m);
+	}
+	
 	public double getIngresos() {
 		return ingresos;
 	}

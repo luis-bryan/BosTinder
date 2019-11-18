@@ -1,34 +1,43 @@
 package modelo;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.swing.Icon;
 
 import controlador.ControlLectura;
 
-public class Mundo
+public class Mundo implements Serializable
 {
 
+	
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Persona> usuarios;
-	private Persona per;
-	private Hombre hom;
-	private Mujer muj;
 	private int numero;
-	private int aux;
+	private Persona aux;
+	private int salto;
+	private int aux2;
 	
 	public Mundo() throws ClassNotFoundException, IOException
 	{
 		usuarios = ControlLectura.lectura();
+		usuarios = new ArrayList<Persona>();
 	}
 	
-	public void enviarConGMail(String destinatario, String cuerpo) {
-	    
-	    String remitente = "tinderbos";  
+	public void enviarConGMail(String destinatario, String cuerpo)
+	{    
+	 
+		String remitente = "tinderbos";  
 	    Properties props = System.getProperties();
-	    props.put("mail.smtp.host", "smtp.gmail.com");  
+	    props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 	    props.put("mail.smtp.user", remitente);
 	    props.put("mail.smtp.clave", "bostinder123");    
 	    props.put("mail.smtp.auth", "true");    
@@ -37,7 +46,8 @@ public class Mundo
 	    Session session = Session.getDefaultInstance(props);
 	    MimeMessage message = new MimeMessage(session);
 
-	    try {
+	    try 
+	    {
 	        message.setFrom(new InternetAddress(remitente));
 	        message.addRecipients(Message.RecipientType.TO, destinatario);   
 	        message.setSubject("Usuario registrado correctamente en BOSTINDER");
@@ -47,7 +57,8 @@ public class Mundo
 	        transport.sendMessage(message, message.getAllRecipients());
 	        transport.close();
 	    }
-	    catch (MessagingException me) {
+	    catch (MessagingException me)
+	    {
 	        me.printStackTrace();   
 	    }
 	    System.out.println("Enviado");
@@ -86,24 +97,26 @@ public class Mundo
 	}
 	
 	public void agregarHombre(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura)
+			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
 		if(nueva == null)
 		{
 			nueva = new Hombre(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, estado, pIngresos, pEstatura);
 			usuarios.add(nueva);
+			ControlLectura.escritura(usuarios);
 		}
 	}
 	
 	public void agregarMujer(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura, boolean pDivorcios)
+			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura, boolean pDivorcios) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
 		if(nueva == null)
 		{
 			nueva = new Mujer(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, estado, pDivorcios);
 			usuarios.add(nueva);
+			ControlLectura.escritura(usuarios);
 		}
 	}
 	
@@ -131,35 +144,89 @@ public class Mundo
 	
 	public void Likes(Persona p1)
 	{
-		usuarios.get(numero).setLikesRecibidos(usuarios.get(numero).getLikesRecibidos()+1);
-		p1.setLikesOtorgados(p1.getLikesOtorgados()+1);
+		Persona p2;
+		if(p1.getSexo()=='M') {
+			p2 = usuarios.get((int) (Math.random()*usuarios.size()));
+			if(p2.getSexo()!='H')
+			while(p2.getSexo()=='H') {
+				p2 = usuarios.get((int) (Math.random()*usuarios.size()));
+			}
+		}if(p1.getSexo()=='H') {
+			p2 = usuarios.get((int) (Math.random()*usuarios.size()));
+			if(p2.getSexo()!='M')
+			while(p2.getSexo()=='M') {
+				p2 = usuarios.get((int) (Math.random()*usuarios.size()));
+			}
+		}
 	}
 	
 	public Persona usuarioAleatorio() 
 	{
 		numero = (int) (Math.random()*usuarios.size());
+		
 		return usuarios.get(numero);
 	}
 	
-	public ArrayList ordenarQuickSort()
+	public ArrayList<Persona> ordenarLikes()
 	{
+		boolean cambios;
+		for(salto=usuarios.size()/2; salto!=0; salto/=2)
+		{
+			cambios = true;
+			while(cambios)
+			{
+				cambios = false;
+				for(int i=salto; i<usuarios.size();i++)
+				{
+					Persona a = usuarios.get(i);
+					Persona b = usuarios.get(i-salto);
+					if(b.getLikesRecibidos()>a.getLikesRecibidos())
+					{
+						aux=a;
+						a=b;
+						b=aux;
+						cambios=true;
+					}
+				}
+			}
+		}
 		return usuarios;
 	}
 	
-	public ArrayList ordenarQuickSort2()
+	public boolean ordenarEdad()
 	{
-		return usuarios;
-	}
-	
-	public void ordenarSeleccion()
-	{
+		boolean cambio = false;
 		for(int i=0; i<usuarios.size();i++)
 		{
-			int apuntador = usuarios.get(i).getLikesRecibidos();
+			Persona apuntador = usuarios.get(i);
 			for(int j=i+1; j<usuarios.size(); j++)
 			{
-				int a = usuarios.get(j).getLikesRecibidos();
-				if(a<apuntador)
+				Persona a = usuarios.get(j);
+				if(a.getEdad()<apuntador.getEdad())
+				{
+					aux = a;
+					a = apuntador;
+					apuntador = aux;
+					cambio = true;
+				}
+				else
+				{
+				cambio=false;
+				}
+			}	 
+		}	
+		return cambio;
+	}
+	
+	public ArrayList<Persona> ordenarNombre()
+	{
+		for(int i=0; i<usuarios.size(); i++)
+		{
+			Persona apuntador = usuarios.get(i);
+			for(int j=i+1; j<usuarios.size();j++)
+			{
+				Persona a = usuarios.get(j);
+				if(a.getNombre().charAt(0)>apuntador.getNombre().charAt(0))
 				{
 					aux = a;
 					a = apuntador;
@@ -167,5 +234,75 @@ public class Mundo
 				}
 			}
 		}
+		return usuarios;
+	}
+	
+	public ArrayList<Persona> ordenarMatch()
+	{
+		boolean cambios;
+		for(salto=usuarios.size()/2; salto!=0; salto/=2)
+		{
+			cambios = true;
+			while(cambios)
+			{
+				cambios = false;
+				for(int i=salto; i<usuarios.size();i++)
+				{
+					Persona a = usuarios.get(i);
+					Persona b = usuarios.get(i-salto);
+					if(b.getMatches()>a.getMatches())
+					{
+						aux=a;
+						a=b;
+						b=aux;
+						cambios=true;
+					}
+				}
+			}
+		}
+		return usuarios;
+	}
+	
+	public ArrayList<Persona> ordenarApellido()
+	{
+		for(int i=0; i<usuarios.size(); i++)
+		{
+			Persona apuntador = usuarios.get(i);
+			for(int j=i+1; j<usuarios.size();j++)
+			{
+				Persona a = usuarios.get(j);
+				if(a.getApellido1().charAt(0)>apuntador.getApellido1().charAt(0))
+				{
+					aux = a;
+					a = apuntador;
+					apuntador = aux;
+				}
+			}
+		}
+		return usuarios;
+	}
+	
+	public void ordenarUsuario()
+	{
+		for(int i=0; i<usuarios.size(); i++)
+		{
+			Persona apuntador = usuarios.get(i);
+			for(int j=i+1; j<usuarios.size();j++)
+			{
+				Persona a = usuarios.get(j);
+				if(a.getUsuario().charAt(0)>apuntador.getUsuario().charAt(0))
+				{
+					aux = a;
+					a = apuntador;
+					apuntador = aux;
+				}
+			}
+		}
+	}
+	
+	public static void main(String[] args) throws ClassNotFoundException, IOException
+	{
+		Mundo m = new Mundo();
+		m.ordenarEdad();
 	}
 }

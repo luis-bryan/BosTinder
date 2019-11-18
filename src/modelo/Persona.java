@@ -2,6 +2,8 @@ package modelo;
 
 import java.io.Serializable;
 
+import javax.swing.Icon;
+
 public class Persona implements Serializable
 {
 
@@ -19,6 +21,7 @@ public class Persona implements Serializable
 	protected int likesOtorgados;
 	protected int matches;
 	protected char estado;
+	protected Icon imagen;
 	
 	public Persona(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
 			String contraseña, String correo, String fechaNacimiento, char estado) 
@@ -35,10 +38,21 @@ public class Persona implements Serializable
 		this.fechaNacimiento = fechaNacimiento;
 		this.estado = estado;
 	}
-	public Persona() {
+	
+	public Persona(Icon icono)
+	{
 		// TODO Auto-generated constructor stub
+		imagen = icono;
 	}
 
+	public Persona(int likesR, int likesO, int Matc) 
+	{
+		// TODO Auto-generated constructor stub
+		likesRecibidos = likesR;
+		likesOtorgados = likesO;
+		matches = Matc;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -154,8 +168,8 @@ public class Persona implements Serializable
 	@Override
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", apellido1=" + apellido1
-				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contrase?a=" + contraseña
+				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseña=" + contraseña
 				+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + ", likesRecibidos=" + likesRecibidos
-				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]";
+				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]\n" ;
 	}
 }

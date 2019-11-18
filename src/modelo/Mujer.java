@@ -2,6 +2,8 @@ package modelo;
 
 import java.io.Serializable;
 
+import javax.swing.Icon;
+
 public class Mujer extends Persona implements Serializable
 {
 
@@ -16,10 +18,19 @@ public class Mujer extends Persona implements Serializable
 		verificarInvariante();
 		// TODO Auto-generated constructor stub
 	}
-	public Mujer() {
+	
+	public Mujer(Icon icono)
+	{
 		// TODO Auto-generated constructor stub
+		super(icono);
 	}
 
+	public Mujer(int r, int o, int m)
+	{
+		// TODO Auto-generated constructor stub
+		super(r, o, m);
+	}
+	
 	public boolean getDivorcios() {
 		return divorcios;
 	}
