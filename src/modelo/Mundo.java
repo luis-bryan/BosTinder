@@ -29,7 +29,8 @@ public class Mundo implements Serializable
 
 	public Mundo() throws ClassNotFoundException, IOException
 	{
-		ControlLectura.lecturaInicial();
+
+		//ControlLectura.lecturaInicial();
 		usuarios = ControlLectura.lectura();
 	}
 
@@ -99,18 +100,15 @@ public class Mundo implements Serializable
 		}
 		return iniciar;
 	}
-
-	public void agregarHombre(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura, Icon icono) throws IOException
+	
+	public void agregarHombre(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
+			String contraseña, String correo, String fechaNacimiento, double pIngresos, double pEstatura) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
 
 		if(nueva == null)
 		{
-
-			nueva = new Hombre(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, estado, pIngresos, pEstatura);
-
-			nueva.setImagen(icono);
+			nueva = new Hombre(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pIngresos, pEstatura);
 
 			usuarios.add(nueva);
 
@@ -119,14 +117,14 @@ public class Mundo implements Serializable
 		}
 	}
 
-	public void agregarMujer(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado, double pIngresos, double pEstatura, boolean pDivorcios, Icon icono) throws IOException
+	public void agregarMujer(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
+			String contraseña, String correo, String fechaNacimiento, boolean pDivorcios) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
 		if(nueva == null)
 		{
-			nueva = new Mujer(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, estado, pDivorcios);
-			nueva.setImagen(icono);
+
+			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pDivorcios);
 			usuarios.add(nueva);
 			ControlLectura.escritura(usuarios);
 		}
