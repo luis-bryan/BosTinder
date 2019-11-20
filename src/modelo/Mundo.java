@@ -89,12 +89,10 @@ public class Mundo implements Serializable
 		{
 			if(n.getContraseña().equals(contraseña))
 			{
-				n.setEstado('D');
 				iniciar = true;
 			}
 			else 
 			{
-				n.setEstado('I');
 				iniciar = false;
 			}
 		}
@@ -151,22 +149,21 @@ public class Mundo implements Serializable
 		}
 	}
 
-	public void Likes(Persona p1)
+	public Persona siguientePersona(Persona p1)
 	{
-		Persona p2;
+		Persona p2 = null;
 		if(p1.getSexo()=='M') {
 			p2 = usuarios.get((int) (Math.random()*usuarios.size()));
-			if(p2.getSexo()!='H')
-				while(p2.getSexo()=='H') {
-					p2 = usuarios.get((int) (Math.random()*usuarios.size()));
-				}
-		}if(p1.getSexo()=='H') {
+			while(p2.getSexo()!='H') {
+				p2 = usuarios.get((int) (Math.random()*usuarios.size()));
+			}
+		}else if(p1.getSexo()=='H') {
 			p2 = usuarios.get((int) (Math.random()*usuarios.size()));
-			if(p2.getSexo()!='M')
-				while(p2.getSexo()=='M') {
-					p2 = usuarios.get((int) (Math.random()*usuarios.size()));
-				}
+			while(p2.getSexo()!='M') {
+				p2 = usuarios.get((int) (Math.random()*usuarios.size()));
+			}
 		}
+		return p2;
 	}
 
 	public Persona usuarioAleatorio() 
