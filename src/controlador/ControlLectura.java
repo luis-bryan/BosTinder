@@ -11,11 +11,12 @@ public class ControlLectura {
 
 	private static final String ubicacionBinario = "Data/binario.txt";
 	public ControlLectura(){
-		try{
-			ArrayList<Persona> arreglo = lectura();
-		} catch (IOException | ClassNotFoundException e){
-			e.printStackTrace();
-		}
+		//try{
+			//lecturaInicial();
+			//ArrayList<Persona> arreglo = lectura();
+		//} catch (IOException | ClassNotFoundException e){
+			//e.printStackTrace();
+		//}
 	}
 
 	public static ArrayList<Persona> lectura() throws IOException, ClassNotFoundException{
@@ -31,7 +32,7 @@ public class ControlLectura {
 		file.writeObject(arreglo);
 	}
 	//En teoria este metodo lo podriamos borrar, por que ya pasamos la informacion al binario
-	private void lecturaInicial(){
+	public static void lecturaInicial(){
 		String cadena;
 		ArrayList<Persona> lista = new ArrayList<>();
 		try {
@@ -74,6 +75,24 @@ public class ControlLectura {
 					fixed[i] = separado[i+aux];
 				}
 
+				// 0=id
+				// 1=nombre
+				// 2=apellido1
+				// 3=apellido2
+				// 4=Sexo
+				// 5=usuario
+				// 6=contrase
+				// 7=correo
+				// 8=fecha
+				// 9=edad
+				// 10=ingresos
+				// 11=divorcios
+				// 12=recibidos
+				// 13=otorgados
+				// 14=matches
+				// 15=estado
+
+
 				if(separado[4].equals("H")){
 					nueva = new Hombre(fixed[1],
 							Integer.parseInt(fixed[9]),
@@ -85,6 +104,9 @@ public class ControlLectura {
 							fixed[6],
 							fixed[7],
 							fixed[8],
+							Integer.parseInt(fixed[12]),
+							Integer.parseInt(fixed[13]),
+							Integer.parseInt(fixed[14]),
 							fixed[15].charAt(0),
 							Double.parseDouble(fixed[10]),
 							Math.random()*2);
@@ -100,6 +122,9 @@ public class ControlLectura {
 							fixed[6],
 							fixed[7],
 							fixed[8],
+							Integer.parseInt(fixed[12]),
+							Integer.parseInt(fixed[13]),
+							Integer.parseInt(fixed[14]),
 							fixed[15].charAt(0),
 							(fixed[11].equals("SI")));
 				}
