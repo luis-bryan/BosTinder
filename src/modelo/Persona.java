@@ -1,12 +1,15 @@
 package modelo;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.Icon;
+import javax.swing.JOptionPane;
 
 public class Persona implements Serializable
 {
-
 	protected String nombre;
 	protected int edad;
 	protected int id;
@@ -22,12 +25,13 @@ public class Persona implements Serializable
 	protected int matches;
 	protected char estado;
 	protected Icon imagen;
+	protected Date fecha;
 	
 	public Persona(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
 			String contraseña, String correo, String fechaNacimiento, char estado) 
 	{
 		this.nombre = nombre;
-		this.edad = edad;
+		this.edad = new Date().getYear()-fecha.getYear();
 		this.id = id;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
@@ -36,6 +40,11 @@ public class Persona implements Serializable
 		this.contraseña = contraseña;
 		this.correo = correo;
 		this.fechaNacimiento = fechaNacimiento;
+		try {
+			this.fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Error en la fecha");
+		}
 		this.estado = estado;
 	}
 	
@@ -169,7 +178,23 @@ public class Persona implements Serializable
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", apellido1=" + apellido1
 				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseña=" + contraseña
-				+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + ", likesRecibidos=" + likesRecibidos
+				+ ", correo=" + correo + ", fechaNacimiento=" + fecha + ", likesRecibidos=" + likesRecibidos
 				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]\n" ;
+	}
+
+	public Icon getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(Icon imagen) {
+		this.imagen = imagen;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 }

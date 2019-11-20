@@ -31,7 +31,7 @@ public class ControlLectura {
 		file.writeObject(arreglo);
 	}
 	//En teoria este metodo lo podriamos borrar, por que ya pasamos la informacion al binario
-	private void lecturaInicial(){
+	public static void lecturaInicial(){
 		String cadena;
 		ArrayList<Persona> lista = new ArrayList<>();
 		try {

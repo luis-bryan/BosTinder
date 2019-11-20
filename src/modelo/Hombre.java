@@ -1,6 +1,9 @@
 package modelo;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.Year;
+import java.util.Date;
 
 import javax.swing.Icon;
 
@@ -57,5 +60,6 @@ public class Hombre extends Persona implements Serializable
 		assert(correo.contains("@") && !correo.contains(";")): "El correo no es valido";
 		assert(fechaNacimiento.contains("[0-9\\/]"));
 		assert(estado=='D' || estado=='I'): "El estado solo admite valores de D o I";
+		assert(edad>18):"Debe tener al menos 18 años";
 	}
 }
