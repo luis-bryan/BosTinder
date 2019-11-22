@@ -1,8 +1,15 @@
 package modelo;
 
-public class Persona
-{
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+
+public abstract class Persona implements Serializable
+{
 	protected String nombre;
 	protected int edad;
 	protected int id;
@@ -12,17 +19,17 @@ public class Persona
 	protected String usuario;
 	protected String contraseña;
 	protected String correo;
-	protected String fechaNacimiento;
+	protected Date fechaNacimiento;
 	protected int likesRecibidos;
 	protected int likesOtorgados;
 	protected int matches;
 	protected char estado;
+	protected Icon imagen;
 	
-	public Persona(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, char estado) 
+	public Persona(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
+			String contraseña, String correo, String fechaNacimiento)
 	{
 		this.nombre = nombre;
-		this.edad = edad;
 		this.id = id;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
@@ -30,10 +37,68 @@ public class Persona
 		this.usuario = usuario;
 		this.contraseña = contraseña;
 		this.correo = correo;
-		this.fechaNacimiento = fechaNacimiento;
-		this.estado = estado;
+		try{
+			this.fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
+		} catch (ParseException e){
+			e.printStackTrace();
+		}
+		this.estado = 'D';
+		this.edad = calcularEdad();
+		if (this.edad >=18){
+			this.estado = 'D';
+		} else{
+			this.estado = 'M';
+		}
+		this.matches = 0;
+		this.likesRecibidos = 0;
+		this.likesOtorgados = 0;
 	}
 
+	public Persona(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
+								 String contraseña, String correo, String fechaNacimiento, int likesRecibidos, int likesOtorgados,
+								 int matches, char estado)
+	{
+		this.nombre = nombre;
+		this.id = id;
+		this.apellido1 = apellido1;
+		this.apellido2 = apellido2;
+		this.sexo = sexo;
+		this.usuario = usuario;
+		this.contraseña = contraseña;
+		this.correo = correo;
+		try{
+			this.fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
+		} catch (ParseException e){
+			JOptionPane.showMessageDialog(null, "Error en la fecha");
+		}
+		this.edad = new Date().getYear()-this.fechaNacimiento.getYear();
+		this.estado = estado;
+		this.likesRecibidos = likesRecibidos;
+		this.likesOtorgados = likesOtorgados;
+		this.matches =matches;
+		if (edad<18){
+			this.estado='M';
+		}
+	}
+	
+	public Persona(Icon icono)
+	{
+		// TODO Auto-generated constructor stub
+		imagen = icono;
+	}
+
+	public Persona(int likesR, int likesO, int Matc) 
+	{
+		// TODO Auto-generated constructor stub
+		likesRecibidos = likesR;
+		likesOtorgados = likesO;
+		matches = Matc;
+	}
+
+	public int calcularEdad(){
+		return new Date().getYear() - fechaNacimiento.getYear();
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -106,11 +171,11 @@ public class Persona
 		this.correo = correo;
 	}
 
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
@@ -150,7 +215,15 @@ public class Persona
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", apellido1=" + apellido1
 				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseña=" + contraseña
-				+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + ", likesRecibidos=" + likesRecibidos
-				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]";
+				+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento.getDay() + "/" + fechaNacimiento.getMonth() + "/" + fechaNacimiento.getYear()  + ", likesRecibidos=" + likesRecibidos
+				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]\n" ;
+	}
+
+	public Icon getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(Icon imagen) {
+		this.imagen = imagen;
 	}
 }
