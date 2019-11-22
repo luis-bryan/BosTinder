@@ -1,17 +1,29 @@
 package modelo;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.swing.Icon;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import controlador.ControlLectura;
 
@@ -81,13 +93,13 @@ public class Mundo implements Serializable
 		return null;
 	}
 
-	public boolean buscarContraseña(String usuario, String contraseña)
+	public boolean buscarContraseÃ±a(String usuario, String contraseÃ±a)
 	{
 		Persona n = buscarUsuario(usuario);
 		boolean iniciar = false;
 		if(n!=null)
 		{
-			if(n.getContraseña().equals(contraseña))
+			if(n.getContraseÃ±a().equals(contraseÃ±a))
 			{
 				iniciar = true;
 			}
@@ -100,13 +112,13 @@ public class Mundo implements Serializable
 	}
 	
 	public void agregarHombre(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, double pIngresos, double pEstatura) throws IOException
+			String contraseÃ±a, String correo, String fechaNacimiento, double pIngresos, double pEstatura) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
 
 		if(nueva == null)
 		{
-			nueva = new Hombre(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pIngresos, pEstatura);
+			nueva = new Hombre(nombre, id, apellido1, apellido2, sexo, usuario, contraseÃ±a, correo, fechaNacimiento, pIngresos, pEstatura);
 
 			usuarios.add(nueva);
 
@@ -116,19 +128,19 @@ public class Mundo implements Serializable
 	}
 
 	public void agregarMujer(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, boolean pDivorcios) throws IOException
+			String contraseÃ±a, String correo, String fechaNacimiento, boolean pDivorcios) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
 		if(nueva == null)
 		{
 
-			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pDivorcios);
+			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseÃ±a, correo, fechaNacimiento, pDivorcios);
 			usuarios.add(nueva);
 			ControlLectura.escritura(usuarios);
 		}
 	}
 
-	public void Modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña)
+	public void Modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseÃ±a)
 	{
 		Persona modificar = buscarUsuario(usuario);
 		if(modificar!=null)
@@ -136,7 +148,7 @@ public class Mundo implements Serializable
 			modificar.setNombre(nombre);
 			modificar.setApellido1(apellido1);
 			modificar.setApellido2(apellido2);
-			modificar.setContraseña(contraseña);
+			modificar.setContraseÃ±a(contraseÃ±a);
 		}
 	}
 
@@ -172,11 +184,13 @@ public class Mundo implements Serializable
 		return usuarios.get(numero);
 	}
 
-	public void ordenarLikes()
+	public ArrayList<Persona> ordenarLikes()
 	{
+		ArrayList<Persona> personas = new ArrayList<Persona>();
 		boolean cambios;
 		for(salto=usuarios.size()/2; salto!=0; salto/=2)
 		{
+			personas = usuarios;
 			cambios = true;
 			while(cambios)
 			{
@@ -187,21 +201,23 @@ public class Mundo implements Serializable
 					Persona b = usuarios.get(i-salto);
 					if(b.getLikesRecibidos()>a.getLikesRecibidos())
 					{
-						aux=a;
-						a=b;
-						b=aux;
+						personas.set(i, b);
+						personas.set(i-salto, a);
 						cambios=true;
 					}
 				}
 			}
 		}
+		return personas;
 	}
 
-	public void ordenarEdad()
+	public ArrayList<Persona> ordenarEdad()
 	{
-		boolean cambios= false;
+		ArrayList<Persona> personas = new ArrayList<Persona>();
+		boolean cambios;
 		for(salto=usuarios.size()/2; salto!=0; salto/=2)
 		{
+			personas = usuarios;
 			cambios = true;
 			while(cambios)
 			{
@@ -212,21 +228,23 @@ public class Mundo implements Serializable
 					Persona b = usuarios.get(i-salto);
 					if(b.getEdad()>a.getEdad())
 					{
-						aux=a;
-						a=b;
-						b=aux;
+						personas.set(i, b);
+						personas.set(i-salto, a);
 						cambios=true;
 					}
 				}
 			}
 		}
+		return personas;
 	}
 
-	public void ordenarNombre()
+	public ArrayList<Persona> ordenarNombre()
 	{
-		boolean cambios=false;
+		ArrayList<Persona> personas = new ArrayList<Persona>();
+		boolean cambios;
 		for(salto=usuarios.size()/2; salto!=0; salto/=2)
 		{
+			personas = usuarios;
 			cambios = true;
 			while(cambios)
 			{
@@ -237,21 +255,23 @@ public class Mundo implements Serializable
 					Persona b = usuarios.get(i-salto);
 					if(b.getNombre().charAt(0)>a.getNombre().charAt(0))
 					{
-						aux=a;
-						a=b;
-						b=aux;
+						personas.set(i, b);
+						personas.set(i-salto, a);
 						cambios=true;
 					}
 				}
 			}
 		}
+		return personas;
 	}
 
-	public void ordenarMatch()
+	public ArrayList<Persona> ordenarMatch()
 	{
+		ArrayList<Persona> personas = new ArrayList<Persona>();
 		boolean cambios;
 		for(salto=usuarios.size()/2; salto!=0; salto/=2)
 		{
+			personas = usuarios;
 			cambios = true;
 			while(cambios)
 			{
@@ -262,21 +282,23 @@ public class Mundo implements Serializable
 					Persona b = usuarios.get(i-salto);
 					if(b.getMatches()>a.getMatches())
 					{
-						aux=a;
-						a=b;
-						b=aux;
+						personas.set(i, b);
+						personas.set(i-salto, a);
 						cambios=true;
 					}
 				}
 			}
 		}
+		return personas;
 	}
 
-	public void ordenarApellido()
+	public ArrayList<Persona> ordenarApellido()
 	{
+		ArrayList<Persona> personas = new ArrayList<Persona>();
 		boolean cambios;
 		for(salto=usuarios.size()/2; salto!=0; salto/=2)
 		{
+			personas = usuarios;
 			cambios = true;
 			while(cambios)
 			{
@@ -285,23 +307,25 @@ public class Mundo implements Serializable
 				{
 					Persona a = usuarios.get(i);
 					Persona b = usuarios.get(i-salto);
-					if(b.getMatches()>a.getMatches())
+					if(b.getApellido1().charAt(0)>a.getApellido1().charAt(0))
 					{
-						aux=a;
-						a=b;
-						b=aux;
+						personas.set(i, b);
+						personas.set(i-salto, a);
 						cambios=true;
 					}
 				}
 			}
 		}
+		return personas;
 	}
 
-	public void ordenarUsuario()
+	public ArrayList<Persona> ordenarUsuario()
 	{
+		ArrayList<Persona> personas = new ArrayList<Persona>();
 		boolean cambios;
 		for(salto=usuarios.size()/2; salto!=0; salto/=2)
 		{
+			personas = usuarios;
 			cambios = true;
 			while(cambios)
 			{
@@ -312,40 +336,152 @@ public class Mundo implements Serializable
 					Persona b = usuarios.get(i-salto);
 					if(b.getUsuario().charAt(0)>a.getUsuario().charAt(0))
 					{
-						aux=a;
-						a=b;
-						b=aux;
+						personas.set(i, b);
+						personas.set(i-salto, a);
 						cambios=true;
 					}
 				}
 			}
 		}
+		return personas;
 	}
 
-	public void ordenarUsuarioSeleccion()
-	{
-		for(int i=0; i<usuarios.size()-1; i++)
-		{
-			Persona apuntador = usuarios.get(i);
-			for(int j=i+1; j<usuarios.size()-1;j++)
-			{
-				Persona a = usuarios.get(j);
-				//if(a.getUsuario().charAt(0)>apuntador.getUsuario().charAt(0))
-				if (a.getUsuario().compareTo(apuntador.getUsuario())>0) 
-				{
-					aux = a;
-					usuarios.remove(i);
-					usuarios.remove(j);
-					usuarios.add(j, apuntador);
-					usuarios.add(i, a);
+	public double calcularMediana() {
+		double mediana;
+        if(usuarios.size() % 2 == 0){
+            int sumaMedios = usuarios.get(usuarios.size()/2).getEdad() +  usuarios.get(usuarios.size()/2-1).getEdad(); 
+            mediana = (double)sumaMedios / 2; 
+        } else {
+            mediana = usuarios.get(usuarios.size()/2).getEdad();
+        }
+        return mediana;
+	}
+	public double calcularMedia() {
+		int media = 0;
+		for (int i=0; i < usuarios.size(); i++) {
+			 media = media + usuarios.get(i).getEdad();
+			}
+        return (double)media/usuarios.size();
+
+	}
+	public double calcularModa() {
+		int numMAXderepeticiones = 0;
+		double moda = 0;
+		for (int i = 0; i < usuarios.size(); i++) {
+			int numerosderepeticiones =0;
+			for (int j = 0; j < usuarios.size(); j++) {
+				if(usuarios.get(i).getEdad()==usuarios.get(j).getEdad()) {
+					numerosderepeticiones++;
+				}
+				if(numerosderepeticiones>numMAXderepeticiones) {
+					moda = usuarios.get(i).getEdad();
+					numMAXderepeticiones=numerosderepeticiones;
 				}
 			}
+			
 		}
+		return moda;
 	}
+	public void generarPDF() throws FileNotFoundException, DocumentException 
+	   {
+		
+		Document doc = new Document();
+		Date objedate = new Date();
+		
+		String ruta ="Registro"+"_"+objedate.getYear()+"_"+objedate.getHours()+"_"+objedate.getMinutes()+"_"+objedate.getSeconds()+".pdf";
+		FileOutputStream fichero = new FileOutputStream(ruta);
+		PdfWriter.getInstance(doc, fichero).setInitialLeading(20);
+		PdfPTable tabla = new PdfPTable(2);
+		PdfPTable tabla2 = new PdfPTable(3);
+		PdfPTable tabla3 = new PdfPTable(2);
+		PdfPTable tabla4 = new PdfPTable(2);
+		PdfPTable tabla5 = new PdfPTable(3);
+		PdfPTable tabla6 = new PdfPTable(2);
+		
+		tabla.addCell("Mediana");
+		tabla.addCell(Double.toString(calcularMediana()));
+		tabla.addCell("Media");
+		tabla.addCell(Double.toString(calcularMedia()));
+		tabla.addCell("Moda");
+		tabla.addCell(Double.toString(calcularModa()));
+		
+		tabla2.addCell("NUMERO");
+		tabla2.addCell("USUARIO");
+		tabla2.addCell("NUMERO DE LIKES");
+	    ordenarLikes();
+		for (int i = 0; i < usuarios.size(); i++) {
+			tabla2.addCell(Integer.toString(i+1));
+			tabla2.addCell(usuarios.get(i).getUsuario());
+			tabla2.addCell(Integer.toString(usuarios.get(i).getLikesRecibidos()));
+		}
+		tabla3.addCell("NUMERO");
+		tabla3.addCell("APELLIDO");
+	 ordenarApellido();
+		for (int i = 0; i < usuarios.size(); i++) {
+			tabla3.addCell(Integer.toString(i+1));
+			tabla3.addCell(usuarios.get(i).getApellido1());
+		}
+		tabla4.addCell("NUMERO");
+		tabla4.addCell("NOMBRE");
+	    ordenarNombre();
+	    for (int i = 0; i < usuarios.size(); i++) {
+			tabla4.addCell(Integer.toString(i+1));
+			tabla4.addCell(usuarios.get(i).getNombre());
+		}
+	    tabla5.addCell("NUMERO");
+	    tabla5.addCell("USUARIO");
+	    tabla5.addCell("EDAD");
+	    ordenarEdad();
+	    for (int i = 0; i < usuarios.size(); i++) {
+			tabla5.addCell(Integer.toString(i+1));
+			tabla5.addCell(usuarios.get(i).getUsuario());
+			tabla5.addCell(Integer.toString(usuarios.get(i).getEdad()));
+		}
+	    tabla6.addCell("NUMERO");
+	    tabla6.addCell("USUARIO");
+	    ordenarUsuario();
+	    for (int i = 0; i <usuarios.size(); i++) {
+	    	tabla6.addCell(Integer.toString(i+1));
+	    	tabla6.addCell(usuarios.get(i).getUsuario());
+			
+		}
+		
+		doc.open();
+		doc.add(new Paragraph(objedate.toString(),FontFactory.getFont("Arial",14,Font.ITALIC,BaseColor.BLACK)));
+		doc.add(new Paragraph("\n"));
+		doc.add(new Paragraph("Moda, Mediana y Media de la Edad"));
+		doc.add(new Paragraph("\n"));
+		doc.add(tabla);
+		doc.add(new Paragraph("\n"));
+		doc.add(new Paragraph("ORDEN ASCENDENTE POR NUMERO DE LIKES"));
+		doc.add(new Paragraph("\n"));
+		doc.add(tabla2);
+		doc.add(new Paragraph("\n"));
+		doc.add(new Paragraph("ORDEN ASCENDENTE POR APELLIDOS"));
+		doc.add(new Paragraph("\n"));
+		doc.add(tabla3);
+		doc.add(new Paragraph("\n"));
+		doc.add(new Paragraph("ORDEN ASCENDENTE POR NOMBRE"));
+		doc.add(new Paragraph("\n"));
+		doc.add(tabla4);
+		doc.add(new Paragraph("\n"));
+		doc.add(new Paragraph("ORDEN ASCENDENTE POR EDAD"));
+		doc.add(new Paragraph("\n"));
+		doc.add(tabla5);
+		doc.add(new Paragraph("\n"));
+		doc.add(new Paragraph("ORDEN ASCENDENTE POR NOMBRE DE USUARIO (ALIAS)"));
+		doc.add(new Paragraph("\n"));
+		doc.add(tabla6);
+		
+		doc.close(); 
+		
+	  }
 
-	public static void main(String[] args) throws ClassNotFoundException, IOException
+	/*public static void main(String[] args) throws ClassNotFoundException, IOException, DocumentException
 	{
 		Mundo m = new Mundo();
 		m.ordenarUsuario();
-	}
+		System.out.println("jdsaoidj");
+		//m.generarPDF();
+	}*/
 }
