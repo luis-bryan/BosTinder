@@ -23,6 +23,7 @@ public class VentanaInteraccion extends JFrame {
 	JButton premium;
 	JButton like;
 	JButton dislike;
+	JLabel apellido;
 
 	public VentanaInteraccion() {
 		setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Logo.png")).getImage());
@@ -35,6 +36,7 @@ public class VentanaInteraccion extends JFrame {
 		setLocationRelativeTo(null);
 
 		Font fuente = new Font("Tahoma", 1, 40);
+		Font fuente2 = new Font("Tahoma", 1, 30);
 
 		fondo = new ImageIcon(getClass().getResource("/Imagenes/fondo.png"));
 		fondo_ = new JLabel(fondo);
@@ -43,8 +45,10 @@ public class VentanaInteraccion extends JFrame {
 		ImageIcon newImage = new ImageIcon(foto.getImage().getScaledInstance(375, 300, Image.SCALE_SMOOTH));
 		foto_ = new JLabel(newImage);
 
-		nombre = new JLabel("SARA ORREGO");
+		nombre = new JLabel("SARA");
 		nombre.setFont(fuente);
+		apellido = new JLabel("ORREGO");
+		apellido.setFont(fuente2);
 
 		edad = new JLabel("21");
 		edad.setFont(fuente);
@@ -77,7 +81,8 @@ public class VentanaInteraccion extends JFrame {
 		botones_ = new JLabel(newBotones);
 
 		add(foto_).setBounds(10, 20, 375, 300);
-		add(nombre).setBounds(50, 260, 400, 200);
+		add(nombre).setBounds(50, 250, 400, 200);
+		add(apellido).setBounds(75, 280, 400, 200);
 		add(edad).setBounds(170, 340, 100, 150);
 		add(botones_).setBounds(20, 450, 350, 170);
 		add(premium).setBounds(50, 490, 50, 50);
@@ -174,5 +179,14 @@ public class VentanaInteraccion extends JFrame {
 	public void setFondo_(JLabel fondo_) {
 		this.fondo_ = fondo_;
 	}
+
+	public JLabel getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(JLabel apellido) {
+		this.apellido = apellido;
+	}
+	
 
 }

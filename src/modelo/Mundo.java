@@ -1,9 +1,11 @@
 package modelo;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,12 +17,24 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -36,12 +50,13 @@ public class Mundo implements Serializable
 	private int numero;
 	private Persona aux;
 	private Persona aux3;
+	private Mujer mu;
+	private Hombre ho;
 	private int salto;
 	private int aux2;
 
 	public Mundo() throws ClassNotFoundException, IOException
 	{
-
 		//ControlLectura.lecturaInicial();
 		usuarios = ControlLectura.lectura();
 	}
@@ -80,26 +95,27 @@ public class Mundo implements Serializable
 
 	public Persona buscarUsuario(String usuario)
 	{
+		Persona p = null;
 		if(!usuarios.isEmpty())
 		{
 			for (int i = 0; i < usuarios.size(); i++) 
 			{
 				if(usuarios.get(i).getUsuario().equals(usuario))
 				{
-					return usuarios.get(i);
+					p= usuarios.get(i);
 				}
 			}
 		}
-		return null;
+		return p;
 	}
 
-	public boolean buscarContraseña(String usuario, String contraseña)
+	public boolean buscarContraseÃ±a(String usuario, String contraseÃ±a)
 	{
 		Persona n = buscarUsuario(usuario);
 		boolean iniciar = false;
 		if(n!=null)
 		{
-			if(n.getContraseña().equals(contraseña))
+			if(n.getContraseÃ±a().equals(contraseÃ±a))
 			{
 				iniciar = true;
 			}
@@ -112,13 +128,13 @@ public class Mundo implements Serializable
 	}
 	
 	public void agregarHombre(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, double pIngresos, double pEstatura) throws IOException
+			String contraseÃ±a, String correo, String fechaNacimiento, double pIngresos, double pEstatura) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
 
 		if(nueva == null)
 		{
-			nueva = new Hombre(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pIngresos, pEstatura);
+			nueva = new Hombre(nombre,id, apellido1, apellido2, sexo, usuario, contraseÃ±a, correo, fechaNacimiento, pIngresos, pEstatura);
 
 			usuarios.add(nueva);
 
@@ -128,19 +144,19 @@ public class Mundo implements Serializable
 	}
 
 	public void agregarMujer(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, boolean pDivorcios) throws IOException
+			String contraseÃ±a, String correo, String fechaNacimiento, boolean pDivorcios) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
 		if(nueva == null)
 		{
 
-			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pDivorcios);
+			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseÃ±a, correo, fechaNacimiento, pDivorcios);
 			usuarios.add(nueva);
 			ControlLectura.escritura(usuarios);
 		}
 	}
 
-	public void Modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña)
+	public void Modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseÃ±a)
 	{
 		Persona modificar = buscarUsuario(usuario);
 		if(modificar!=null)
@@ -148,16 +164,24 @@ public class Mundo implements Serializable
 			modificar.setNombre(nombre);
 			modificar.setApellido1(apellido1);
 			modificar.setApellido2(apellido2);
-			modificar.setContraseña(contraseña);
+			modificar.setContraseÃ±a(contraseÃ±a);
 		}
 	}
 
 	public void Eliminar(String usuario)
-	{
-		Persona eliminar = buscarUsuario(usuario);
-		if(eliminar!=null)
-		{
-			usuarios.remove(eliminar);
+	{	
+		int pos = -1;
+		for(int i = 0 ; i< usuarios.size(); i++){
+			if(usuarios.get(i).getNombre().equalsIgnoreCase(usuario)){
+				pos = i;
+			}
+		}
+		
+		if(pos == -1){
+			System.out.println("PERSONA NO ENCONTRADA");
+		}else{
+			usuarios.remove(pos);
+			System.out.println("USUARIO ELIMINADO");			
 		}
 	}
 
@@ -177,12 +201,23 @@ public class Mundo implements Serializable
 		}
 		return p2;
 	}
-
-	public Persona usuarioAleatorio() 
-	{
-		numero = (int) (Math.random()*usuarios.size());
-		return usuarios.get(numero);
+	public void darLike(Persona usuario,Persona like) {
+		Persona p3 =null;
+		usuario.setLikesOtorgados(usuario.getLikesOtorgados()+1);
+		like.setLikesRecibidos(like.getLikesRecibidos()+1);
+		if(usuario.getSexo()=='M') {
+			p3 = usuarios.get((int) (Math.random()*usuarios.size()));
+			while(p3.getSexo()!='H') {
+				p3 = usuarios.get((int) (Math.random()*usuarios.size()));
+			}
+		}else if(usuario.getSexo()=='H') {
+			p3 = usuarios.get((int) (Math.random()*usuarios.size()));
+			while(p3.getSexo()!='M') {
+				p3 = usuarios.get((int) (Math.random()*usuarios.size()));
+			}
+		}
 	}
+
 
 	public ArrayList<Persona> ordenarLikes()
 	{
@@ -382,7 +417,17 @@ public class Mundo implements Serializable
 		}
 		return moda;
 	}
-	public void generarPDF() throws FileNotFoundException, DocumentException 
+	public void generarGrafica() throws IOException {
+		DefaultCategoryDataset data = new DefaultCategoryDataset();
+		data.addValue(calcularMedia(), "Datos", "MEDIA");
+		data.addValue(calcularMediana(), "Datos", "MEDIANA");
+		data.addValue(calcularModa(), "Datos", "MODA");
+		JFreeChart grafica = ChartFactory.createBarChart("Moda, Mediana y Moda de Edad",
+				"", "Valor", data,
+				PlotOrientation.VERTICAL, true, true, false);
+		ChartUtilities.saveChartAsPNG(new File("Grafico1.png"), grafica, 500, 500);
+	}
+	public void generarPDF() throws DocumentException, MalformedURLException, IOException 
 	   {
 		
 		Document doc = new Document();
@@ -397,6 +442,11 @@ public class Mundo implements Serializable
 		PdfPTable tabla4 = new PdfPTable(2);
 		PdfPTable tabla5 = new PdfPTable(3);
 		PdfPTable tabla6 = new PdfPTable(2);
+		generarGrafica();
+		Image grafica  = Image.getInstance("Grafico1.png");
+		grafica.scaleToFit(300,300);
+		grafica.setAlignment(Chunk.ALIGN_LEFT);
+		
 		
 		tabla.addCell("Mediana");
 		tabla.addCell(Double.toString(calcularMediana()));
@@ -416,14 +466,14 @@ public class Mundo implements Serializable
 		}
 		tabla3.addCell("NUMERO");
 		tabla3.addCell("APELLIDO");
-	 ordenarApellido();
+	    //ordenarApellido();
 		for (int i = 0; i < usuarios.size(); i++) {
 			tabla3.addCell(Integer.toString(i+1));
 			tabla3.addCell(usuarios.get(i).getApellido1());
 		}
 		tabla4.addCell("NUMERO");
 		tabla4.addCell("NOMBRE");
-	    ordenarNombre();
+	    //ordenarNombre();
 	    for (int i = 0; i < usuarios.size(); i++) {
 			tabla4.addCell(Integer.toString(i+1));
 			tabla4.addCell(usuarios.get(i).getNombre());
@@ -439,7 +489,7 @@ public class Mundo implements Serializable
 		}
 	    tabla6.addCell("NUMERO");
 	    tabla6.addCell("USUARIO");
-	    ordenarUsuario();
+	    //ordenarUsuario();
 	    for (int i = 0; i <usuarios.size(); i++) {
 	    	tabla6.addCell(Integer.toString(i+1));
 	    	tabla6.addCell(usuarios.get(i).getUsuario());
@@ -452,6 +502,8 @@ public class Mundo implements Serializable
 		doc.add(new Paragraph("Moda, Mediana y Media de la Edad"));
 		doc.add(new Paragraph("\n"));
 		doc.add(tabla);
+		doc.add(new Paragraph("\n"));
+		doc.add(grafica);
 		doc.add(new Paragraph("\n"));
 		doc.add(new Paragraph("ORDEN ASCENDENTE POR NUMERO DE LIKES"));
 		doc.add(new Paragraph("\n"));
@@ -476,12 +528,22 @@ public class Mundo implements Serializable
 		doc.close(); 
 		
 	  }
+	public Icon generarFoto(Persona usuario,Persona p2) {
+		Icon foto =null;
+		if(usuario.getSexo()=='H') {
+			if(p2.getEdad()<30) {
+		ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*3)+1))+".png"));
+			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.RIGHT));
+		}else if(p2.getEdad()>30&&p2.getEdad()<50) {
+			ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*3)+1))+".png"));
+			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
+		}else if(p2.getEdad()>50) {
+			ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*3)+1))+".png"));
+			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
+		}
+		}
+			
+		return foto;
 
-	/*public static void main(String[] args) throws ClassNotFoundException, IOException, DocumentException
-	{
-		Mundo m = new Mundo();
-		m.ordenarUsuario();
-		System.out.println("jdsaoidj");
-		//m.generarPDF();
-	}*/
+	}
 }

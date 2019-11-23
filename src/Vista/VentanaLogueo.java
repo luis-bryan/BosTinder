@@ -16,9 +16,9 @@ public class VentanaLogueo extends JFrame {
 	JButton iniciar;
 	ImageIcon iniciarIcon;
 	JLabel usuario;
-	JLabel contraseña;
+	JLabel contraseÃ±a;
 	JTextField usuario_;
-	JPasswordField contraseña_;
+	JPasswordField contraseÃ±a_;
 	ImageIcon fondo;
 	JLabel fondo_;
 
@@ -54,14 +54,14 @@ public class VentanaLogueo extends JFrame {
 		usuario.setFont(fuente);
 		usuario_ = new JTextField();
 
-		contraseña = new JLabel("CONTRASEÑA:");
-		contraseña.setFont(fuente);
-		contraseña_ = new JPasswordField();
+		contraseÃ±a = new JLabel("CONTRASEÃ±A:");
+		contraseÃ±a.setFont(fuente);
+		contraseÃ±a_ = new JPasswordField();
 
 		add(usuario).setBounds(40, 90, 150, 30);
 		add(usuario_).setBounds(150, 90, 200, 30);
-		add(contraseña).setBounds(30, 130, 150, 30);
-		add(contraseña_).setBounds(150, 130, 200, 30);
+		add(contraseÃ±a).setBounds(30, 130, 150, 30);
+		add(contraseÃ±a_).setBounds(150, 130, 200, 30);
 		add(iniciar).setBounds(90, 185, 200, 60);
 		add(fondo_).setBounds(0, 0, 400, 300);
 
@@ -92,12 +92,12 @@ public class VentanaLogueo extends JFrame {
 		this.usuario = usuario;
 	}
 
-	public JLabel getContraseña() {
-		return contraseña;
+	public JLabel getContraseÃ±a() {
+		return contraseÃ±a;
 	}
 
-	public void setContraseña(JLabel contraseña) {
-		this.contraseña = contraseña;
+	public void setContraseÃ±a(JLabel contraseÃ±a) {
+		this.contraseÃ±a = contraseÃ±a;
 	}
 
 	public JTextField getUsuario_() {
@@ -108,12 +108,12 @@ public class VentanaLogueo extends JFrame {
 		this.usuario_ = usuario_;
 	}
 
-	public JPasswordField getContraseña_() {
-		return contraseña_;
+	public JPasswordField getContraseÃ±a_() {
+		return contraseÃ±a_;
 	}
 
-	public void setContraseña_(JPasswordField contraseña_) {
-		this.contraseña_ = contraseña_;
+	public void setContraseÃ±a_(JPasswordField contraseÃ±a_) {
+		this.contraseÃ±a_ = contraseÃ±a_;
 	}
 
 	public ImageIcon getFondo() {

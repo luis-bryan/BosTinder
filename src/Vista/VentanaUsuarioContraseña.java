@@ -10,15 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class VentanaUsuarioContraseña extends JFrame {
+public class VentanaUsuarioContraseÃ±a extends JFrame {
 	ImageIcon fondo;
 	JLabel fondo_;
 	JButton guardar;
 	ImageIcon guardarIcon;
 	JTextField usuario_;
-	JTextField contraseña_;
+	JTextField contraseÃ±a_;
 
-	public VentanaUsuarioContraseña() {
+	public VentanaUsuarioContraseÃ±a() {
 		setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Logo.png")).getImage());
 		setTitle("INICIAR SESION");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -35,7 +35,7 @@ public class VentanaUsuarioContraseña extends JFrame {
 
 		usuario_ = new JTextField();
 
-		contraseña_ = new JTextField();
+		contraseÃ±a_ = new JTextField();
 
 		guardar = new JButton();
 		guardar.setActionCommand("guardar");
@@ -49,7 +49,7 @@ public class VentanaUsuarioContraseña extends JFrame {
 
 		add(guardar).setBounds(90, 260, 150, 50);
 		add(usuario_).setBounds(160, 170, 160, 30);
-		add(contraseña_).setBounds(180, 213, 140, 30);
+		add(contraseÃ±a_).setBounds(180, 213, 140, 30);
 		add(fondo_).setBounds(0, 0, 350, 350);
 
 		setVisible(false);
@@ -64,12 +64,12 @@ public class VentanaUsuarioContraseña extends JFrame {
 		this.usuario_ = usuario_;
 	}
 
-	public JTextField getContraseña_() {
-		return contraseña_;
+	public JTextField getContraseÃ±a_() {
+		return contraseÃ±a_;
 	}
 
-	public void setContraseña_(JTextField contraseña_) {
-		this.contraseña_ = contraseña_;
+	public void setContraseÃ±a_(JTextField contraseÃ±a_) {
+		this.contraseÃ±a_ = contraseÃ±a_;
 	}
 
 	public ImageIcon getFondo() {
