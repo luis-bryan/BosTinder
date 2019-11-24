@@ -75,7 +75,7 @@ public class Mundo implements Serializable
 		{
 			me.printStackTrace();   
 		}
-		System.out.println("Enviado");
+		System.out.println("ENVIADO");
 	}
 
 	public Persona buscarUsuario(String usuario)

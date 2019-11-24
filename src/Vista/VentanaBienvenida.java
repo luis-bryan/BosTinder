@@ -31,6 +31,7 @@ public class VentanaBienvenida extends JFrame implements ActionListener {
 	VentanaConfirmacionCorreo vcc;
 	VentanaInteraccion vi;
 	VentanaFinRegistro vfr;
+	VentanaAdministrador va;
 
 	public VentanaBienvenida() {
 		setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Logo.png")).getImage());
@@ -84,6 +85,7 @@ public class VentanaBienvenida extends JFrame implements ActionListener {
 		vcc = new VentanaConfirmacionCorreo();
 		vi = new VentanaInteraccion();
 		vfr = new VentanaFinRegistro();
+		va = new VentanaAdministrador();
 
 		add(logoJLabel).setBounds(90, 50, 220, 240);
 		add(iniciar).setBounds(70, 300, 250, 100);
@@ -108,6 +110,11 @@ public class VentanaBienvenida extends JFrame implements ActionListener {
 		vi.getPremium().addActionListener(this);
 		vi.getLike().addActionListener(this);
 		vi.getDislike().addActionListener(this);
+		vi.getCerrarsesion().addActionListener(this);
+		vi.getInformacion().addActionListener(this);
+		va.getPdf().addActionListener(this);
+		va.getCerrarsesion().addActionListener(this);
+		va.getEliminar().addActionListener(this);
 		setVisible(true);
 
 	}
@@ -139,6 +146,7 @@ public class VentanaBienvenida extends JFrame implements ActionListener {
 			vcc.setVisible(true);
 		} else if (e.getActionCommand().equals("iniciarsesion")) {
 			vl.setVisible(false);
+			va.setVisible(true);
 			vi.setVisible(true);
 		} else if (e.getActionCommand().equals("listo")) {
 			vcc.setVisible(false);
@@ -148,7 +156,6 @@ public class VentanaBienvenida extends JFrame implements ActionListener {
 		} else if (e.getActionCommand().equals("guardar")) {
 			vuc.setVisible(false);
 			vfr.setVisible(true);
-
 		} else if (e.getActionCommand().equals("listofin")) {
 			vi.setVisible(true);
 			vfr.setVisible(false);
@@ -158,6 +165,19 @@ public class VentanaBienvenida extends JFrame implements ActionListener {
 			System.out.println("LIKE");
 		} else if (e.getActionCommand().equals("dislike")) {
 			System.out.println("DISLIKE");
+		} else if (e.getActionCommand().equals("informacion")) {
+			System.out.println("INFORMACION");
+		} else if (e.getActionCommand().equals("cerrarsesion")) {
+			System.out.println("CERRAR SESION");
+			vi.setVisible(false);
+			va.setVisible(false);
+			this.setVisible(true);
+		} else if (e.getActionCommand().equals("pdf")) {
+			System.out.println("PDF");
+		} else if (e.getActionCommand().equals("eliminar")) {
+			System.out.println("ELIMINADO USUARIO");
+		//} else if (e.getActionCommand().equals("cerrarsesion")) {
+		//	System.out.println("CERRAR SESION");
 		}
 
 	}

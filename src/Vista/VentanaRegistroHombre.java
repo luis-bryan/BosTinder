@@ -178,6 +178,7 @@ public class VentanaRegistroHombre extends JFrame {
 		edad.setFont(fuente);
 		edad_ = new JTextField();
 		edad_.setHorizontalAlignment(SwingConstants.CENTER);
+		edad_.setEnabled(false);
 
 		correo = new JLabel("CORREO ELCTRONICO:");
 		correo.setFont(fuente);
