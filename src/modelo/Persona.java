@@ -1,32 +1,30 @@
 package modelo;
 
+import javax.swing.*;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.swing.Icon;
-import javax.swing.JOptionPane;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Persona implements Serializable
 {
 	protected String nombre;
 	protected int edad;
-	protected int id;
+	protected long id;
 	protected String apellido1;
 	protected String apellido2;
 	protected char sexo;
 	protected String usuario;
-	protected String contraseÃ±a;
+	protected String contraseña;
 	protected String correo;
-	protected Date fechaNacimiento;
+	protected LocalDate fechaNacimiento;
 	protected int likesRecibidos;
 	protected int likesOtorgados;
 	protected int matches;
 	protected char estado;
 	protected Icon imagen;
-	public Persona(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseÃ±a, String correo, String fechaNacimiento)
+
+	public Persona(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
+								 String contraseña, String correo, String fechaNacimiento)
 	{
 		this.nombre = nombre;
 		this.id = id;
@@ -34,13 +32,9 @@ public abstract class Persona implements Serializable
 		this.apellido2 = apellido2;
 		this.sexo = sexo;
 		this.usuario = usuario;
-		this.contraseÃ±a = contraseÃ±a;
+		this.contraseña = contraseña;
 		this.correo = correo;
-		try{
-			this.fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
-		} catch (ParseException e){
-			e.printStackTrace();
-		}
+		this.fechaNacimiento = LocalDate.parse(fechaNacimiento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		this.estado = 'D';
 		this.edad = calcularEdad();
 		if (this.edad >=18){
@@ -51,10 +45,11 @@ public abstract class Persona implements Serializable
 		this.matches = 0;
 		this.likesRecibidos = 0;
 		this.likesOtorgados = 0;
+
 	}
 
-	public Persona(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-								 String contraseÃ±a, String correo, String fechaNacimiento, int likesRecibidos, int likesOtorgados,
+	public Persona(String nombre, int edad, long id, String apellido1, String apellido2, char sexo, String usuario,
+								 String contraseña, String correo, String fechaNacimiento, int likesRecibidos, int likesOtorgados,
 								 int matches, char estado)
 	{
 		this.nombre = nombre;
@@ -63,21 +58,21 @@ public abstract class Persona implements Serializable
 		this.apellido2 = apellido2;
 		this.sexo = sexo;
 		this.usuario = usuario;
-		this.contraseÃ±a = contraseÃ±a;
+		this.contraseña = contraseña;
 		this.correo = correo;
-		try{
-			this.fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
-		} catch (ParseException e){
-			JOptionPane.showMessageDialog(null, "Error en la fecha");
-		}
-		this.edad = new Date().getYear()-this.fechaNacimiento.getYear();
+		fechaNacimiento = fechaNacimiento.length() == 10 ? fechaNacimiento : "0" + fechaNacimiento;
+		this.fechaNacimiento = LocalDate.parse(fechaNacimiento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		this.edad = calcularEdad();
 		this.estado = estado;
 		this.likesRecibidos = likesRecibidos;
 		this.likesOtorgados = likesOtorgados;
-		this.matches =matches;
-		if (edad<18){
+		this.matches = matches;
+		if (this.edad < 18) {
 			this.estado='M';
 		}
+
+		System.out.println(this.estado);
+		System.out.println(this.edad);
 	}
 	
 	public Persona(Icon icono)
@@ -95,7 +90,8 @@ public abstract class Persona implements Serializable
 	}
 
 	public int calcularEdad(){
-		return new Date().getYear() - fechaNacimiento.getYear();
+		String tiempoDesde = fechaNacimiento.until(LocalDate.now()).toString();
+		return Integer.parseInt((tiempoDesde.charAt(1) + "" + tiempoDesde.charAt(2)));
 	}
 	
 	public String getNombre() {
@@ -114,11 +110,11 @@ public abstract class Persona implements Serializable
 		this.edad = edad;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -154,12 +150,12 @@ public abstract class Persona implements Serializable
 		this.usuario = usuario;
 	}
 
-	public String getContraseÃ±a() {
-		return contraseÃ±a;
+	public String getContraseña() {
+		return contraseña;
 	}
 
-	public void setContraseÃ±a(String contraseÃ±a) {
-		this.contraseÃ±a = contraseÃ±a;
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
 	}
 
 	public String getCorreo() {
@@ -170,11 +166,11 @@ public abstract class Persona implements Serializable
 		this.correo = correo;
 	}
 
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
@@ -213,8 +209,8 @@ public abstract class Persona implements Serializable
 	@Override
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", apellido1=" + apellido1
-				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseÃ±a=" + contraseÃ±a
-				+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento.getDay() + "/" + fechaNacimiento.getMonth() + "/" + fechaNacimiento.getYear()  + ", likesRecibidos=" + likesRecibidos
+			+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseña=" + contraseña
+			+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento.getDayOfMonth() + "/" + fechaNacimiento.getMonth() + "/" + fechaNacimiento.getYear() + ", likesRecibidos=" + likesRecibidos
 				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]\n" ;
 	}
 
@@ -224,5 +220,14 @@ public abstract class Persona implements Serializable
 
 	public void setImagen(Icon imagen) {
 		this.imagen = imagen;
+	}
+
+	public void validarEdad() {
+		if (edad != calcularEdad()) {
+			edad = calcularEdad();
+		}
+		if (edad > 18 && estado == 'M') {
+			estado = 'D';
+		}
 	}
 }

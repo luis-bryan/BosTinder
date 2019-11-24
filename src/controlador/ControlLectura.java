@@ -10,14 +10,6 @@ import java.util.ArrayList;
 public class ControlLectura {
 
 	private static final String ubicacionBinario = "Data/binario.txt";
-	public ControlLectura(){
-		//try{
-			//lecturaInicial();
-			//ArrayList<Persona> arreglo = lectura();
-		//} catch (IOException | ClassNotFoundException e){
-			//e.printStackTrace();
-		//}
-	}
 
 	public static ArrayList<Persona> lectura() throws IOException, ClassNotFoundException{
 		ArrayList<Persona> lista = new ArrayList<>();
@@ -40,37 +32,37 @@ public class ControlLectura {
 			while((cadena = br.readLine())!=null) {
 				String[] separado = cadena.split(";");
 				Persona nueva = null;
-				String contraseÃ±a = null;
+        String contraseña = null;
 				String[] fixed = new String[16];
 				int aux = 0;
 				if(separado[6].charAt(0) == '\"'){
 					if (!separado[7].contains("\"") && !separado[8].contains("\"") && !separado[9].contains("\"") && separado[10].contains("\"")) {
-						contraseÃ±a = separado[6] + ";" + separado[7]+ ";" + separado[8] + ";" + separado[9] + ";" + separado[10];
+            contraseña = separado[6] + ";" + separado[7] + ";" + separado[8] + ";" + separado[9] + ";" + separado[10];
 						aux = 4;
-						System.out.println(contraseÃ±a + " " + aux);
+            System.out.println(contraseña + " " + aux);
 					} else if (!separado[7].contains("\"") && !separado[8].contains("\"") && separado[9].contains("\"")) {
-						contraseÃ±a = separado[6] + ";" + separado[7]+ ";" + separado[8] + ";" + separado[9];
+            contraseña = separado[6] + ";" + separado[7] + ";" + separado[8] + ";" + separado[9];
 						aux = 3;
-						System.out.println(contraseÃ±a + " " + aux);
+            System.out.println(contraseña + " " + aux);
 					} else if (!separado[7].contains("\"") && separado[8].contains("\"")) {
-						contraseÃ±a = separado[6] + ";" + separado[7]+ ";" + separado[8];
+            contraseña = separado[6] + ";" + separado[7] + ";" + separado[8];
 						aux = 2;
-						System.out.println(contraseÃ±a + " " + aux);
+            System.out.println(contraseña + " " + aux);
 					} else if(separado[7].contains("\"")){
-						contraseÃ±a = separado[6] + ";" + separado[7];
+            contraseña = separado[6] + ";" + separado[7];
 						aux = 1;
-						System.out.println(contraseÃ±a + " " + aux);
+            System.out.println(contraseña + " " + aux);
 
 					}
 				} else {
-					contraseÃ±a = separado[6];
+          contraseña = separado[6];
 				}
 
 				for (int i =0; i<6; i++){
 					fixed[i] = separado[i];
 					System.out.println(fixed[i]);
 				}
-				fixed[6] = contraseÃ±a;
+        fixed[6] = contraseña;
 				for (int i=7; i<16; i++){
 					fixed[i] = separado[i+aux];
 				}

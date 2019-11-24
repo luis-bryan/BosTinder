@@ -1,15 +1,9 @@
 package Vista;
 
-import java.awt.Color;
-import java.awt.Image;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import controlador.Controlador;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class VentanaBienvenida extends JFrame  {
 	JButton iniciar;
@@ -26,7 +20,7 @@ public class VentanaBienvenida extends JFrame  {
 	VentanaRegistroHombre vrh;
 	VentanaRegistroMujer vrm;
 	VentanaLogueo vl;
-	VentanaUsuarioContraseÃ±a vuc;
+  VentanaUsuarioContraseña vuc;
 	VentanaConfirmacionCorreo vcc;
 	VentanaInteraccion vi;
 	VentanaFinRegistro vfr;
@@ -79,7 +73,7 @@ public class VentanaBienvenida extends JFrame  {
 		vrh = new VentanaRegistroHombre();
 		veg = new VentanaEscogerGenero();
 		vl = new VentanaLogueo();
-		vuc = new VentanaUsuarioContraseÃ±a();
+    vuc = new VentanaUsuarioContraseña();
 		vcc = new VentanaConfirmacionCorreo();
 		vi = new VentanaInteraccion();
 		vfr = new VentanaFinRegistro();
@@ -223,11 +217,11 @@ public class VentanaBienvenida extends JFrame  {
 		this.vl = vl;
 	}
 
-	public VentanaUsuarioContraseÃ±a getVuc() {
+  public VentanaUsuarioContraseña getVuc() {
 		return vuc;
 	}
 
-	public void setVuc(VentanaUsuarioContraseÃ±a vuc) {
+  public void setVuc(VentanaUsuarioContraseña vuc) {
 		this.vuc = vuc;
 	}
 

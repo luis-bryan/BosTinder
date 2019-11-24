@@ -1,22 +1,16 @@
 package controlador;
 
 import Vista.VentanaBienvenida;
+import com.itextpdf.text.DocumentException;
+import modelo.Mundo;
+import modelo.Persona;
 
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
-import com.itextpdf.text.DocumentException;
-
-import modelo.Mundo;
-import modelo.Persona;
 
 public class Controlador implements ActionListener{
 	VentanaBienvenida vb;
@@ -31,6 +25,7 @@ public class Controlador implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		ImageIcon Icono = new ImageIcon(getClass().getResource("/Imagenes/logo.png"));
 		ImageIcon newIcono = new ImageIcon(vb.getLogoIcon().getImage().getScaledInstance(70, 80, Image.SCALE_SMOOTH));
+    Persona p1 = null;
 
 		if (e.getActionCommand().equals("iniciar")) {
 			vb.getVl().setVisible(true);
@@ -83,35 +78,41 @@ public class Controlador implements ActionListener{
 			vb.getVuc().setVisible(true);
 		} else if (e.getActionCommand().equals("iniciarsesion")) {
 			vb.getVl().setVisible(false);
-			if(m.buscarContraseÃ±a(vb.getVl().getUsuario_().getText(), vb.getVl().getContraseÃ±a_().getText())==true) {
-				vb.getVi().setVisible(true);
+      if (m.buscarContraseña(vb.getVl().getUsuario_().getText(), vb.getVl().getContraseña_().getText()) == true) {
+        p1 = m.buscarUsuario(vb.getVl().getUsuario_().getText());
+        p1.validarEdad();
+        if (m.buscarUsuario(vb.getVl().getUsuario_().getText()).getEstado() == 'M') {
+          JOptionPane.showMessageDialog(null, "USUARIO MENOR DE EDAD, VUELVE CUANDO TENGAS 18 AÑOS");
+        } else {
+          vb.getVi().setVisible(true);
+        }
 			}else {
-				JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÃ‘A INVALIDOS");
+        JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVALIDOS");
 				vb.getVl().setVisible(true);
 			}
 
 		} else if (e.getActionCommand().equals("listo")) {
-			vb.getVuc().setVisible(true);
+      vb.getVcc().setVisible(false);
 			vb.getVfr().setVisible(true);
 
 		} else if (e.getActionCommand().equals("reenviar")) {
 
 			if(vb.getVrm().getNombre_().getText().length()==0&&vb.getVrh().getNombre_().getText().length()!=0) {
-				m.enviarConGMail(vb.getVrh().getCorreo_().getText(), "Su nombre de usuario es: "+vb.getVuc().getUsuario_().getText()+"\n"+"Su contraseÃ±a es: "+vb.getVuc().getContraseÃ±a_().getText());
+        m.enviarConGMail(vb.getVrh().getCorreo_().getText(), "Su nombre de usuario es: " + vb.getVuc().getUsuario_().getText() + "\n" + "Su contraseña es: " + vb.getVuc().getContraseña_().getText());
 
 			}else {
-				m.enviarConGMail(vb.getVrm().getCorreo_().getText(), "Su nombre de usuario es: "+vb.getVuc().getUsuario_().getText()+"\n"+"Su contraseÃ±a es: "+vb.getVuc().getContraseÃ±a_().getText());
+        m.enviarConGMail(vb.getVrm().getCorreo_().getText(), "Su nombre de usuario es: " + vb.getVuc().getUsuario_().getText() + "\n" + "Su contraseña es: " + vb.getVuc().getContraseña_().getText());
 			}
 
 		} else if (e.getActionCommand().equals("guardar")) {
 			vb.getVuc().setVisible(false);
 			if(vb.getVrm().getNombre_().getText().length()==0&&vb.getVrh().getNombre_().getText().length()!=0) {
 				try {
-					m.agregarHombre(vb.getVrh().getNombre_().getText(),Integer.parseInt(vb.getVrh().getiden_().getText()), vb.getVrh().getApellidos_().getText(),vb.getVrh().getApellidos_().getText() , 'H',vb.getVuc().getUsuario_().getText() , vb.getVuc().getContraseÃ±a_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getDia().getSelectedItem().toString()+"/"+vb.getVrh().getMes().getSelectedIndex()+"/"+vb.getVrh().getAÃ±o().getSelectedItem().toString(), Double.parseDouble(vb.getVrh().getIngresos_().getText()), Double.parseDouble(vb.getVrh().getEstatura_().getText()));
+          m.agregarHombre(vb.getVrh().getNombre_().getText(), Long.parseLong(vb.getVrh().getiden_().getText()), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'H', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getDia().getSelectedItem().toString() + "/" + vb.getVrh().getMes().getSelectedIndex() + "/" + vb.getVrh().getAño().getSelectedItem().toString(), Double.parseDouble(vb.getVrh().getIngresos_().getText().replace(",", "")), Double.parseDouble(vb.getVrh().getEstatura_().getText()));
 				} catch (NumberFormatException | IOException e1) {
 					e1.printStackTrace();
 				}
-				m.enviarConGMail(vb.getVrh().getCorreo_().getText(), "Su nombre de usuario es: "+vb.getVuc().getUsuario_().getText()+"\n"+"Su contraseÃ±a es: "+vb.getVuc().getContraseÃ±a_().getText());
+        m.enviarConGMail(vb.getVrh().getCorreo_().getText(), "Su nombre de usuario es: " + vb.getVuc().getUsuario_().getText() + "\n" + "Su contraseña es: " + vb.getVuc().getContraseña_().getText());
 			}else {
 				try {
 					boolean divorcios;
@@ -123,18 +124,16 @@ public class Controlador implements ActionListener{
 					{
 						divorcios = false;
 					}
-					m.agregarMujer(vb.getVrh().getNombre_().getText(),Integer.parseInt(vb.getVrm().getiden_().getText()), vb.getVrh().getApellidos_().getText(),vb.getVrh().getApellidos_().getText() , 'M', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseÃ±a_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getDia().getSelectedItem().toString()+"/"+vb.getVrh().getMes().getSelectedIndex()+"/"+vb.getVrh().getAÃ±o().getSelectedItem().toString(), divorcios);
+          m.agregarMujer(vb.getVrh().getNombre_().getText(), Integer.parseInt(vb.getVrm().getiden_().getText()), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'M', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getDia().getSelectedItem().toString() + "/" + vb.getVrh().getMes().getSelectedIndex() + "/" + vb.getVrh().getAño().getSelectedItem().toString(), divorcios);
 				} catch (NumberFormatException | IOException e1) {
 					e1.printStackTrace();
 				}
-				m.enviarConGMail(vb.getVrm().getCorreo_().getText(), "Su nombre de usuario es: "+vb.getVuc().getUsuario_().getText()+"\n"+"Su contraseÃ±a es: "+vb.getVuc().getContraseÃ±a_().getText());
+        m.enviarConGMail(vb.getVrm().getCorreo_().getText(), "Su nombre de usuario es: " + vb.getVuc().getUsuario_().getText() + "\n" + "Su contraseña es: " + vb.getVuc().getContraseña_().getText());
 			}
 			vb.getVcc().setVisible(true);
 
 		} else if (e.getActionCommand().equals("listofin")) {
 			vb.getVfr().setVisible(false);
-			
-			Persona p1 = null;
 			if(vb.getVuc().getUsuario_().getText().length()==0) {
 				p1 = m.buscarUsuario(vb.getVl().getUsuario_().getText());
 			}else if(vb.getVl().getUsuario_().getText().length()==0) {
@@ -150,25 +149,14 @@ public class Controlador implements ActionListener{
 			System.out.println("PREMIUM");
 
 		} else if (e.getActionCommand().equals("like")) {
-			Persona p1 = null;
-			if(vb.getVuc().getUsuario_().getText().length()==0) {
-				p1 = m.buscarUsuario(vb.getVl().getUsuario_().getText());
-			}else if(vb.getVl().getUsuario_().getText().length()==0) {
-				p1 = m.buscarUsuario(vb.getVuc().getUsuario_().getText());
-			}
 			Persona p2 =  m.siguientePersona(p1);
 			m.darLike(p1, p2);
-			vb.getVi().getFoto_().setIcon(m.generarFoto(p2, p1));
+      vb.getVi().getFoto_().setIcon(m.generarFoto(p1, p2));
 			vb.getVi().getNombre().setText(p2.getNombre());
 			vb.getVi().getEdad().setText(Integer.toString(p2.getEdad()));
+      vb.getVi().getApellido().setText(p2.getApellido1());
 
 		} else if (e.getActionCommand().equals("dislike")) {
-			Persona p1 = null;
-			if(vb.getVuc().getUsuario_().getText().length()==0) {
-				p1 = m.buscarUsuario(vb.getVl().getUsuario_().getText());
-			}else if(vb.getVl().getUsuario_().getText().length()==0) {
-				p1 = m.buscarUsuario(vb.getVuc().getUsuario_().getText());
-			}
 				Persona p2 = m.siguientePersona(p1);
 				vb.getVi().getFoto_().setIcon(m.generarFoto(p1, p2));
 				vb.getVi().getNombre().setText(p2.getNombre());
