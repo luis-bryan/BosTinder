@@ -36,8 +36,8 @@ public class VentanaRegistroHombre extends JFrame {
 	JTextField nombre_;
 	JLabel apellidos;
 	JTextField apellidos_;
-	JLabel alias;
-	JTextField alias_;
+	JLabel iden;
+	JTextField iden_;
 	JLabel correo;
 	JTextField correo_;
 	JLabel edad;
@@ -75,7 +75,7 @@ public class VentanaRegistroHombre extends JFrame {
 		foto = new JLabel(newImage);
 
 		cambiarfoto = new JButton();
-		cambiarfoto.setActionCommand("cambiarfoto");
+		cambiarfoto.setActionCommand("cambiarfotoH");
 		cambiarfoto_ = new ImageIcon(getClass().getResource("/Imagenes/cambiarfoto.png"));
 		ImageIcon boton = new ImageIcon(cambiarfoto_.getImage().getScaledInstance(150, 50, Image.SCALE_SMOOTH));
 		cambiarfoto.setIcon(boton);
@@ -94,10 +94,10 @@ public class VentanaRegistroHombre extends JFrame {
 		apellidos_ = new JTextField();
 		apellidos_.setHorizontalAlignment(SwingConstants.CENTER);
 
-		alias = new JLabel("ALIAS:");
-		alias.setFont(fuente);
-		alias_ = new JTextField();
-		alias_.setHorizontalAlignment(SwingConstants.CENTER);
+		iden = new JLabel("IDENTIFICACION:");
+		iden.setFont(fuente);
+		iden_ = new JTextField();
+		iden_.setHorizontalAlignment(SwingConstants.CENTER);
 
 		fechaNacimineto = new JLabel("FECHA DE NACIMIENTO:");
 		fechaNacimineto.setFont(fuente);
@@ -196,7 +196,7 @@ public class VentanaRegistroHombre extends JFrame {
 		ingresos_.setHorizontalAlignment(SwingConstants.CENTER);
 
 		siguiente = new JButton();
-		siguiente.setActionCommand("siguiente");
+		siguiente.setActionCommand("siguienteH");
 		siguienteIcon = new ImageIcon(getClass().getResource("/Imagenes/siguiente.png"));
 		ImageIcon newSiguiente = new ImageIcon(siguienteIcon.getImage().getScaledInstance(200, 80, Image.SCALE_SMOOTH));
 		siguiente.setIcon(newSiguiente);
@@ -211,8 +211,8 @@ public class VentanaRegistroHombre extends JFrame {
 		add(nombre_).setBounds(150, 230, 230, 30);
 		add(apellidos).setBounds(20, 270, 130, 50);
 		add(apellidos_).setBounds(150, 280, 230, 30);
-		add(alias).setBounds(20, 320, 180, 50);
-		add(alias_).setBounds(150, 330, 230, 30);
+		add(iden).setBounds(20, 320, 180, 50);
+		add(iden_).setBounds(150, 330, 230, 30);
 		add(fechaNacimineto).setBounds(10, 370, 300, 50);
 		add(dia).setBounds(200, 380, 40, 30);
 		add(mes).setBounds(240, 380, 90, 30);
@@ -344,20 +344,20 @@ public class VentanaRegistroHombre extends JFrame {
 		this.apellidos_ = apellidos_;
 	}
 
-	public JLabel getAlias() {
-		return alias;
+	public JLabel getiden() {
+		return iden;
 	}
 
-	public void setAlias(JLabel alias) {
-		this.alias = alias;
+	public void setiden(JLabel iden) {
+		this.iden = iden;
 	}
 
-	public JTextField getAlias_() {
-		return alias_;
+	public JTextField getiden_() {
+		return iden_;
 	}
 
-	public void setAlias_(JTextField alias_) {
-		this.alias_ = alias_;
+	public void setiden_(JTextField iden_) {
+		this.iden_ = iden_;
 	}
 
 	public JLabel getCorreo() {

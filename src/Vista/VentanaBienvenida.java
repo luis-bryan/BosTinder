@@ -10,7 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
+import controlador.Controlador;
 
 public class VentanaBienvenida extends JFrame implements ActionListener {
 	JButton iniciar;
@@ -33,7 +34,7 @@ public class VentanaBienvenida extends JFrame implements ActionListener {
 	VentanaFinRegistro vfr;
 	VentanaAdministrador va;
 
-	public VentanaBienvenida() {
+	public VentanaBienvenida(Controlador c) {
 		setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Logo.png")).getImage());
 		setTitle("BOSTINDER");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,6 +116,24 @@ public class VentanaBienvenida extends JFrame implements ActionListener {
 		va.getPdf().addActionListener(this);
 		va.getCerrarsesion().addActionListener(this);
 		va.getEliminar().addActionListener(this);
+
+		iniciar.addActionListener(c);
+		registrar.addActionListener(c);
+		tc.addActionListener(c);
+		veg.getHombre().addActionListener(c);
+		veg.getMujer().addActionListener(c);
+		vrh.siguiente.addActionListener(c);
+		vrm.siguiente.addActionListener(c);
+		vrh.getCambiarfoto().addActionListener(c);
+		vrm.getCambiarfoto().addActionListener(c);
+		vl.getIniciar().addActionListener(c);
+		vcc.getListo().addActionListener(c);
+		vcc.getReenviar().addActionListener(c);
+		vuc.getGuardar().addActionListener(c);
+		vfr.getListo().addActionListener(c);
+		vi.getPremium().addActionListener(c);
+		vi.getLike().addActionListener(c);
+		vi.getDislike().addActionListener(c);
 		setVisible(true);
 
 	}
@@ -176,10 +195,153 @@ public class VentanaBienvenida extends JFrame implements ActionListener {
 			System.out.println("PDF");
 		} else if (e.getActionCommand().equals("eliminar")) {
 			System.out.println("ELIMINADO USUARIO");
-		//} else if (e.getActionCommand().equals("cerrarsesion")) {
-		//	System.out.println("CERRAR SESION");
 		}
+		// } else if (e.getActionCommand().equals("cerrarsesion")) {
+		// System.out.println("CERRAR SESION");
+	}
 
+	public JButton getIniciar() {
+		return iniciar;
+	}
+
+	public void setIniciar(JButton iniciar) {
+		this.iniciar = iniciar;
+	}
+
+	public JButton getRegistrar() {
+		return registrar;
+	}
+
+	public void setRegistrar(JButton registrar) {
+		this.registrar = registrar;
+	}
+
+	public JButton getTc() {
+		return tc;
+	}
+
+	public void setTc(JButton tc) {
+		this.tc = tc;
+	}
+
+	public Icon getIniciarIcon() {
+		return iniciarIcon;
+	}
+
+	public void setIniciarIcon(Icon iniciarIcon) {
+		this.iniciarIcon = iniciarIcon;
+	}
+
+	public Icon getRegistrarIcon() {
+		return registrarIcon;
+	}
+
+	public void setRegistrarIcon(Icon registrarIcon) {
+		this.registrarIcon = registrarIcon;
+	}
+
+	public Icon getTcIcon() {
+		return tcIcon;
+	}
+
+	public void setTcIcon(Icon tcIcon) {
+		this.tcIcon = tcIcon;
+	}
+
+	public ImageIcon getLogoIcon() {
+		return logoIcon;
+	}
+
+	public void setLogoIcon(ImageIcon logoIcon) {
+		this.logoIcon = logoIcon;
+	}
+
+	public ImageIcon getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(ImageIcon titulo) {
+		this.titulo = titulo;
+	}
+
+	public JLabel getTitu() {
+		return titu;
+	}
+
+	public void setTitu(JLabel titu) {
+		this.titu = titu;
+	}
+
+	public JLabel getLogoJLabel() {
+		return logoJLabel;
+	}
+
+	public void setLogoJLabel(JLabel logoJLabel) {
+		this.logoJLabel = logoJLabel;
+	}
+
+	public VentanaEscogerGenero getVeg() {
+		return veg;
+	}
+
+	public void setVeg(VentanaEscogerGenero veg) {
+		this.veg = veg;
+	}
+
+	public VentanaRegistroHombre getVrh() {
+		return vrh;
+	}
+
+	public void setVrh(VentanaRegistroHombre vrh) {
+		this.vrh = vrh;
+	}
+
+	public VentanaRegistroMujer getVrm() {
+		return vrm;
+	}
+
+	public void setVrm(VentanaRegistroMujer vrm) {
+		this.vrm = vrm;
+	}
+
+	public VentanaLogueo getVl() {
+		return vl;
+	}
+
+	public void setVl(VentanaLogueo vl) {
+		this.vl = vl;
+	}
+
+	public VentanaUsuarioContraseña getVuc() {
+		return vuc;
+	}
+
+	public void setVuc(VentanaUsuarioContraseña vuc) {
+		this.vuc = vuc;
+	}
+
+	public VentanaConfirmacionCorreo getVcc() {
+		return vcc;
+	}
+
+	public void setVcc(VentanaConfirmacionCorreo vcc) {
+		this.vcc = vcc;
+	}
+
+	public VentanaInteraccion getVi() {
+		return vi;
+	}
+
+	public void setVi(VentanaInteraccion vi) {
+		this.vi = vi;
+	}
+
+	public VentanaFinRegistro getVfr() {
+		return vfr;
+	}
+
+	public void setVfr(VentanaFinRegistro vfr) {
+		this.vfr = vfr;
 	}
 
 }

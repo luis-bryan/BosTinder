@@ -40,37 +40,37 @@ public class ControlLectura {
 			while((cadena = br.readLine())!=null) {
 				String[] separado = cadena.split(";");
 				Persona nueva = null;
-				String contraseña = null;
+				String contraseÃ±a = null;
 				String[] fixed = new String[16];
 				int aux = 0;
 				if(separado[6].charAt(0) == '\"'){
 					if (!separado[7].contains("\"") && !separado[8].contains("\"") && !separado[9].contains("\"") && separado[10].contains("\"")) {
-						contraseña = separado[6] + ";" + separado[7]+ ";" + separado[8] + ";" + separado[9] + ";" + separado[10];
+						contraseÃ±a = separado[6] + ";" + separado[7]+ ";" + separado[8] + ";" + separado[9] + ";" + separado[10];
 						aux = 4;
-						System.out.println(contraseña + " " + aux);
+						System.out.println(contraseÃ±a + " " + aux);
 					} else if (!separado[7].contains("\"") && !separado[8].contains("\"") && separado[9].contains("\"")) {
-						contraseña = separado[6] + ";" + separado[7]+ ";" + separado[8] + ";" + separado[9];
+						contraseÃ±a = separado[6] + ";" + separado[7]+ ";" + separado[8] + ";" + separado[9];
 						aux = 3;
-						System.out.println(contraseña + " " + aux);
+						System.out.println(contraseÃ±a + " " + aux);
 					} else if (!separado[7].contains("\"") && separado[8].contains("\"")) {
-						contraseña = separado[6] + ";" + separado[7]+ ";" + separado[8];
+						contraseÃ±a = separado[6] + ";" + separado[7]+ ";" + separado[8];
 						aux = 2;
-						System.out.println(contraseña + " " + aux);
+						System.out.println(contraseÃ±a + " " + aux);
 					} else if(separado[7].contains("\"")){
-						contraseña = separado[6] + ";" + separado[7];
+						contraseÃ±a = separado[6] + ";" + separado[7];
 						aux = 1;
-						System.out.println(contraseña + " " + aux);
+						System.out.println(contraseÃ±a + " " + aux);
 
 					}
 				} else {
-					contraseña = separado[6];
+					contraseÃ±a = separado[6];
 				}
 
 				for (int i =0; i<6; i++){
 					fixed[i] = separado[i];
 					System.out.println(fixed[i]);
 				}
-				fixed[6] = contraseña;
+				fixed[6] = contraseÃ±a;
 				for (int i=7; i<16; i++){
 					fixed[i] = separado[i+aux];
 				}

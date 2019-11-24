@@ -28,13 +28,13 @@ public class VentanaRegistroMujer extends JFrame {
 	JLabel fechaNacimineto;
 	JComboBox<String> dia;
 	JComboBox<String> mes;
-	JComboBox<String> año;
+	JComboBox<String> aÃ±o;
 	JLabel nombre;
 	JTextField nombre_;
 	JLabel apellidos;
 	JTextField apellidos_;
-	JLabel alias;
-	JTextField alias_;
+	JLabel iden;
+	JTextField iden_;
 	JLabel correo;
 	JTextField correo_;
 	JLabel edad;
@@ -72,7 +72,7 @@ public class VentanaRegistroMujer extends JFrame {
 		foto = new JLabel(newImage);
 
 		cambiarfoto = new JButton();
-		cambiarfoto.setActionCommand("cambiarfoto");
+		cambiarfoto.setActionCommand("cambiarfotoM");
 		cambiarfoto_ = new ImageIcon(getClass().getResource("/Imagenes/cambiarfoto.png"));
 		ImageIcon boton = new ImageIcon(cambiarfoto_.getImage().getScaledInstance(150, 50, Image.SCALE_SMOOTH));
 		cambiarfoto.setIcon(boton);
@@ -91,10 +91,10 @@ public class VentanaRegistroMujer extends JFrame {
 		apellidos_ = new JTextField();
 		apellidos_.setHorizontalAlignment(SwingConstants.CENTER);
 
-		alias = new JLabel("ALIAS:");
-		alias.setFont(fuente);
-		alias_ = new JTextField();
-		alias_.setHorizontalAlignment(SwingConstants.CENTER);
+		iden = new JLabel("IDENTIFICACION:");
+		iden.setFont(fuente);
+		iden_ = new JTextField();
+		iden_.setHorizontalAlignment(SwingConstants.CENTER);
 
 		fechaNacimineto = new JLabel("FECHA DE NACIMIENTO:");
 		fechaNacimineto.setFont(fuente);
@@ -147,29 +147,29 @@ public class VentanaRegistroMujer extends JFrame {
 		mes.addItem("Diciembre");
 		((JLabel) mes.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
-		año = new JComboBox<String>();
-		año.addItem("2019");
-		año.addItem("2018");
-		año.addItem("2017");
-		año.addItem("2016");
-		año.addItem("2015");
-		año.addItem("2014");
-		año.addItem("2013");
-		año.addItem("2012");
-		año.addItem("2011");
-		año.addItem("2019");
-		año.addItem("2010");
-		año.addItem("2009");
-		año.addItem("2008");
-		año.addItem("2007");
-		año.addItem("2006");
-		año.addItem("2005");
-		año.addItem("2004");
-		año.addItem("2003");
-		año.addItem("2002");
-		año.addItem("2001");
-		año.addItem("2000");
-		((JLabel) año.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		aÃ±o = new JComboBox<String>();
+		aÃ±o.addItem("2019");
+		aÃ±o.addItem("2018");
+		aÃ±o.addItem("2017");
+		aÃ±o.addItem("2016");
+		aÃ±o.addItem("2015");
+		aÃ±o.addItem("2014");
+		aÃ±o.addItem("2013");
+		aÃ±o.addItem("2012");
+		aÃ±o.addItem("2011");
+		aÃ±o.addItem("2019");
+		aÃ±o.addItem("2010");
+		aÃ±o.addItem("2009");
+		aÃ±o.addItem("2008");
+		aÃ±o.addItem("2007");
+		aÃ±o.addItem("2006");
+		aÃ±o.addItem("2005");
+		aÃ±o.addItem("2004");
+		aÃ±o.addItem("2003");
+		aÃ±o.addItem("2002");
+		aÃ±o.addItem("2001");
+		aÃ±o.addItem("2000");
+		((JLabel) aÃ±o.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
 		edad = new JLabel("EDAD:");
 		edad.setFont(fuente);
@@ -195,7 +195,7 @@ public class VentanaRegistroMujer extends JFrame {
 		divorcios_no.setOpaque(false);
 
 		siguiente = new JButton();
-		siguiente.setActionCommand("siguiente");
+		siguiente.setActionCommand("siguienteM");
 		siguienteIcon = new ImageIcon(getClass().getResource("/Imagenes/siguiente.png"));
 		siguiente.setIcon(siguienteIcon);
 		siguiente.setOpaque(false);
@@ -209,12 +209,12 @@ public class VentanaRegistroMujer extends JFrame {
 		add(nombre_).setBounds(150, 230, 230, 30);
 		add(apellidos).setBounds(20, 270, 130, 50);
 		add(apellidos_).setBounds(150, 280, 230, 30);
-		add(alias).setBounds(20, 320, 180, 50);
-		add(alias_).setBounds(150, 330, 230, 30);
+		add(iden).setBounds(20, 320, 180, 50);
+		add(iden_).setBounds(150, 330, 230, 30);
 		add(fechaNacimineto).setBounds(10, 370, 300, 50);
 		add(dia).setBounds(200, 380, 40, 30);
 		add(mes).setBounds(240, 380, 90, 30);
-		add(año).setBounds(330, 380, 80, 30);
+		add(aÃ±o).setBounds(330, 380, 80, 30);
 		add(edad).setBounds(20, 420, 100, 50);
 		add(edad_).setBounds(150, 430, 230, 30);
 		add(correo).setBounds(10, 470, 200, 50);
@@ -301,12 +301,12 @@ public class VentanaRegistroMujer extends JFrame {
 		this.mes = mes;
 	}
 
-	public JComboBox<String> getAño() {
-		return año;
+	public JComboBox<String> getAÃ±o() {
+		return aÃ±o;
 	}
 
-	public void setAño(JComboBox<String> año) {
-		this.año = año;
+	public void setAÃ±o(JComboBox<String> aÃ±o) {
+		this.aÃ±o = aÃ±o;
 	}
 
 	public JLabel getNombre() {
@@ -341,20 +341,20 @@ public class VentanaRegistroMujer extends JFrame {
 		this.apellidos_ = apellidos_;
 	}
 
-	public JLabel getAlias() {
-		return alias;
+	public JLabel getiden() {
+		return iden;
 	}
 
-	public void setAlias(JLabel alias) {
-		this.alias = alias;
+	public void setiden(JLabel iden) {
+		this.iden = iden;
 	}
 
-	public JTextField getAlias_() {
-		return alias_;
+	public JTextField getiden_() {
+		return iden_;
 	}
 
-	public void setAlias_(JTextField alias_) {
-		this.alias_ = alias_;
+	public void setiden_(JTextField iden_) {
+		this.iden_ = iden_;
 	}
 
 	public JLabel getCorreo() {

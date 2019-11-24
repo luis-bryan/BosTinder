@@ -17,7 +17,7 @@ public abstract class Persona implements Serializable
 	protected String apellido2;
 	protected char sexo;
 	protected String usuario;
-	protected String contraseña;
+	protected String contraseÃ±a;
 	protected String correo;
 	protected Date fechaNacimiento;
 	protected int likesRecibidos;
@@ -25,9 +25,8 @@ public abstract class Persona implements Serializable
 	protected int matches;
 	protected char estado;
 	protected Icon imagen;
-	
 	public Persona(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento)
+			String contraseÃ±a, String correo, String fechaNacimiento)
 	{
 		this.nombre = nombre;
 		this.id = id;
@@ -35,7 +34,7 @@ public abstract class Persona implements Serializable
 		this.apellido2 = apellido2;
 		this.sexo = sexo;
 		this.usuario = usuario;
-		this.contraseña = contraseña;
+		this.contraseÃ±a = contraseÃ±a;
 		this.correo = correo;
 		try{
 			this.fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
@@ -55,7 +54,7 @@ public abstract class Persona implements Serializable
 	}
 
 	public Persona(String nombre, int edad, int id, String apellido1, String apellido2, char sexo, String usuario,
-								 String contraseña, String correo, String fechaNacimiento, int likesRecibidos, int likesOtorgados,
+								 String contraseÃ±a, String correo, String fechaNacimiento, int likesRecibidos, int likesOtorgados,
 								 int matches, char estado)
 	{
 		this.nombre = nombre;
@@ -64,7 +63,7 @@ public abstract class Persona implements Serializable
 		this.apellido2 = apellido2;
 		this.sexo = sexo;
 		this.usuario = usuario;
-		this.contraseña = contraseña;
+		this.contraseÃ±a = contraseÃ±a;
 		this.correo = correo;
 		try{
 			this.fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
@@ -155,12 +154,12 @@ public abstract class Persona implements Serializable
 		this.usuario = usuario;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContraseÃ±a() {
+		return contraseÃ±a;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContraseÃ±a(String contraseÃ±a) {
+		this.contraseÃ±a = contraseÃ±a;
 	}
 
 	public String getCorreo() {
@@ -214,7 +213,7 @@ public abstract class Persona implements Serializable
 	@Override
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", apellido1=" + apellido1
-				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseña=" + contraseña
+				+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseÃ±a=" + contraseÃ±a
 				+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento.getDay() + "/" + fechaNacimiento.getMonth() + "/" + fechaNacimiento.getYear()  + ", likesRecibidos=" + likesRecibidos
 				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]\n" ;
 	}
