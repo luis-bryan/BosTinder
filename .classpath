@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="C:/Users/Usuario/Documents/Santiago/lib/orsonpdf-1.6-eval.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Usuario/Documents/Santiago/lib/servlet.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Usuario/Documents/Santiago/lib/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/git/BosTinder/lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,5 @@
+JDatePicker: https://sourceforge.net/projects/jdatepicker/files/latest/download
+iTextPDF 5.5.9: http://www.java2s.com/example/jar/i/download-itextpdf559jar-file.html
+JavaMail: https://github.com/javaee/javamail/releases
+JFreeChart 1.0.19: https://repo1.maven.org/maven2/org/jfree/jfreechart/
+https://ufpr.dl.sourceforge.net/project/jfreechart/1.%20JFreeChart/1.0.19/jfreechart-1.0.19.zip

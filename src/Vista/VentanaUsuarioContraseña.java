@@ -1,24 +1,19 @@
 package Vista;
 
-import java.awt.Color;
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+public class VentanaUsuarioContraseña extends JFrame implements KeyListener {
+	private ImageIcon fondo;
+	private JLabel fondo_;
+	private JButton guardar;
+	private ImageIcon guardarIcon;
+	private JTextField usuario_;
+	private JTextField contraseña_;
 
-public class VentanaUsuarioContraseña extends JFrame {
-	ImageIcon fondo;
-	JLabel fondo_;
-	JButton guardar;
-	ImageIcon guardarIcon;
-	JTextField usuario_;
-	JTextField contraseña_;
-
-	public VentanaUsuarioContraseña() {
+  public VentanaUsuarioContraseña() {
 		setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Logo.png")).getImage());
 		setTitle("INICIAR SESION");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -34,8 +29,9 @@ public class VentanaUsuarioContraseña extends JFrame {
 		fondo_ = new JLabel(newFondo);
 
 		usuario_ = new JTextField();
+		usuario_.addKeyListener(this);
 
-		contraseña_ = new JTextField();
+    contraseña_ = new JTextField();
 
 		guardar = new JButton();
 		guardar.setActionCommand("guardar");
@@ -49,13 +45,30 @@ public class VentanaUsuarioContraseña extends JFrame {
 
 		add(guardar).setBounds(90, 260, 150, 50);
 		add(usuario_).setBounds(160, 170, 160, 30);
-		add(contraseña_).setBounds(180, 213, 140, 30);
+    add(contraseña_).setBounds(180, 213, 140, 30);
 		add(fondo_).setBounds(0, 0, 350, 350);
 
 		setVisible(false);
 
 	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+		char charecter = e.getKeyChar();
+		if (Character.isUpperCase(charecter)) {
+			e.setKeyChar(Character.toLowerCase(charecter));
+		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+	}
 	public JTextField getUsuario_() {
 		return usuario_;
 	}
@@ -64,12 +77,12 @@ public class VentanaUsuarioContraseña extends JFrame {
 		this.usuario_ = usuario_;
 	}
 
-	public JTextField getContraseña_() {
-		return contraseña_;
-	}
+  public JTextField getContraseña_() {
+    return contraseña_;
+  }
 
-	public void setContraseña_(JTextField contraseña_) {
-		this.contraseña_ = contraseña_;
+  public void setContraseña_(JTextField contraseña_) {
+    this.contraseña_ = contraseña_;
 	}
 
 	public ImageIcon getFondo() {

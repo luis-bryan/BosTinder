@@ -1,35 +1,30 @@
 package Vista;
 
-import java.awt.Color;
-import java.awt.Image;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import controlador.Controlador;
 
-public class VentanaBienvenida extends JFrame  {
-	JButton iniciar;
-	JButton registrar;
-	JButton tc;
-	Icon iniciarIcon;
-	Icon registrarIcon;
-	Icon tcIcon;
-	ImageIcon logoIcon;
-	ImageIcon titulo;
-	JLabel titu;
-	JLabel logoJLabel;
-	VentanaEscogerGenero veg;
-	VentanaRegistroHombre vrh;
-	VentanaRegistroMujer vrm;
-	VentanaLogueo vl;
-	VentanaUsuarioContraseña vuc;
-	VentanaConfirmacionCorreo vcc;
-	VentanaInteraccion vi;
-	VentanaFinRegistro vfr;
+import javax.swing.*;
+import java.awt.*;
+
+public class VentanaBienvenida extends JFrame {
+	private JButton iniciar;
+	private JButton registrar;
+	private JButton tc;
+	private Icon iniciarIcon;
+	private Icon registrarIcon;
+	private Icon tcIcon;
+	private ImageIcon logoIcon;
+	private ImageIcon titulo;
+	private JLabel titu;
+	private JLabel logoJLabel;
+	private VentanaEscogerGenero veg;
+	private VentanaRegistroHombre vrh;
+	private VentanaRegistroMujer vrm;
+	private VentanaLogueo vl;
+	private VentanaUsuarioContraseña vuc;
+	private VentanaConfirmacionCorreo vcc;
+	private VentanaInteraccion vi;
+	private VentanaFinRegistro vfr;
+	private VentanaAdministrador va;
 
 	public VentanaBienvenida(Controlador c) {
 		setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Logo.png")).getImage());
@@ -79,10 +74,11 @@ public class VentanaBienvenida extends JFrame  {
 		vrh = new VentanaRegistroHombre();
 		veg = new VentanaEscogerGenero();
 		vl = new VentanaLogueo();
-		vuc = new VentanaUsuarioContraseña();
+    vuc = new VentanaUsuarioContraseña();
 		vcc = new VentanaConfirmacionCorreo();
 		vi = new VentanaInteraccion();
 		vfr = new VentanaFinRegistro();
+		va = new VentanaAdministrador();
 
 		add(logoJLabel).setBounds(90, 50, 220, 240);
 		add(iniciar).setBounds(70, 300, 250, 100);
@@ -95,8 +91,8 @@ public class VentanaBienvenida extends JFrame  {
 		tc.addActionListener(c);
 		veg.getHombre().addActionListener(c);
 		veg.getMujer().addActionListener(c);
-		vrh.siguiente.addActionListener(c);
-		vrm.siguiente.addActionListener(c);
+		vrh.getSiguiente().addActionListener(c);
+		vrm.getSiguiente().addActionListener(c);
 		vrh.getCambiarfoto().addActionListener(c);
 		vrm.getCambiarfoto().addActionListener(c);
 		vl.getIniciar().addActionListener(c);
@@ -107,9 +103,15 @@ public class VentanaBienvenida extends JFrame  {
 		vi.getPremium().addActionListener(c);
 		vi.getLike().addActionListener(c);
 		vi.getDislike().addActionListener(c);
+		vi.getCerrarsesion().addActionListener(c);
+		vi.getInformacion().addActionListener(c);
+		va.getCerrarsesion().addActionListener(c);
+		va.getEliminar().addActionListener(c);
+		va.getPdf().addActionListener(c);
 		setVisible(true);
 
 	}
+
 
 	public JButton getIniciar() {
 		return iniciar;
@@ -255,6 +257,11 @@ public class VentanaBienvenida extends JFrame  {
 		this.vfr = vfr;
 	}
 
+	public VentanaAdministrador getVa() {
+		return va;
+	}
 
-
+	public void setVa(VentanaAdministrador va) {
+		this.va = va;
+	}
 }

@@ -1,19 +1,13 @@
 package Vista;
 
-import java.awt.Color;
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 public class VentanaFinRegistro extends JFrame {
-	ImageIcon fondo;
-	JLabel fondo_;
-	JButton listo;
-	ImageIcon listoIcon;
+	private ImageIcon fondo;
+	private JLabel fondo_;
+	private JButton listo;
+	private ImageIcon listoIcon;
 
 	public VentanaFinRegistro() {
 		setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Logo.png")).getImage());

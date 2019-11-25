@@ -1,21 +1,15 @@
 package Vista;
 
-import java.awt.Color;
-import java.awt.Image;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
+import java.awt.*;
 
 public class VentanaEscogerGenero extends JFrame {
-	JButton mujer;
-	JButton hombre;
-	ImageIcon mujerIcon;
-	ImageIcon hombreIcon;
-	ImageIcon fondoIcon;
-	JLabel preguntaJLabel;
+	private JButton mujer;
+	private JButton hombre;
+	private ImageIcon mujerIcon;
+	private ImageIcon hombreIcon;
+	private ImageIcon fondoIcon;
+	private JLabel preguntaJLabel;
 
 	public VentanaEscogerGenero() {
 		setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Logo.png")).getImage());

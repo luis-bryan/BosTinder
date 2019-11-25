@@ -1,45 +1,31 @@
 package modelo;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import controlador.ControlLectura;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import controlador.ControlLectura;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.swing.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Properties;
 
 public class Mundo implements Serializable
 {
@@ -84,7 +70,7 @@ public class Mundo implements Serializable
 		{
 			me.printStackTrace();   
 		}
-		System.out.println("Enviado");
+    System.out.println("ENVIADO");
 	}
 
 	public Persona buscarUsuario(String usuario)
@@ -96,11 +82,11 @@ public class Mundo implements Serializable
 			{
 				if(usuarios.get(i).getUsuario().equals(usuario))
 				{
-					p= usuarios.get(i);
+					return usuarios.get(i);
 				}
 			}
 		}
-		return p;
+		return null;
 	}
 
 	public boolean buscarContraseña(String usuario, String contraseña)
@@ -109,7 +95,7 @@ public class Mundo implements Serializable
 		boolean iniciar = false;
 		if(n!=null)
 		{
-			if(n.getContraseña().equals(contraseña))
+			if (n.getContraseña().equals(contraseña))
 			{
 				iniciar = true;
 			}
@@ -120,37 +106,44 @@ public class Mundo implements Serializable
 		}
 		return iniciar;
 	}
-	
-	public void agregarHombre(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, double pIngresos, double pEstatura) throws IOException
+
+
+	public boolean agregarHombre(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
+														String contraseña, String correo, Date fechaNacimiento, double pIngresos, double pEstatura) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
+		String fecha = new SimpleDateFormat("dd/MM/yyyy").format(fechaNacimiento);
 
 		if(nueva == null)
 		{
-			nueva = new Hombre(nombre,id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pIngresos, pEstatura);
+			nueva = new Hombre(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fecha, pIngresos, pEstatura);
 
 			usuarios.add(nueva);
 
 			ControlLectura.escritura(usuarios);
 
+			return true;
 		}
+		return false;
 	}
 
-	public void agregarMujer(String nombre, int id, String apellido1, String apellido2, char sexo, String usuario,
-			String contraseña, String correo, String fechaNacimiento, boolean pDivorcios) throws IOException
+	public boolean agregarMujer(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
+													 String contraseña, String correo, Date fechaNacimiento, boolean pDivorcios) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
+		String fecha = new SimpleDateFormat("dd/MM/yyyy").format(fechaNacimiento);
+
 		if(nueva == null)
 		{
-
-			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pDivorcios);
+			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fecha, pDivorcios);
 			usuarios.add(nueva);
 			ControlLectura.escritura(usuarios);
+			return true;
 		}
+		return false;
 	}
 
-	public void Modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña)
+  public boolean modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña) throws IOException
 	{
 		Persona modificar = buscarUsuario(usuario);
 		if(modificar!=null)
@@ -159,10 +152,13 @@ public class Mundo implements Serializable
 			modificar.setApellido1(apellido1);
 			modificar.setApellido2(apellido2);
 			modificar.setContraseña(contraseña);
+      ControlLectura.escritura(usuarios);
+      return true;
 		}
+		return false;
 	}
 
-	public void Eliminar(String usuario)
+	public boolean eliminar(String usuario)
 	{	
 		int pos = -1;
 		for(int i = 0 ; i< usuarios.size(); i++){
@@ -173,9 +169,11 @@ public class Mundo implements Serializable
 		
 		if(pos == -1){
 			System.out.println("PERSONA NO ENCONTRADA");
+			return false;
 		}else{
 			usuarios.remove(pos);
-			System.out.println("USUARIO ELIMINADO");			
+      System.out.println("USUARIO ELIMINADO");
+			return true;
 		}
 	}
 
@@ -184,12 +182,12 @@ public class Mundo implements Serializable
 		Persona p2 = null;
 		if(p1.getSexo()=='M') {
 			p2 = usuarios.get((int) (Math.random()*usuarios.size()));
-			while(p2.getSexo()!='H') {
+			while (p2.getSexo() != 'H' || p2.getEstado() == 'I') {
 				p2 = usuarios.get((int) (Math.random()*usuarios.size()));
 			}
 		}else if(p1.getSexo()=='H') {
 			p2 = usuarios.get((int) (Math.random()*usuarios.size()));
-			while(p2.getSexo()!='M') {
+			while (p2.getSexo() != 'M' || p2.getEstado() == 'I') {
 				p2 = usuarios.get((int) (Math.random()*usuarios.size()));
 			}
 		}
@@ -526,13 +524,13 @@ public class Mundo implements Serializable
 		Icon foto =null;
 		if(usuario.getSexo()=='H') {
 			if(p2.getEdad()<30) {
-		ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*3)+1))+".png"));
-			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.RIGHT));
+				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer" + ((int) ((Math.random() * 3) + 1)) + ".png"));
+				foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
 		}else if(p2.getEdad()>30&&p2.getEdad()<50) {
-			ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*6)+4))+".png"));
+				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer" + ((int) ((Math.random() * 3) + 1)) + ".png"));
 			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
 		}else if(p2.getEdad()>50) {
-			ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*9)+7))+".png"));
+				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer" + ((int) ((Math.random() * 3) + 1)) + ".png"));
 			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
 		}
 		}
@@ -540,4 +538,12 @@ public class Mundo implements Serializable
 		return foto;
 
 	}
+
+  public ArrayList<Persona> getUsuarios() {
+    return usuarios;
+  }
+
+  public void setUsuarios(ArrayList<Persona> usuarios) {
+    this.usuarios = usuarios;
+  }
 }
