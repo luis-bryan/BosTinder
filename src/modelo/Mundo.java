@@ -82,11 +82,11 @@ public class Mundo implements Serializable
 			{
 				if(usuarios.get(i).getUsuario().equals(usuario))
 				{
-					p= usuarios.get(i);
+					return usuarios.get(i);
 				}
 			}
 		}
-		return p;
+		return null;
 	}
 
 	public boolean buscarContraseña(String usuario, String contraseña)
@@ -108,7 +108,7 @@ public class Mundo implements Serializable
 	}
 
 
-	public void agregarHombre(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
+	public boolean agregarHombre(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
 														String contraseña, String correo, Date fechaNacimiento, double pIngresos, double pEstatura) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
@@ -122,10 +122,12 @@ public class Mundo implements Serializable
 
 			ControlLectura.escritura(usuarios);
 
+			return true;
 		}
+		return false;
 	}
 
-	public void agregarMujer(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
+	public boolean agregarMujer(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
 													 String contraseña, String correo, Date fechaNacimiento, boolean pDivorcios) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
@@ -136,10 +138,12 @@ public class Mundo implements Serializable
 			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fecha, pDivorcios);
 			usuarios.add(nueva);
 			ControlLectura.escritura(usuarios);
+			return true;
 		}
+		return false;
 	}
 
-  public void modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña) throws IOException
+  public boolean modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña) throws IOException
 	{
 		Persona modificar = buscarUsuario(usuario);
 		if(modificar!=null)
@@ -149,10 +153,12 @@ public class Mundo implements Serializable
 			modificar.setApellido2(apellido2);
 			modificar.setContraseña(contraseña);
       ControlLectura.escritura(usuarios);
+      return true;
 		}
+		return false;
 	}
 
-	public void eliminar(String usuario)
+	public boolean eliminar(String usuario)
 	{	
 		int pos = -1;
 		for(int i = 0 ; i< usuarios.size(); i++){
@@ -163,9 +169,11 @@ public class Mundo implements Serializable
 		
 		if(pos == -1){
 			System.out.println("PERSONA NO ENCONTRADA");
+			return false;
 		}else{
 			usuarios.remove(pos);
-			System.out.println("USUARIO ELIMINADO");			
+      System.out.println("USUARIO ELIMINADO");
+			return true;
 		}
 	}
 
@@ -530,4 +538,12 @@ public class Mundo implements Serializable
 		return foto;
 
 	}
+
+  public ArrayList<Persona> getUsuarios() {
+    return usuarios;
+  }
+
+  public void setUsuarios(ArrayList<Persona> usuarios) {
+    this.usuarios = usuarios;
+  }
 }

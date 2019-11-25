@@ -110,14 +110,20 @@ public class Controlador implements ActionListener{
 			}
 
 		} else if (e.getActionCommand().equals("guardar")) {
-			vb.getVuc().setVisible(false);
+			boolean agrego = false;
 			if(vb.getVrm().getNombre_().getText().length()==0&&vb.getVrh().getNombre_().getText().length()!=0) {
 				try {
-          m.agregarHombre(vb.getVrh().getNombre_().getText(), Long.parseLong(vb.getVrh().getiden_().getText()), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'H', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getFecha_().getDate(), Double.parseDouble(vb.getVrh().getIngresos_().getText().replace(",", "")), Double.parseDouble(vb.getVrh().getEstatura_().getText()));
+					agrego = m.agregarHombre(vb.getVrh().getNombre_().getText(), Long.parseLong(vb.getVrh().getiden_().getText().replace(",","")), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'H', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getFecha_().getDate(), Double.parseDouble(vb.getVrh().getIngresos_().getText().replace(",", "")), Double.parseDouble(vb.getVrh().getEstatura_().getText()));
+          if (agrego){
+						vb.getVuc().setVisible(false);
+						m.enviarConGMail(vb.getVrh().getCorreo_().getText(), "Su nombre de usuario es: " + vb.getVuc().getUsuario_().getText() + "\n" + "Su contraseña es: " + vb.getVuc().getContraseña_().getText());
+						vb.getVcc().setVisible(true);
+          } else {
+          	JOptionPane.showMessageDialog(null, "Error, ya existe alguien con este usuario");
+					}
 				} catch (NumberFormatException | IOException e1) {
 					e1.printStackTrace();
 				}
-        m.enviarConGMail(vb.getVrh().getCorreo_().getText(), "Su nombre de usuario es: " + vb.getVuc().getUsuario_().getText() + "\n" + "Su contraseña es: " + vb.getVuc().getContraseña_().getText());
 			}else {
 				try {
 					boolean divorcios;
@@ -129,13 +135,19 @@ public class Controlador implements ActionListener{
 					{
 						divorcios = false;
 					}
-          m.agregarMujer(vb.getVrh().getNombre_().getText(), Integer.parseInt(vb.getVrm().getiden_().getText()), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'M', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getFecha_().getDate(), divorcios);
+					agrego = m.agregarMujer(vb.getVrh().getNombre_().getText(), Long.parseLong(vb.getVrm().getiden_().getText().replace(",","")), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'M', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getFecha_().getDate(), divorcios);
+					if (agrego){
+						vb.getVuc().setVisible(false);
+						m.enviarConGMail(vb.getVrm().getCorreo_().getText(), "Su nombre de usuario es: " + vb.getVuc().getUsuario_().getText() + "\n" + "Su contraseña es: " + vb.getVuc().getContraseña_().getText());
+						vb.getVcc().setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Error, ya existe alguien con este usuario");
+					}
 				} catch (NumberFormatException | IOException e1) {
 					e1.printStackTrace();
 				}
-        m.enviarConGMail(vb.getVrm().getCorreo_().getText(), "Su nombre de usuario es: " + vb.getVuc().getUsuario_().getText() + "\n" + "Su contraseña es: " + vb.getVuc().getContraseña_().getText());
 			}
-			vb.getVcc().setVisible(true);
+
 
 		} else if (e.getActionCommand().equals("listofin")) {
 			vb.getVfr().setVisible(false);

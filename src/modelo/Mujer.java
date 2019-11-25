@@ -58,7 +58,7 @@ public class Mujer extends Persona implements Serializable
 		assert(!usuario.contains(";")): "El usuario no puede tener caracteres especiales";
 		assert (contraseña != null && !contraseña.equals(" ")) : "La contrasela no es valida";
 		assert(correo.contains("@") && !correo.contains(";")): "El correo no es valido";
-		assert(fechaNacimiento.toString().contains("[0-9\\/]")):"La fecha de nacimiento no es valida";
+		//assert(fechaNacimiento.toString().contains("[0-9\\/]")):"La fecha de nacimiento no es valida";
 		assert(estado=='D' || estado=='I'|| estado=='M'): "El estado solo admite valores de D, I o M";
 	}
 }
