@@ -158,7 +158,7 @@ public class Controlador implements ActionListener{
 			}
 			Persona p2 =  m.siguientePersona(p1);
 			m.darLike(p1, p2);
-			vb.getVi().getFoto_().setIcon(m.generarFoto(p2, p1));
+			vb.getVi().getFoto_().setIcon(m.generarFoto(p1, p2));
 			vb.getVi().getNombre().setText(p2.getNombre());
 			vb.getVi().getEdad().setText(Integer.toString(p2.getEdad()));
 

@@ -47,13 +47,7 @@ public class Mundo implements Serializable
 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Persona> usuarios;
-	private int numero;
-	private Persona aux;
-	private Persona aux3;
-	private Mujer mu;
-	private Hombre ho;
 	private int salto;
-	private int aux2;
 
 	public Mundo() throws ClassNotFoundException, IOException
 	{
@@ -535,10 +529,10 @@ public class Mundo implements Serializable
 		ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*3)+1))+".png"));
 			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.RIGHT));
 		}else if(p2.getEdad()>30&&p2.getEdad()<50) {
-			ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*3)+1))+".png"));
+			ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*6)+4))+".png"));
 			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
 		}else if(p2.getEdad()>50) {
-			ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*3)+1))+".png"));
+			ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer"+Integer.toString((int) ((Math.random()*9)+7))+".png"));
 			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
 		}
 		}
