@@ -1,5 +1,6 @@
 package controlador;
 
+import Vista.VentanaAdministrador;
 import Vista.VentanaBienvenida;
 import com.itextpdf.text.DocumentException;
 import modelo.Mundo;
@@ -13,9 +14,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class Controlador implements ActionListener{
-	VentanaBienvenida vb;
+  private VentanaBienvenida vb;
 	private Mundo m;
-  Persona p1 = null;
+  private Persona p1;
+  private VentanaAdministrador va;
 
 	public Controlador() throws ClassNotFoundException, IOException, DocumentException {
 		m = new Mundo();
@@ -81,6 +83,7 @@ public class Controlador implements ActionListener{
       if (m.buscarContraseña(vb.getVl().getUsuario_().getText(), vb.getVl().getContraseña_().getText()) == true) {
         p1 = m.buscarUsuario(vb.getVl().getUsuario_().getText());
         p1.validarEdad();
+
         if (m.buscarUsuario(vb.getVl().getUsuario_().getText()).getEstado() == 'M') {
           JOptionPane.showMessageDialog(null, "USUARIO MENOR DE EDAD, VUELVE CUANDO TENGAS 18 AÑOS");
         } else {
@@ -90,6 +93,8 @@ public class Controlador implements ActionListener{
         JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVALIDOS");
 				vb.getVl().setVisible(true);
 			}
+      vb.getVl().getUsuario_().setText("");
+      vb.getVl().getContraseña_().setText("");
 
 		} else if (e.getActionCommand().equals("listo")) {
       vb.getVcc().setVisible(false);
@@ -143,7 +148,8 @@ public class Controlador implements ActionListener{
 				vb.getVi().getNombre().setText(p2.getNombre());
       vb.getVi().getApellido().setText(p2.getApellido1());
 				vb.getVi().getEdad().setText(Integer.toString(p2.getEdad()));
-			
+      vb.getVuc().getUsuario_().setText("");
+      vb.getVuc().getContraseña_().setText("");
 			vb.getVi().setVisible(true);
 
 		} else if (e.getActionCommand().equals("premium")) {
@@ -163,10 +169,18 @@ public class Controlador implements ActionListener{
 				vb.getVi().getNombre().setText(p2.getNombre());
 				vb.getVi().getEdad().setText(Integer.toString(p2.getEdad()));
 				vb.getVi().getApellido().setText(p2.getApellido1());
-			
-		}
 
-
-	}
-
+    } else if (e.getActionCommand().equals("cerrarsesion")) {
+      vb.getVi().setVisible(false);
+      vb.setVisible(true);
+    } else if (e.getActionCommand().equals("pdf")) {
+      try {
+        m.generarPDF();
+      } catch (DocumentException | IOException e2) {
+        JOptionPane.showMessageDialog(null, "Error al generar el PDF");
+      }
+    } else if (e.getActionCommand().equals("eliminar")) {
+      m.eliminar(vb.getVa().getPlu().getlistaUsuarios().getSelectedValue());
+    }
+  }
 }

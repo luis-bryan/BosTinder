@@ -6,12 +6,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class VentanaUsuarioContraseña extends JFrame implements KeyListener {
-	ImageIcon fondo;
-	JLabel fondo_;
-	JButton guardar;
-	ImageIcon guardarIcon;
-	JTextField usuario_;
-  JTextField contraseña_;
+	private ImageIcon fondo;
+	private JLabel fondo_;
+	private JButton guardar;
+	private ImageIcon guardarIcon;
+	private JTextField usuario_;
+	private JTextField contraseña_;
 
   public VentanaUsuarioContraseña() {
 		setIconImage(new ImageIcon(getClass().getResource("/Imagenes/Logo.png")).getImage());

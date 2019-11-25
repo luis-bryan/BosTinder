@@ -11,30 +11,30 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class VentanaRegistroHombre extends JFrame {
-	JButton siguiente;
-	ImageIcon siguienteIcon;
-	JButton cambiarfoto;
-	ImageIcon cambiarfoto_;
-	ImageIcon fondo;
-	JLabel fondoJLabel;
-	JLabel fechaNacimineto;
-	JDateChooser fecha_;
-	JLabel nombre;
-	JTextField nombre_;
-	JLabel apellidos;
-	JTextField apellidos_;
-	JLabel iden;
-	JTextField iden_;
-	JLabel correo;
-	JTextField correo_;
-	JLabel edad;
-	JTextField edad_;
-	JLabel estatura;
-	JFormattedTextField estatura_;
-	JLabel ingresos;
-	JFormattedTextField ingresos_;
-	JLabel foto;
-	ImageIcon foto_;
+	private JButton siguiente;
+	private ImageIcon siguienteIcon;
+	private JButton cambiarfoto;
+	private ImageIcon cambiarfoto_;
+	private ImageIcon fondo;
+	private JLabel fondoJLabel;
+	private JLabel fechaNacimineto;
+	private JDateChooser fecha_;
+	private JLabel nombre;
+	private JTextField nombre_;
+	private JLabel apellidos;
+	private JTextField apellidos_;
+	private JLabel iden;
+	private JTextField iden_;
+	private JLabel correo;
+	private JTextField correo_;
+	private JLabel edad;
+	private JTextField edad_;
+	private JLabel estatura;
+	private JFormattedTextField estatura_;
+	private JLabel ingresos;
+	private JFormattedTextField ingresos_;
+	private JLabel foto;
+	private ImageIcon foto_;
 
 
 	public VentanaRegistroHombre() {
@@ -54,6 +54,18 @@ public class VentanaRegistroHombre extends JFrame {
 		formatter.setMaximum(Integer.MAX_VALUE);
 		formatter.setAllowsInvalid(false);
 		formatter.setCommitsOnValidEdit(false);
+		NumberFormatter formatterEdad = new NumberFormatter(format);
+		formatterEdad.setValueClass(Integer.class);
+		formatterEdad.setMinimum(0);
+		formatterEdad.setMaximum(150);
+		formatterEdad.setAllowsInvalid(false);
+		formatterEdad.setCommitsOnValidEdit(false);
+		NumberFormatter formatterAltura = new NumberFormatter(format);
+		formatterAltura.setValueClass(Integer.class);
+		formatterAltura.setMinimum(0);
+		formatterAltura.setMaximum(300);
+		formatterAltura.setAllowsInvalid(false);
+		formatterAltura.setCommitsOnValidEdit(false);
 
 		fondo = new ImageIcon(getClass().getResource("/Imagenes/fondo.png"));
 		fondoJLabel = new JLabel(fondo);
@@ -84,7 +96,7 @@ public class VentanaRegistroHombre extends JFrame {
 
 		iden = new JLabel("IDENTIFICACION:");
 		iden.setFont(fuente);
-		iden_ = new JTextField();
+		iden_ = new JFormattedTextField(formatter);
 		iden_.setHorizontalAlignment(SwingConstants.CENTER);
 
 		fechaNacimineto = new JLabel("FECHA DE NACIMIENTO:");
@@ -97,8 +109,9 @@ public class VentanaRegistroHombre extends JFrame {
 
 		edad = new JLabel("EDAD:");
 		edad.setFont(fuente);
-		edad_ = new JTextField();
+		edad_ = new JFormattedTextField(formatterEdad);
 		edad_.setHorizontalAlignment(SwingConstants.CENTER);
+		edad_.setEnabled(false);
 
 		correo = new JLabel("CORREO ELECTRONICO:");
 		correo.setFont(fuente);
@@ -107,7 +120,7 @@ public class VentanaRegistroHombre extends JFrame {
 
 		estatura = new JLabel("ESTATURA:");
 		estatura.setFont(fuente);
-		estatura_ = new JFormattedTextField(formatter);
+		estatura_ = new JFormattedTextField(formatterAltura);
 		estatura_.setHorizontalAlignment(SwingConstants.CENTER);
 
 		ingresos = new JLabel("INGRESOS:");

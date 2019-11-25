@@ -39,11 +39,6 @@ public class Mundo implements Serializable
 	{
 		//ControlLectura.lecturaInicial();
 		usuarios = ControlLectura.lectura();
-		try {
-			generarPDF();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void enviarConGMail(String destinatario, String cuerpo)
@@ -75,7 +70,7 @@ public class Mundo implements Serializable
 		{
 			me.printStackTrace();   
 		}
-		System.out.println("Enviado");
+    System.out.println("ENVIADO");
 	}
 
 	public Persona buscarUsuario(String usuario)
@@ -144,7 +139,7 @@ public class Mundo implements Serializable
 		}
 	}
 
-	public void modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña)
+  public void modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña) throws IOException
 	{
 		Persona modificar = buscarUsuario(usuario);
 		if(modificar!=null)
@@ -153,6 +148,7 @@ public class Mundo implements Serializable
 			modificar.setApellido1(apellido1);
 			modificar.setApellido2(apellido2);
 			modificar.setContraseña(contraseña);
+      ControlLectura.escritura(usuarios);
 		}
 	}
 

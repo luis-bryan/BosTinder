@@ -4,14 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VentanaLogueo extends JFrame {
-	JButton iniciar;
-	ImageIcon iniciarIcon;
-	JLabel usuario;
-  JLabel contraseña;
-	JTextField usuario_;
-  JPasswordField contraseña_;
-	ImageIcon fondo;
-	JLabel fondo_;
+	private JButton iniciar;
+	private ImageIcon iniciarIcon;
+	private JLabel usuario;
+	private JLabel contraseña;
+	private JTextField usuario_;
+	private JPasswordField contraseña_;
+	private ImageIcon fondo;
+	private JLabel fondo_;
 
 	public VentanaLogueo() {
 
