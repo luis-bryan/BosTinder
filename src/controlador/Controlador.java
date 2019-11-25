@@ -15,6 +15,7 @@ import java.io.IOException;
 public class Controlador implements ActionListener{
 	VentanaBienvenida vb;
 	private Mundo m;
+  Persona p1 = null;
 
 	public Controlador() throws ClassNotFoundException, IOException, DocumentException {
 		m = new Mundo();
@@ -25,7 +26,6 @@ public class Controlador implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		ImageIcon Icono = new ImageIcon(getClass().getResource("/Imagenes/logo.png"));
 		ImageIcon newIcono = new ImageIcon(vb.getLogoIcon().getImage().getScaledInstance(70, 80, Image.SCALE_SMOOTH));
-    Persona p1 = null;
 
 		if (e.getActionCommand().equals("iniciar")) {
 			vb.getVl().setVisible(true);
@@ -108,7 +108,7 @@ public class Controlador implements ActionListener{
 			vb.getVuc().setVisible(false);
 			if(vb.getVrm().getNombre_().getText().length()==0&&vb.getVrh().getNombre_().getText().length()!=0) {
 				try {
-          m.agregarHombre(vb.getVrh().getNombre_().getText(), Long.parseLong(vb.getVrh().getiden_().getText()), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'H', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getDia().getSelectedItem().toString() + "/" + vb.getVrh().getMes().getSelectedIndex() + "/" + vb.getVrh().getAño().getSelectedItem().toString(), Double.parseDouble(vb.getVrh().getIngresos_().getText().replace(",", "")), Double.parseDouble(vb.getVrh().getEstatura_().getText()));
+          m.agregarHombre(vb.getVrh().getNombre_().getText(), Long.parseLong(vb.getVrh().getiden_().getText()), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'H', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getFecha_().getDate(), Double.parseDouble(vb.getVrh().getIngresos_().getText().replace(",", "")), Double.parseDouble(vb.getVrh().getEstatura_().getText()));
 				} catch (NumberFormatException | IOException e1) {
 					e1.printStackTrace();
 				}
@@ -124,7 +124,7 @@ public class Controlador implements ActionListener{
 					{
 						divorcios = false;
 					}
-          m.agregarMujer(vb.getVrh().getNombre_().getText(), Integer.parseInt(vb.getVrm().getiden_().getText()), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'M', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getDia().getSelectedItem().toString() + "/" + vb.getVrh().getMes().getSelectedIndex() + "/" + vb.getVrh().getAño().getSelectedItem().toString(), divorcios);
+          m.agregarMujer(vb.getVrh().getNombre_().getText(), Integer.parseInt(vb.getVrm().getiden_().getText()), vb.getVrh().getApellidos_().getText(), vb.getVrh().getApellidos_().getText(), 'M', vb.getVuc().getUsuario_().getText(), vb.getVuc().getContraseña_().getText(), vb.getVrh().getCorreo_().getText(), vb.getVrh().getFecha_().getDate(), divorcios);
 				} catch (NumberFormatException | IOException e1) {
 					e1.printStackTrace();
 				}
@@ -141,6 +141,7 @@ public class Controlador implements ActionListener{
 			}
 				Persona p2 = m.siguientePersona(p1);
 				vb.getVi().getNombre().setText(p2.getNombre());
+      vb.getVi().getApellido().setText(p2.getApellido1());
 				vb.getVi().getEdad().setText(Integer.toString(p2.getEdad()));
 			
 			vb.getVi().setVisible(true);

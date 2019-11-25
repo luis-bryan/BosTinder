@@ -2,8 +2,10 @@ package Vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class VentanaUsuarioContraseña extends JFrame {
+public class VentanaUsuarioContraseña extends JFrame implements KeyListener {
 	ImageIcon fondo;
 	JLabel fondo_;
 	JButton guardar;
@@ -27,6 +29,7 @@ public class VentanaUsuarioContraseña extends JFrame {
 		fondo_ = new JLabel(newFondo);
 
 		usuario_ = new JTextField();
+		usuario_.addKeyListener(this);
 
     contraseña_ = new JTextField();
 
@@ -49,6 +52,23 @@ public class VentanaUsuarioContraseña extends JFrame {
 
 	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+		char charecter = e.getKeyChar();
+		if (Character.isUpperCase(charecter)) {
+			e.setKeyChar(Character.toLowerCase(charecter));
+		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+	}
 	public JTextField getUsuario_() {
 		return usuario_;
 	}

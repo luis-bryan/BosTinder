@@ -1,9 +1,14 @@
 package Vista;
 
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class VentanaRegistroMujer extends JFrame {
 	JButton siguiente;
@@ -12,10 +17,8 @@ public class VentanaRegistroMujer extends JFrame {
 	ImageIcon cambiarfoto_;
 	ImageIcon fondo;
 	JLabel fondoJLabel;
+	JDateChooser fecha_;
 	JLabel fechaNacimineto;
-	JComboBox<String> dia;
-	JComboBox<String> mes;
-  JComboBox<String> año;
 	JLabel nombre;
 	JTextField nombre_;
 	JLabel apellidos;
@@ -85,78 +88,12 @@ public class VentanaRegistroMujer extends JFrame {
 
 		fechaNacimineto = new JLabel("FECHA DE NACIMIENTO:");
 		fechaNacimineto.setFont(fuente);
-		dia = new JComboBox<String>();
-		dia.addItem("1");
-		dia.addItem("2");
-		dia.addItem("3");
-		dia.addItem("4");
-		dia.addItem("5");
-		dia.addItem("6");
-		dia.addItem("7");
-		dia.addItem("8");
-		dia.addItem("9");
-		dia.addItem("10");
-		dia.addItem("11");
-		dia.addItem("12");
-		dia.addItem("13");
-		dia.addItem("14");
-		dia.addItem("15");
-		dia.addItem("16");
-		dia.addItem("17");
-		dia.addItem("18");
-		dia.addItem("19");
-		dia.addItem("20");
-		dia.addItem("21");
-		dia.addItem("22");
-		dia.addItem("23");
-		dia.addItem("24");
-		dia.addItem("25");
-		dia.addItem("26");
-		dia.addItem("27");
-		dia.addItem("28");
-		dia.addItem("29");
-		dia.addItem("30");
-		dia.addItem("31");
-		((JLabel) dia.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
-		mes = new JComboBox<String>();
-		mes.addItem("Enero");
-		mes.addItem("Febrero");
-		mes.addItem("Marzo");
-		mes.addItem("Abril");
-		mes.addItem("Mayo");
-		mes.addItem("Junio");
-		mes.addItem("Julio");
-		mes.addItem("Agosto");
-		mes.addItem("Septiembre");
-		mes.addItem("Octubre");
-		mes.addItem("Noviembre");
-		mes.addItem("Diciembre");
-		((JLabel) mes.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		fecha_ = new JDateChooser();
+		fecha_.setMaxSelectableDate(Date.from(LocalDate.now().minusYears(18).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		fecha_.setDateFormatString("dd/MM/yyyy");
+		fecha_.setDate(Date.from(LocalDate.now().minusYears(18).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
-    año = new JComboBox<String>();
-    año.addItem("2019");
-    año.addItem("2018");
-    año.addItem("2017");
-    año.addItem("2016");
-    año.addItem("2015");
-    año.addItem("2014");
-    año.addItem("2013");
-    año.addItem("2012");
-    año.addItem("2011");
-    año.addItem("2019");
-    año.addItem("2010");
-    año.addItem("2009");
-    año.addItem("2008");
-    año.addItem("2007");
-    año.addItem("2006");
-    año.addItem("2005");
-    año.addItem("2004");
-    año.addItem("2003");
-    año.addItem("2002");
-    año.addItem("2001");
-    año.addItem("2000");
-    ((JLabel) año.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
 		edad = new JLabel("EDAD:");
 		edad.setFont(fuente);
@@ -197,9 +134,7 @@ public class VentanaRegistroMujer extends JFrame {
 		add(iden).setBounds(20, 320, 180, 50);
 		add(iden_).setBounds(150, 330, 230, 30);
 		add(fechaNacimineto).setBounds(10, 370, 300, 50);
-		add(dia).setBounds(200, 380, 40, 30);
-		add(mes).setBounds(240, 380, 90, 30);
-    add(año).setBounds(330, 380, 80, 30);
+		add(fecha_).setBounds(200, 380, 200, 30);
 		add(edad).setBounds(20, 420, 100, 50);
 		add(edad_).setBounds(150, 430, 230, 30);
 		add(correo).setBounds(10, 470, 200, 50);
@@ -270,28 +205,28 @@ public class VentanaRegistroMujer extends JFrame {
 		this.fechaNacimineto = fechaNacimineto;
 	}
 
-	public JComboBox<String> getDia() {
-		return dia;
+	public JDateChooser getFecha_() {
+		return fecha_;
 	}
 
-	public void setDia(JComboBox<String> dia) {
-		this.dia = dia;
+	public void setFecha_(JDateChooser fecha_) {
+		this.fecha_ = fecha_;
 	}
 
-	public JComboBox<String> getMes() {
-		return mes;
+	public JLabel getIden() {
+		return iden;
 	}
 
-	public void setMes(JComboBox<String> mes) {
-		this.mes = mes;
+	public void setIden(JLabel iden) {
+		this.iden = iden;
 	}
 
-  public JComboBox<String> getAño() {
-    return año;
-  }
+	public JTextField getIden_() {
+		return iden_;
+	}
 
-  public void setAño(JComboBox<String> año) {
-    this.año = año;
+	public void setIden_(JTextField iden_) {
+		this.iden_ = iden_;
 	}
 
 	public JLabel getNombre() {

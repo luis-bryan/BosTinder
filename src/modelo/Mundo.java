@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
@@ -113,16 +114,14 @@ public class Mundo implements Serializable
 
 
 	public void agregarHombre(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
-														String contraseña, String correo, String fechaNacimiento, double pIngresos, double pEstatura) throws IOException
+														String contraseña, String correo, Date fechaNacimiento, double pIngresos, double pEstatura) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
-		String[] fecha = fechaNacimiento.split("/");
-		fecha[0] = fecha[0].length() == 1 ? "0" + fecha[0] : fecha[0];
-		fecha[1] = fecha[1].length() == 1 ? "0" + fecha[1] : fecha[1];
-		fechaNacimiento = fecha[0] + "/" + fecha[1] + "/" + fecha[2];
+		String fecha = new SimpleDateFormat("dd/MM/yyyy").format(fechaNacimiento);
+
 		if(nueva == null)
 		{
-			nueva = new Hombre(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pIngresos, pEstatura);
+			nueva = new Hombre(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fecha, pIngresos, pEstatura);
 
 			usuarios.add(nueva);
 
@@ -132,23 +131,20 @@ public class Mundo implements Serializable
 	}
 
 	public void agregarMujer(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
-													 String contraseña, String correo, String fechaNacimiento, boolean pDivorcios) throws IOException
+													 String contraseña, String correo, Date fechaNacimiento, boolean pDivorcios) throws IOException
 	{
 		Persona nueva = buscarUsuario(usuario);
-		String[] fecha = fechaNacimiento.split("/");
-		fecha[0] = fecha[0].length() == 1 ? "0" + fecha[0] : fecha[0];
-		fecha[1] = fecha[1].length() == 1 ? "0" + fecha[1] : fecha[1];
-		fechaNacimiento = fecha[0] + "/" + fecha[1] + "/" + fecha[2];
+		String fecha = new SimpleDateFormat("dd/MM/yyyy").format(fechaNacimiento);
+
 		if(nueva == null)
 		{
-
-			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, pDivorcios);
+			nueva = new Mujer(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fecha, pDivorcios);
 			usuarios.add(nueva);
 			ControlLectura.escritura(usuarios);
 		}
 	}
 
-	public void Modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña)
+	public void modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña)
 	{
 		Persona modificar = buscarUsuario(usuario);
 		if(modificar!=null)
@@ -160,7 +156,7 @@ public class Mundo implements Serializable
 		}
 	}
 
-	public void Eliminar(String usuario)
+	public void eliminar(String usuario)
 	{	
 		int pos = -1;
 		for(int i = 0 ; i< usuarios.size(); i++){
