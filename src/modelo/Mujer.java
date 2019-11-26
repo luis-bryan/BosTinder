@@ -1,6 +1,5 @@
 package modelo;
 
-import javax.swing.*;
 import java.io.Serializable;
 
 public class Mujer extends Persona implements Serializable
@@ -23,18 +22,6 @@ public class Mujer extends Persona implements Serializable
 							 int matches, char estado, boolean divorcios) {
 		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, likesRecibidos, likesOtorgados, matches, estado);
 		this.divorcios = divorcios;
-	}
-	
-	public Mujer(Icon icono)
-	{
-		// TODO Auto-generated constructor stub
-		super(icono);
-	}
-
-	public Mujer(int r, int o, int m)
-	{
-		// TODO Auto-generated constructor stub
-		super(r, o, m);
 	}
 	
 	public boolean getDivorcios() {

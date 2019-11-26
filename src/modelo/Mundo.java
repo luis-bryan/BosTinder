@@ -37,7 +37,7 @@ public class Mundo implements Serializable
 
 	public Mundo() throws ClassNotFoundException, IOException
 	{
-		//ControlLectura.lecturaInicial();
+    ControlLectura.lecturaInicial();
 		usuarios = ControlLectura.lectura();
 	}
 

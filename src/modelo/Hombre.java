@@ -1,6 +1,5 @@
 package modelo;
 
-import javax.swing.*;
 import java.io.Serializable;
 
 public class Hombre extends Persona implements Serializable
@@ -10,6 +9,22 @@ public class Hombre extends Persona implements Serializable
 	private double ingresos;
 	private double estatura;
 
+	/**
+	 * Construye un objeto de tipo Hombre a partir de la informacion suministrada por el usuario
+	 *
+	 * @param nombre          Nombre del Hombre
+	 * @param id              Identificacion del Hombre
+	 * @param apellido1       Apellido del Hombre
+	 * @param apellido2       Apellido del Hombre
+	 * @param sexo            Sexo del Hombre
+	 * @param usuario         UserName del Hombre
+	 * @param contraseña      Contraseña del Hombre
+	 * @param correo          Correo del Hombre
+	 * @param fechaNacimiento Fecha de Nacimiento del Hombre
+	 * @param pIngresos       Ingresos del Hombre
+	 * @param pEstatura       Estatura del Hombre
+	 * @throws AssertionError En caso que alguna variable no cumpla con las condiciones dadas
+	 */
 	public Hombre(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
 								String contraseña, String correo, String fechaNacimiento, double pIngresos, double pEstatura) throws AssertionError {
 		super(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento);
@@ -19,26 +34,34 @@ public class Hombre extends Persona implements Serializable
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Construye un objeto de tipo Hombre a partir de la informacion a partir del archivo csv
+	 *
+	 * @param nombre          Nombre del Hombre !=null
+	 * @param edad            Edad del Hombre //Deprecado, siempre se calcula la edad >0
+	 * @param id              Identificacion del Hombre !=0
+	 * @param apellido1       Apellido del Hombre !=null
+	 * @param apellido2       Apellido del Hombre !=null
+	 * @param sexo            Sexo del Hombre //Deprecado, Un hombre siempre es un hombre... Uno de{'H','M'}
+	 * @param usuario         UserName del Hombre !=null, unico
+	 * @param contraseña      Contraseña del Hombre !=null
+	 * @param correo          Correo del Hombre !=null, contiene un @
+	 * @param fechaNacimiento Fecha de Nacimiento del Hombre !=null, cumple con el formato "dd/MM/yyyy"
+	 * @param likesRecibidos  Cantidad de likes recibidos por el Hombre, >=0
+	 * @param likesOtorgados  Cantidad de likes dados por el Hombre >=0
+	 * @param matches         Cantidad de matches que ha hecho el Hombre >=0
+	 * @param estado          Estado del Hombre, Uno de {'D' si esta disponible, 'I' si esta inactivo, 'M' si es menor de edad}
+	 * @param pIngresos       Ingresos del Hombre >=0
+	 * @param pEstatura       Estatura del Hombre en centimetros>=130, <=300
+	 */
 	public Hombre(String nombre, int edad, long id, String apellido1, String apellido2, char sexo, String usuario,
 								String contraseña, String correo, String fechaNacimiento, int likesRecibidos, int likesOtorgados,
-								int matches, char estado, double pIngresos, double pEstatura){
+								int matches, char estado, double pIngresos, double pEstatura) {
 		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, likesRecibidos, likesOtorgados, matches, estado);
 		this.ingresos = pIngresos;
 		this.estatura = pEstatura;
 	}
 
-	public Hombre(Icon icono)
-	{
-		// TODO Auto-generated constructor stub
-		super(icono);
-	}
-	
-	public Hombre(int r, int o, int m)
-	{
-		// TODO Auto-generated constructor stub
-		super(r,o,m);
-	}
-	
 	public double getIngresos() {
 		return ingresos;
 	}

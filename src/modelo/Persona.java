@@ -74,21 +74,12 @@ public abstract class Persona implements Serializable
 		System.out.println(this.estado);
 		System.out.println(this.edad);
 	}
-	
-	public Persona(Icon icono)
-	{
-		// TODO Auto-generated constructor stub
-		imagen = icono;
-	}
 
-	public Persona(int likesR, int likesO, int Matc) 
-	{
-		// TODO Auto-generated constructor stub
-		likesRecibidos = likesR;
-		likesOtorgados = likesO;
-		matches = Matc;
-	}
-
+	/**
+	 * Calcula la edad de el objeto a partir de
+	 *
+	 * @return
+	 */
 	public int calcularEdad(){
 		String tiempoDesde = fechaNacimiento.until(LocalDate.now()).toString();
 		return Integer.parseInt((tiempoDesde.charAt(1) + "" + tiempoDesde.charAt(2)));
