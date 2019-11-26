@@ -2,6 +2,7 @@ package modelo;
 
 import javax.swing.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Mujer extends Persona implements Serializable
 {
@@ -9,13 +10,14 @@ public class Mujer extends Persona implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	private boolean divorcios;
+	private ArrayList<Persona>match;
 
 	public Mujer(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
 							 String contraseña, String correo, String fechaNacimiento, boolean divorcios) throws AssertionError {
 		super(nombre, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento);
 		this.divorcios = divorcios;
 		verificarInvariante();
-		// TODO Auto-generated constructor stub
+		match = new ArrayList<Persona>();
 	}
 
 	public Mujer(String nombre, int edad, long id, String apellido1, String apellido2, char sexo, String usuario,
@@ -44,6 +46,15 @@ public class Mujer extends Persona implements Serializable
 	public void setDivorcios(boolean divorcios) {
 		this.divorcios = divorcios;
 	}
+	
+
+	public ArrayList<Persona> getMatch() {
+		return match;
+	}
+
+	public void setMatch(ArrayList<Persona> match) {
+		this.match = match;
+	}
 
 	public void verificarInvariante() throws AssertionError {
 		assert(nombre!=null && !nombre.equals(" ")): "El nombre no puede estar vacio";
@@ -60,5 +71,22 @@ public class Mujer extends Persona implements Serializable
 		assert(correo.contains("@") && !correo.contains(";")): "El correo no es valido";
 		//assert(fechaNacimiento.toString().contains("[0-9\\/]")):"La fecha de nacimiento no es valida";
 		assert(estado=='D' || estado=='I'|| estado=='M'): "El estado solo admite valores de D, I o M";
+	}
+	
+	public boolean buscarUsuario(String usuario)
+	{
+		boolean aux = false;
+		Persona p = null;
+		if(!match.isEmpty())
+		{
+			for (int i = 0; i < match.size(); i++) 
+			{
+				if(match.get(i).getUsuario().equals(usuario))
+				{
+					aux = true;
+				}
+			}
+		}
+		return aux;
 	}
 }

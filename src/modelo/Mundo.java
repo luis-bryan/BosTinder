@@ -34,6 +34,7 @@ public class Mundo implements Serializable
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Persona> usuarios;
 	private int salto;
+	private Hombre ho;
 
 	public Mundo() throws ClassNotFoundException, IOException
 	{
@@ -71,6 +72,31 @@ public class Mundo implements Serializable
 			me.printStackTrace();   
 		}
     System.out.println("ENVIADO");
+	}
+	
+	public boolean generarMatch(Persona p1, Persona p2) {
+		boolean aux = false;
+		if(p1.getSexo()=='H') {
+			((Hombre) p1).getMatch().add(p2);
+			if(((Hombre) p1).buscarUsuario(p2.getUsuario())==true && ((Mujer)p2).buscarUsuario(p1.getUsuario())==true) {
+				aux = true;
+				p1.setMatches(p1.getMatches()+1);
+				p2.setMatches(p2.getMatches()+1);
+			}else {
+				aux = false;
+			}
+		}else if(p1.getSexo()=='M') {
+			((Mujer) p1).getMatch().add(p2);
+			if(((Mujer) p1).buscarUsuario(p2.getUsuario())==true && ((Hombre)p2).buscarUsuario(p1.getUsuario())==true) {
+				aux = true;
+				p1.setMatches(p1.getMatches()+1);
+				p2.setMatches(p2.getMatches()+1);
+			}else {
+				aux = false;
+			}
+		}
+		return aux;
+		
 	}
 
 	public Persona buscarUsuario(String usuario)
@@ -152,8 +178,8 @@ public class Mundo implements Serializable
 			modificar.setApellido1(apellido1);
 			modificar.setApellido2(apellido2);
 			modificar.setContraseña(contraseña);
-      ControlLectura.escritura(usuarios);
-      return true;
+            ControlLectura.escritura(usuarios);
+            return true;
 		}
 		return false;
 	}
@@ -161,6 +187,7 @@ public class Mundo implements Serializable
 	public boolean eliminar(String usuario)
 	{	
 		int pos = -1;
+		boolean eli = false;
 		for(int i = 0 ; i< usuarios.size(); i++){
 			if(usuarios.get(i).getNombre().equalsIgnoreCase(usuario)){
 				pos = i;
@@ -169,12 +196,13 @@ public class Mundo implements Serializable
 		
 		if(pos == -1){
 			System.out.println("PERSONA NO ENCONTRADA");
-			return false;
+			eli = false;
 		}else{
 			usuarios.remove(pos);
       System.out.println("USUARIO ELIMINADO");
-			return true;
+			eli = true;
 		}
+		return eli;
 	}
 
 	public Persona siguientePersona(Persona p1)
@@ -458,14 +486,14 @@ public class Mundo implements Serializable
 		}
 		tabla3.addCell("NUMERO");
 		tabla3.addCell("APELLIDO");
-	    //ordenarApellido();
+	    ordenarApellido();
 		for (int i = 0; i < usuarios.size(); i++) {
 			tabla3.addCell(Integer.toString(i+1));
 			tabla3.addCell(usuarios.get(i).getApellido1());
 		}
 		tabla4.addCell("NUMERO");
 		tabla4.addCell("NOMBRE");
-	    //ordenarNombre();
+	    ordenarNombre();
 	    for (int i = 0; i < usuarios.size(); i++) {
 			tabla4.addCell(Integer.toString(i+1));
 			tabla4.addCell(usuarios.get(i).getNombre());
@@ -481,7 +509,7 @@ public class Mundo implements Serializable
 		}
 	    tabla6.addCell("NUMERO");
 	    tabla6.addCell("USUARIO");
-	    //ordenarUsuario();
+	    ordenarUsuario();
 	    for (int i = 0; i <usuarios.size(); i++) {
 	    	tabla6.addCell(Integer.toString(i+1));
 	    	tabla6.addCell(usuarios.get(i).getUsuario());
