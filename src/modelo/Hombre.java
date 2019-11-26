@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Hombre extends Persona implements Serializable
 {
@@ -8,6 +9,7 @@ public class Hombre extends Persona implements Serializable
 	private static final long serialVersionUID = 1L;
 	private double ingresos;
 	private double estatura;
+  private ArrayList<Persona> match;
 
 	/**
 	 * Construye un objeto de tipo Hombre a partir de la informacion suministrada por el usuario
@@ -31,7 +33,7 @@ public class Hombre extends Persona implements Serializable
 		this.ingresos = pIngresos;
 		this.estatura = pEstatura;
 		verificarInvariante();
-		// TODO Auto-generated constructor stub
+    match = new ArrayList<Persona>();
 	}
 
 	/**
@@ -58,6 +60,7 @@ public class Hombre extends Persona implements Serializable
 								String contraseña, String correo, String fechaNacimiento, int likesRecibidos, int likesOtorgados,
 								int matches, char estado, double pIngresos, double pEstatura) {
 		super(nombre, edad, id, apellido1, apellido2, sexo, usuario, contraseña, correo, fechaNacimiento, likesRecibidos, likesOtorgados, matches, estado);
+
 		this.ingresos = pIngresos;
 		this.estatura = pEstatura;
 	}
@@ -69,7 +72,38 @@ public class Hombre extends Persona implements Serializable
 	public void setIngresos(double ingresos) {
 		this.ingresos = ingresos;
 	}
+
+
+  public double getEstatura() {
+    return estatura;
+  }
+
+  public void setEstatura(double estatura) {
+    this.estatura = estatura;
+  }
+
+  public void setMatch(ArrayList<Persona> match) {
+    this.match = match;
+  }
+
+  public ArrayList<Persona> getMatch() {
+    return match;
+  }
+
+  public boolean buscarUsuario(String usuario) {
+    boolean aux = false;
+    Persona p = null;
+    if (!match.isEmpty()) {
+      for (int i = 0; i < match.size(); i++) {
+        if (match.get(i).getUsuario().equals(usuario)) {
+          aux = true;
+        }
+      }
+    }
+    return aux;
+  }
 	
+
 	public void verificarInvariante() throws AssertionError
 	{
 		assert(nombre!=null && !nombre.equals(" ")): "El nombre no puede estar vacio";

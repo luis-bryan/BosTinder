@@ -383,14 +383,40 @@ public class Mundo implements Serializable
         }
         return mediana;
 	}
-	public double calcularMedia() {
-		int media = 0;
-		for (int i=0; i < usuarios.size(); i++) {
-			 media = media + usuarios.get(i).getEdad();
-			}
-        return (double)media/usuarios.size();
 
-	}
+  public double calcularMedia() {
+    int media = 0;
+    for (int i = 0; i < usuarios.size(); i++) {
+      media = media + usuarios.get(i).getEdad();
+    }
+    return (double)media/usuarios.size();
+
+  }
+
+  public boolean generarMatch(Persona p1, Persona p2) {
+    boolean aux = false;
+    if (p1.getSexo() == 'H') {
+      ((Hombre) p1).getMatch().add(p2);
+      if (((Hombre) p1).buscarUsuario(p2.getUsuario()) == true && ((Mujer) p2).buscarUsuario(p1.getUsuario()) == true) {
+        aux = true;
+        p1.setMatches(p1.getMatches() + 1);
+        p2.setMatches(p2.getMatches() + 1);
+      } else {
+        aux = false;
+      }
+    } else if (p1.getSexo() == 'M') {
+      ((Mujer) p1).getMatch().add(p2);
+      if (((Mujer) p1).buscarUsuario(p2.getUsuario()) == true && ((Hombre) p2).buscarUsuario(p1.getUsuario()) == true) {
+        aux = true;
+        p1.setMatches(p1.getMatches() + 1);
+        p2.setMatches(p2.getMatches() + 1);
+      } else {
+        aux = false;
+      }
+    }
+    return aux;
+
+  }
 	public double calcularModa() {
 		int numMAXderepeticiones = 0;
 		double moda = 0;

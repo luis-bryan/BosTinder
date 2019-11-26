@@ -39,7 +39,6 @@ public class ControlLectura {
     file.writeObject(arreglo);
   }
 	//En teoria este metodo lo podriamos borrar, por que ya pasamos la informacion al binario
-
   /**
    * Se encarga de leer la informacion directamente del archivo csv
    * Se ejecuta en caso que no exista el archivo binario.
