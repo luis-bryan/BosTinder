@@ -14,17 +14,17 @@ public class Mujer extends Persona implements Serializable
   /**
    * Constructor para la creacion de una mujer
    *
-   * @param nombre
-   * @param id
-   * @param apellido1
-   * @param apellido2
-   * @param sexo
-   * @param usuario
-   * @param contraseña
-   * @param correo
-   * @param fechaNacimiento
-   * @param divorcios
-   * @throws AssertionError
+   * @param nombre !=null
+   * @param id >0
+   * @param apellido1 !=null
+   * @param apellido2 !=null
+   * @param sexo !=null {'M'||'H'}
+   * @param usuario !=null
+   * @param contraseña !=null
+   * @param correo !=null
+   * @param fechaNacimiento !=null formato dd/MM/yyyy
+   * @param divorcios true o false
+   * @throws AssertionError Si no se cumple alguna condicion
    */
   public Mujer(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
                String contraseña, String correo, String fechaNacimiento, boolean divorcios) throws AssertionError {

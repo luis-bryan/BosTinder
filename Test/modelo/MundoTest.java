@@ -73,6 +73,7 @@ public class MundoTest extends TestCase {
     temp.add(c);
     temp.add(a);
     temp.add(d);
+    m.setUsuarios(temp);
     return temp;
   }
 
@@ -118,7 +119,11 @@ public class MundoTest extends TestCase {
 
   @Test
   public void testeliminar() {
-    assertEquals(false, m.eliminar(a.getUsuario()));
+    try {
+      assertEquals(false, m.eliminar(a.getUsuario()));
+    } catch(IOException e){
+      e.printStackTrace();
+    }
   }
 
   @Test

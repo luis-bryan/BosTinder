@@ -8,6 +8,7 @@ import modelo.Mundo;
 import modelo.Persona;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,6 +19,8 @@ public class Controlador implements ActionListener {
   private Mundo m;
   private Persona p1;
   private Persona p2;
+  VentanaTerminos vt = new VentanaTerminos();
+  VentanaPremium p = new VentanaPremium();
 
   /**
    * Construye un objeto de la clase Controlador, encargada de tener centralizados las acciones del programa
@@ -28,6 +31,9 @@ public class Controlador implements ActionListener {
   public Controlador() throws ClassNotFoundException, IOException {
     m = new Mundo();
     vb = new VentanaBienvenida(this);
+    vt.getAceptar().addActionListener(this);
+    p.getListo().addActionListener(this);
+
   }
 
   /**
@@ -42,6 +48,7 @@ public class Controlador implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
 
+
     if (e.getActionCommand().equals("iniciar")) {
       vb.getVl().setVisible(true);
       vb.setVisible(false);
@@ -50,7 +57,7 @@ public class Controlador implements ActionListener {
       vb.setVisible(false);
       vb.getVeg().setVisible(true);
     } else if (e.getActionCommand().equals("tc")) {
-      VentanaTerminos vt = new VentanaTerminos();
+      vt.setVisible(true);
 
     } else if (e.getActionCommand().equals("hombre")) {
       vb.getVeg().setVisible(false);
@@ -92,8 +99,7 @@ public class Controlador implements ActionListener {
     } else if (e.getActionCommand().equals("listofin")) {
       luegoDeCrear();
     } else if (e.getActionCommand().equals("premium")) {
-      VentanaPremium p = new VentanaPremium();
-
+      p.setVisible(true);
     } else if (e.getActionCommand().equals("like")) {
       like();
     } else if (e.getActionCommand().equals("dislike")) {
@@ -116,29 +122,42 @@ public class Controlador implements ActionListener {
       } else {
         new VentanaInfoHombre((Hombre) p2).setVisible(true);
       }
+    } else if(e.getActionCommand().equals("aceptarterminos")){
+        vt.setVisible(false);
+    } else if(e.getActionCommand().equals("listopremium")){
+      p.setVisible(false);
     }
   }
 
+  /**
+   * Se ejecuta al oprimir el boton de cambiar foto dentro de la ventana de creacion de hombre
+   */
   public void cambiarFotoHombre() {
     JFileChooser f = new JFileChooser();
     f.showOpenDialog(f);
     File m = f.getSelectedFile();
     if (m != null) {
       ImageIcon a = new ImageIcon(m.toString());
-      vb.getVrh().setFoto_(a);
+      vb.getVrh().getFoto().setIcon(new ImageIcon(a.getImage().getScaledInstance(210,180, Image.SCALE_SMOOTH)));
     }
   }
 
+  /**
+   * Se ejecuta al oprimir el boton de cambiar foto dentro de la ventana de creacion de mujer
+   */
   public void cambiarFotoMujer() {
     JFileChooser f = new JFileChooser();
     f.showOpenDialog(f);
     File m = f.getSelectedFile();
     if (m != null) {
       ImageIcon a = new ImageIcon(m.toString());
-      vb.getVrm().setFoto_(a);
+      vb.getVrh().getFoto().setIcon(new ImageIcon(a.getImage().getScaledInstance(210,180, Image.SCALE_SMOOTH)));
     }
   }
 
+  /**
+   * Ejecuta el inicio de sesion, hace todas las confirmaciones necesarias y genera la primera persona
+   */
   public void iniciarSesion() {
     vb.getVl().setVisible(false);
     if (vb.getVl().getUsuario_().getText().equals("tinderbos") && vb.getVl().getContraseña_().getText().equals("bostinder123")) {
@@ -174,7 +193,11 @@ public class Controlador implements ActionListener {
 
   public void eliminar() {
     String toDelete = vb.getVa().getPlu().getlistaUsuarios().getSelectedValue();
-    m.eliminar(toDelete);
+    try {
+      m.eliminar(toDelete);
+    } catch (IOException e){
+      JOptionPane.showMessageDialog(null, "Error al intentar eliminar la persona");
+    }
     vb.getVa().getPlu().getModeloLista().removeElement(toDelete);
     vb.getVa().getPlu().getlistaUsuarios().setModel(vb.getVa().getPlu().getModeloLista());
   }

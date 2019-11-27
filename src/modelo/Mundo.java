@@ -18,6 +18,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -34,13 +35,24 @@ public class Mundo implements Serializable
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Persona> usuarios;
 	private int salto;
-
+	/**
+	 * Constructor de la clase Mundo
+	 * <b> Vector de usuarios inicializado </b>
+	 * @throws ClassNotFoundException Si no encuentra la clase
+	 * @throws IOException Si hay un problema en el sistema de archivos
+	 */
 	public Mundo() throws ClassNotFoundException, IOException
 	{
 		//ControlLectura.lecturaInicial();
 		usuarios = ControlLectura.lectura();
 	}
-
+	/**
+	 * Metodo que envia el correo al usuario
+	 * @param destinatario
+	 *        destinatario != null
+	 * @param cuerpo
+	 *        cuerpo != null
+	 */
 	public void enviarConGMail(String destinatario, String cuerpo)
 	{    
 
@@ -72,7 +84,12 @@ public class Mundo implements Serializable
 		}
     System.out.println("ENVIADO");
 	}
-
+	/**
+	 * Metodo que busca un usuario en el sistema
+	 * @param usuario
+	 *        usuario != null
+	 * @return p
+	 */
 	public Persona buscarUsuario(String usuario)
 	{
 		Persona p = null;
@@ -88,7 +105,15 @@ public class Mundo implements Serializable
 		}
 		return null;
 	}
-
+	/**
+	 * Busca al usuario y la contraseña para poder iniciar sesion
+	 * @param usuario
+	 *        usuario != null
+	 * @param contraseña
+	 *        contraseña != null
+	 * @return true si se encontro al usuario con dicha contraseña
+	 *         false si no se encuentra en el sistema
+	 */
 	public boolean buscarContraseña(String usuario, String contraseña)
 	{
 		Persona n = buscarUsuario(usuario);
@@ -107,7 +132,30 @@ public class Mundo implements Serializable
 		return iniciar;
 	}
 
-
+	/**
+	 * Agrega una persona al sistema
+	 * @param nombre
+	 *        nombre != null
+	 * @param id
+	 * @param apellido1
+	 *        apellido1 != null
+	 * @param apellido2
+	 *        apellido2 != null
+	 * @param sexo
+	 *        sexo = 'H'
+	 * @param usuario
+	 *        usuario != null
+	 * @param contraseña
+	 *        contraseña != null
+	 * @param correo
+	 *        correo != null
+	 * @param fechaNacimiento
+	 * @param pIngresos
+	 * @param pEstatura
+	 * @return true si se agrego al sistema
+	 *         false de lo contrario
+	 * @throws IOException Si hay un problema con el sistema de archivos
+	 */
 	public boolean agregarHombre(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
 														String contraseña, String correo, Date fechaNacimiento, double pIngresos, double pEstatura) throws IOException
 	{
@@ -126,7 +174,29 @@ public class Mundo implements Serializable
 		}
 		return false;
 	}
-
+	/**
+	 * Agrega una mujer al sistema
+	 * @param nombre
+	 *        nombre != null
+	 * @param id
+	 * @param apellido1
+	 *        apellido1 != null
+	 * @param apellido2
+	 *        apellido2 != null
+	 * @param sexo
+	 *        sexo = 'M'
+	 * @param usuario
+	 *        usuario != null
+	 * @param contraseña
+	 *        contraseña != null
+	 * @param correo
+	 *        correo != null
+	 * @param fechaNacimiento
+	 * @param pDivorcios
+	 * @return true si se agrego
+	 *         false de lo contrario
+	 * @throws IOException Si hay un problema en el sistema de archivos
+	 */
 	public boolean agregarMujer(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
 													 String contraseña, String correo, Date fechaNacimiento, boolean pDivorcios) throws IOException
 	{
@@ -142,7 +212,22 @@ public class Mundo implements Serializable
 		}
 		return false;
 	}
-
+	/**
+	 * Modifica los datos de una persona en el sistema
+	 * @param nombre
+	 *        nombre != null
+	 * @param usuario
+	 *        usuario != null
+	 * @param apellido1
+	 *        apellido != null
+	 * @param apellido2
+	 *        apellido2 != null
+	 * @param contraseña
+	 *        contraseña != null
+	 * @return true si se modifico
+	 *         false de lo contrario
+	 * @throws IOException Si hay un problema en el sistema de archivos
+	 */
   public boolean modificar(String nombre, String usuario, String apellido1, String apellido2, String contraseña) throws IOException
 	{
 		Persona modificar = buscarUsuario(usuario);
@@ -157,11 +242,19 @@ public class Mundo implements Serializable
 		}
 		return false;
 	}
-
-	public boolean eliminar(String usuario) {
+	/**
+	 * Elimina una persona del sistema
+	 * @param usuario
+	 *        usuario != null
+	 * @return true si se elimina del sistema
+	 *         false de lo contrario
+	 * @throws IOException si hay un problema con el sistema de archivos
+	 */
+	public boolean eliminar(String usuario) throws IOException{
 		for(int i = 0 ; i< usuarios.size(); i++){
 			if (usuarios.get(i).getUsuario().equals(usuario)) {
 				usuarios.remove(i);
+				ControlLectura.escritura(usuarios);
 				System.out.println("ELIMINADO");
 				return true;
 			}
@@ -169,7 +262,12 @@ public class Mundo implements Serializable
 		System.out.println("NO ENCONTRADO");
 		return false;
 	}
-
+	/**
+	 * Genera una nueva Persona
+	 * @param p1
+	 *        p1 != null
+	 * @return p2
+	 */
 	public Persona siguientePersona(Persona p1)
 	{
 		Persona p2 = null;
@@ -186,6 +284,13 @@ public class Mundo implements Serializable
 		}
 		return p2;
 	}
+	/**
+ * Da like a la persona o a otro usuario
+ * @param usuario
+ *        usuario != null
+ * @param like
+ *        like != null
+ */
 	public void darLike(Persona usuario,Persona like) {
 		usuario.setLikesOtorgados(usuario.getLikesOtorgados()+1);
 		if (usuario instanceof Hombre) {
@@ -196,7 +301,10 @@ public class Mundo implements Serializable
 		like.setLikesRecibidos(like.getLikesRecibidos()+1);
 		if (generarMatch(usuario, like)) JOptionPane.showMessageDialog(null, "Hiciste Match!");
 	}
-
+	/**
+	 * Ordena por numero de likes usando el metodo shell
+	 * @return personas
+	 */
 
 	public ArrayList<Persona> ordenarLikes()
 	{
@@ -224,7 +332,10 @@ public class Mundo implements Serializable
 		}
 		return personas;
 	}
-
+	/**
+	 * Ordena por edad usando el metodo shell
+	 * @return personas
+	 */
 	public ArrayList<Persona> ordenarEdad()
 	{
 		ArrayList<Persona> personas = new ArrayList<Persona>();
@@ -251,7 +362,10 @@ public class Mundo implements Serializable
 		}
 		return personas;
 	}
-
+	/**
+	 * Ordena por nombre usando el metodo shell
+	 * @return personas
+	 */
 	public ArrayList<Persona> ordenarNombre()
 	{
 		ArrayList<Persona> personas = new ArrayList<Persona>();
@@ -278,7 +392,10 @@ public class Mundo implements Serializable
 		}
 		return personas;
 	}
-
+	/**
+	 * Ordena por numero de match usando el metodo shell
+	 * @return personas
+	 */
 	public ArrayList<Persona> ordenarMatch()
 	{
 		ArrayList<Persona> personas = new ArrayList<Persona>();
@@ -305,7 +422,10 @@ public class Mundo implements Serializable
 		}
 		return personas;
 	}
-
+	/**
+	 * Ordena por apellido usando el metodo shell
+	 * @return personas
+	 */
 	public ArrayList<Persona> ordenarApellido()
 	{
 		ArrayList<Persona> personas = new ArrayList<Persona>();
@@ -332,7 +452,10 @@ public class Mundo implements Serializable
 		}
 		return personas;
 	}
-
+	/**
+	 * Ordena por usuario usando el metodo shell
+	 * @return personas
+	 */
 	public ArrayList<Persona> ordenarUsuario()
 	{
 		ArrayList<Persona> personas = new ArrayList<Persona>();
@@ -359,7 +482,10 @@ public class Mundo implements Serializable
 		}
 		return personas;
 	}
-
+	/**
+	 * Calcula la media de todos los usuarios segun la edad
+	 * @return mediana
+	 */
 	public double calcularMediana() {
 		double mediana;
         if(usuarios.size() % 2 == 0){
@@ -370,7 +496,10 @@ public class Mundo implements Serializable
         }
         return mediana;
 	}
-
+	/**
+	 * Calcula la media segun la edad
+	 * @return media
+	 */
   public double calcularMedia() {
     int media = 0;
     for (int i = 0; i < usuarios.size(); i++) {
@@ -379,7 +508,13 @@ public class Mundo implements Serializable
     return (double)media/usuarios.size();
 
   }
-
+	/**
+	 * Genera match cuando las dos personas se dieron like mutuamente
+	 * @param p1
+	 * @param p2
+	 * @return true si genero match
+	 *         false de lo contrario
+	 */
   public boolean generarMatch(Persona p1, Persona p2) {
     boolean aux = false;
     if (p1.getSexo() == 'H') {
@@ -404,6 +539,10 @@ public class Mundo implements Serializable
     return aux;
 
   }
+	/**
+	 * Calcula la moda segun la edad
+	 * @return moda
+	 */
 	public double calcularModa() {
 		int numMAXderepeticiones = 0;
 		double moda = 0;
@@ -422,6 +561,10 @@ public class Mundo implements Serializable
 		}
 		return moda;
 	}
+	/**
+	 * Genera las graficas para el PDF
+	 * @throws IOException Si hay un problema en el sistema de archivos
+	 */
 	public void generarGrafica() throws IOException {
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
 		data.addValue(calcularMedia(), "Datos", "MEDIA");
@@ -432,7 +575,12 @@ public class Mundo implements Serializable
 				PlotOrientation.VERTICAL, true, true, false);
 		ChartUtilities.saveChartAsPNG(new File("Grafico1.png"), grafica, 500, 500);
 	}
-	public void generarPDF() throws DocumentException, MalformedURLException, IOException 
+	/**
+	 * Genera el PDF, mostrando asi los metodos de ordenamiento, graficas y el top 10
+	 * @throws DocumentException Si hay un problema con el documento
+	 * @throws IOException Si hay un error en el sistema de archivos
+	 */
+	public void generarPDF() throws DocumentException, IOException
 	   {
 		
 		Document doc = new Document();
@@ -446,69 +594,59 @@ public class Mundo implements Serializable
 		PdfPTable tabla3 = new PdfPTable(2);
 		PdfPTable tabla4 = new PdfPTable(2);
 		PdfPTable tabla5 = new PdfPTable(3);
-		PdfPTable tabla6 = new PdfPTable(2);
-		generarGrafica();
-		Image grafica  = Image.getInstance("Grafico1.png");
-		grafica.scaleToFit(300,300);
-		grafica.setAlignment(Chunk.ALIGN_LEFT);
-		
+		PdfPTable tabla6 = new PdfPTable(3);
 		
 		tabla.addCell("Mediana");
-		tabla.addCell(Double.toString(calcularMediana()));
+		tabla.addCell("");
 		tabla.addCell("Media");
-		tabla.addCell(Double.toString(calcularMedia()));
+		tabla.addCell("");
 		tabla.addCell("Moda");
-		tabla.addCell(Double.toString(calcularModa()));
+		tabla.addCell("");
 		
 		tabla2.addCell("NUMERO");
 		tabla2.addCell("USUARIO");
 		tabla2.addCell("NUMERO DE LIKES");
-	    ordenarLikes();
+		ordenarLikes();
 		for (int i = 0; i < usuarios.size(); i++) {
-			tabla2.addCell(Integer.toString(i+1));
+			tabla2.addCell(Integer.toString(i));
 			tabla2.addCell(usuarios.get(i).getUsuario());
 			tabla2.addCell(Integer.toString(usuarios.get(i).getLikesRecibidos()));
 		}
 		tabla3.addCell("NUMERO");
 		tabla3.addCell("APELLIDO");
-	    //ordenarApellido();
+		ordenarApellido();
 		for (int i = 0; i < usuarios.size(); i++) {
-			tabla3.addCell(Integer.toString(i+1));
+			tabla3.addCell(Integer.toString(i));
 			tabla3.addCell(usuarios.get(i).getApellido1());
 		}
 		tabla4.addCell("NUMERO");
 		tabla4.addCell("NOMBRE");
-	    //ordenarNombre();
+	    ordenarNombre();
 	    for (int i = 0; i < usuarios.size(); i++) {
-			tabla4.addCell(Integer.toString(i+1));
+			tabla4.addCell(Integer.toString(i));
 			tabla4.addCell(usuarios.get(i).getNombre());
 		}
 	    tabla5.addCell("NUMERO");
 	    tabla5.addCell("USUARIO");
 	    tabla5.addCell("EDAD");
-	    ordenarEdad();
+	    ordenarNombre();
 	    for (int i = 0; i < usuarios.size(); i++) {
-			tabla5.addCell(Integer.toString(i+1));
+			tabla5.addCell(Integer.toString(i));
 			tabla5.addCell(usuarios.get(i).getUsuario());
 			tabla5.addCell(Integer.toString(usuarios.get(i).getEdad()));
 		}
 	    tabla6.addCell("NUMERO");
 	    tabla6.addCell("USUARIO");
-	    //ordenarUsuario();
+	    ordenarUsuario();
 	    for (int i = 0; i <usuarios.size(); i++) {
-	    	tabla6.addCell(Integer.toString(i+1));
+	    	tabla6.addCell(Integer.toString(i));
 	    	tabla6.addCell(usuarios.get(i).getUsuario());
 			
 		}
 		
 		doc.open();
 		doc.add(new Paragraph(objedate.toString(),FontFactory.getFont("Arial",14,Font.ITALIC,BaseColor.BLACK)));
-		doc.add(new Paragraph("\n"));
-		doc.add(new Paragraph("Moda, Mediana y Media de la Edad"));
-		doc.add(new Paragraph("\n"));
 		doc.add(tabla);
-		doc.add(new Paragraph("\n"));
-		doc.add(grafica);
 		doc.add(new Paragraph("\n"));
 		doc.add(new Paragraph("ORDEN ASCENDENTE POR NUMERO DE LIKES"));
 		doc.add(new Paragraph("\n"));
@@ -533,7 +671,11 @@ public class Mundo implements Serializable
 		doc.close(); 
 		
 	  }
-
+	/**
+	 * Genera una foto aleatoria
+	 * @param p2
+	 * @return
+	 */
 	public Icon generarFoto(Persona p2) {
 		Icon foto =null;
 		if (p2.getSexo() == 'M') {
@@ -565,12 +707,19 @@ public class Mundo implements Serializable
 		return foto;
 
 	}
+	/**
+	 * Obtiene el arrayList de usuarios
+	 * @return usuarios
+	 */
+	public ArrayList<Persona> getUsuarios() {
+		return usuarios;
+	}
 
-  public ArrayList<Persona> getUsuarios() {
-    return usuarios;
-  }
-
-  public void setUsuarios(ArrayList<Persona> usuarios) {
-    this.usuarios = usuarios;
-  }
+	/**
+	 * Modifica el arrayList
+	 * @param usuarios
+	 */
+	public void setUsuarios(ArrayList<Persona> usuarios) {
+		this.usuarios = usuarios;
+	}
 }
