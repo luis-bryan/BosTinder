@@ -37,7 +37,7 @@ public class Mundo implements Serializable
 
 	public Mundo() throws ClassNotFoundException, IOException
 	{
-    ControlLectura.lecturaInicial();
+		//ControlLectura.lecturaInicial();
 		usuarios = ControlLectura.lectura();
 	}
 
@@ -158,23 +158,16 @@ public class Mundo implements Serializable
 		return false;
 	}
 
-	public boolean eliminar(String usuario)
-	{	
-		int pos = -1;
+	public boolean eliminar(String usuario) {
 		for(int i = 0 ; i< usuarios.size(); i++){
-			if(usuarios.get(i).getNombre().equalsIgnoreCase(usuario)){
-				pos = i;
+			if (usuarios.get(i).getUsuario().equals(usuario)) {
+				usuarios.remove(i);
+				System.out.println("ELIMINADO");
+				return true;
 			}
 		}
-		
-		if(pos == -1){
-			System.out.println("PERSONA NO ENCONTRADA");
-			return false;
-		}else{
-			usuarios.remove(pos);
-      System.out.println("USUARIO ELIMINADO");
-			return true;
-		}
+		System.out.println("NO ENCONTRADO");
+		return false;
 	}
 
 	public Persona siguientePersona(Persona p1)
@@ -194,20 +187,14 @@ public class Mundo implements Serializable
 		return p2;
 	}
 	public void darLike(Persona usuario,Persona like) {
-		Persona p3 =null;
 		usuario.setLikesOtorgados(usuario.getLikesOtorgados()+1);
-		like.setLikesRecibidos(like.getLikesRecibidos()+1);
-		if(usuario.getSexo()=='M') {
-			p3 = usuarios.get((int) (Math.random()*usuarios.size()));
-			while(p3.getSexo()!='H') {
-				p3 = usuarios.get((int) (Math.random()*usuarios.size()));
-			}
-		}else if(usuario.getSexo()=='H') {
-			p3 = usuarios.get((int) (Math.random()*usuarios.size()));
-			while(p3.getSexo()!='M') {
-				p3 = usuarios.get((int) (Math.random()*usuarios.size()));
-			}
+		if (usuario instanceof Hombre) {
+			((Hombre) usuario).getMatch().add(like);
+		} else if (usuario instanceof Mujer) {
+			((Mujer) usuario).getMatch().add(like);
 		}
+		like.setLikesRecibidos(like.getLikesRecibidos()+1);
+		if (generarMatch(usuario, like)) JOptionPane.showMessageDialog(null, "Hiciste Match!");
 	}
 
 
@@ -397,7 +384,7 @@ public class Mundo implements Serializable
     boolean aux = false;
     if (p1.getSexo() == 'H') {
       ((Hombre) p1).getMatch().add(p2);
-      if (((Hombre) p1).buscarUsuario(p2.getUsuario()) == true && ((Mujer) p2).buscarUsuario(p1.getUsuario()) == true) {
+			if (((Hombre) p1).buscarUsuario(p2.getUsuario()) && ((Mujer) p2).buscarUsuario(p1.getUsuario())) {
         aux = true;
         p1.setMatches(p1.getMatches() + 1);
         p2.setMatches(p2.getMatches() + 1);
@@ -406,7 +393,7 @@ public class Mundo implements Serializable
       }
     } else if (p1.getSexo() == 'M') {
       ((Mujer) p1).getMatch().add(p2);
-      if (((Mujer) p1).buscarUsuario(p2.getUsuario()) == true && ((Hombre) p2).buscarUsuario(p1.getUsuario()) == true) {
+			if (((Mujer) p1).buscarUsuario(p2.getUsuario()) && ((Hombre) p2).buscarUsuario(p1.getUsuario())) {
         aux = true;
         p1.setMatches(p1.getMatches() + 1);
         p2.setMatches(p2.getMatches() + 1);
@@ -546,21 +533,35 @@ public class Mundo implements Serializable
 		doc.close(); 
 		
 	  }
-	public Icon generarFoto(Persona usuario,Persona p2) {
+
+	public Icon generarFoto(Persona p2) {
 		Icon foto =null;
-		if(usuario.getSexo()=='H') {
+		if (p2.getSexo() == 'M') {
 			if(p2.getEdad()<30) {
-				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer" + ((int) ((Math.random() * 3) + 1)) + ".png"));
+				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer" + ((int) ((Math.random() * 128) + 1)) + ".jpg"));
 				foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
-		}else if(p2.getEdad()>30&&p2.getEdad()<50) {
-				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer" + ((int) ((Math.random() * 3) + 1)) + ".png"));
-			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
-		}else if(p2.getEdad()>50) {
-				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer" + ((int) ((Math.random() * 3) + 1)) + ".png"));
-			foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
+			} else if (p2.getEdad() > 30 && p2.getEdad() < 50) {
+				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer" + ((int) ((Math.random() * 128) + 1)) + ".jpg"));
+				foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
+			} else if (p2.getEdad() > 50) {
+				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/mujer" + ((int) ((Math.random() * 128) + 1)) + ".jpg"));
+				foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
+			}
+			p2.setImagen(foto);
+		} else if (p2.getSexo() == 'H') {
+			if (p2.getEdad() < 30) {
+				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/hombre" + ((int) ((Math.random() * 68) + 1)) + ".jpg"));
+				foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
+			} else if (p2.getEdad() > 30 && p2.getEdad() < 50) {
+				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/hombre" + ((int) ((Math.random() * 68) + 1)) + ".jpg"));
+				foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
+			} else if (p2.getEdad() > 50) {
+				ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/hombre" + ((int) ((Math.random() * 68) + 1)) + ".jpg"));
+				foto = new ImageIcon(imagen.getImage().getScaledInstance(375, 300, Image.AX));
+			}
+			p2.setImagen(foto);
 		}
-		}
-			
+
 		return foto;
 
 	}

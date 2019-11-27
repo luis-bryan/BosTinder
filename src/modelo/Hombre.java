@@ -63,49 +63,89 @@ public class Hombre extends Persona implements Serializable
 
 		this.ingresos = pIngresos;
 		this.estatura = pEstatura;
+		match = new ArrayList<>();
+
 	}
 
+	/**
+	 * Obtiene los ingresos de una persona
+	 *
+	 * @return ingresos
+	 */
 	public double getIngresos() {
 		return ingresos;
 	}
 
+	/**
+	 * Modifica los ingresos
+	 * @param ingresos
+	 */
 	public void setIngresos(double ingresos) {
 		this.ingresos = ingresos;
 	}
 
+	/**
+	 * Obtiene la estatura de la persona
+	 *
+	 * @return estatura
+	 */
+	public double getEstatura() {
+		return estatura;
+	}
 
-  public double getEstatura() {
-    return estatura;
-  }
+	/**
+	 * Modifica la estatura de la persona
+	 *
+	 * @param estatura
+	 */
+	public void setEstatura(double estatura) {
+		this.estatura = estatura;
+	}
 
-  public void setEstatura(double estatura) {
-    this.estatura = estatura;
-  }
+	/**
+	 * Modifica el arrayList de personas que tiene el hombre
+	 *
+	 * @param match
+	 */
+	public void setMatch(ArrayList<Persona> match) {
+		this.match = match;
+	}
 
-  public void setMatch(ArrayList<Persona> match) {
-    this.match = match;
-  }
+	/**
+	 * Obtiene la lista de personas a las que les dio like
+	 *
+	 * @return
+	 */
+	public ArrayList<Persona> getMatch() {
+		return match;
+	}
 
-  public ArrayList<Persona> getMatch() {
-    return match;
-  }
+	/**
+	 * Metodo que busca al usuario dentro de la lista de personas
+	 *
+	 * @param usuario
+	 * @return
+	 */
+	public boolean buscarUsuario(String usuario) {
+		boolean aux = false;
+		Persona p = null;
+		if (!match.isEmpty()) {
+			for (int i = 0; i < match.size(); i++) {
+				if (match.get(i).getUsuario().equals(usuario)) {
+					aux = true;
+				}
+			}
+		}
+		return aux;
+	}
 
-  public boolean buscarUsuario(String usuario) {
-    boolean aux = false;
-    Persona p = null;
-    if (!match.isEmpty()) {
-      for (int i = 0; i < match.size(); i++) {
-        if (match.get(i).getUsuario().equals(usuario)) {
-          aux = true;
-        }
-      }
-    }
-    return aux;
-  }
-	
 
-	public void verificarInvariante() throws AssertionError
-	{
+	/**
+	 * Verifica las invariantes, valida todos los datos ingresados
+	 *
+	 * @throws AssertionError
+	 */
+	public void verificarInvariante() throws AssertionError {
 		assert(nombre!=null && !nombre.equals(" ")): "El nombre no puede estar vacio";
 		assert(!nombre.contains(";")):"El nombre no puede contener caracteres especiales";
 		assert(edad>18):"La edad debe ser mayor a 18";

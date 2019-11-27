@@ -63,7 +63,7 @@ public class VentanaRegistroMujer extends JFrame {
 		fondo = new ImageIcon(getClass().getResource("/Imagenes/fondo.png"));
 		fondoJLabel = new JLabel(fondo);
 
-		foto_ = new ImageIcon(getClass().getResource("/Imagenes/sara.png"));
+    foto_ = new ImageIcon(getClass().getResource("/Imagenes/avatar_generico_mujer.jpeg"));
 		ImageIcon newImage = new ImageIcon(foto_.getImage().getScaledInstance(210, 180, Image.SCALE_SMOOTH));
 		foto = new JLabel(newImage);
 

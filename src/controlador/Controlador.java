@@ -1,8 +1,9 @@
 package controlador;
 
-import Vista.VentanaAdministrador;
-import Vista.VentanaBienvenida;
+import Vista.*;
 import com.itextpdf.text.DocumentException;
+import modelo.Hombre;
+import modelo.Mujer;
 import modelo.Mundo;
 import modelo.Persona;
 
@@ -16,7 +17,7 @@ public class Controlador implements ActionListener {
   private VentanaBienvenida vb;
   private Mundo m;
   private Persona p1;
-  private VentanaAdministrador va;
+  private Persona p2;
 
   /**
    * Construye un objeto de la clase Controlador, encargada de tener centralizados las acciones del programa
@@ -49,7 +50,7 @@ public class Controlador implements ActionListener {
       vb.setVisible(false);
       vb.getVeg().setVisible(true);
     } else if (e.getActionCommand().equals("tc")) {
-      System.out.println("TERMINOS Y CONDICIONES");
+      VentanaTerminos vt = new VentanaTerminos();
 
     } else if (e.getActionCommand().equals("hombre")) {
       vb.getVeg().setVisible(false);
@@ -91,7 +92,7 @@ public class Controlador implements ActionListener {
     } else if (e.getActionCommand().equals("listofin")) {
       luegoDeCrear();
     } else if (e.getActionCommand().equals("premium")) {
-      System.out.println("PREMIUM");
+      VentanaPremium p = new VentanaPremium();
 
     } else if (e.getActionCommand().equals("like")) {
       like();
@@ -100,6 +101,7 @@ public class Controlador implements ActionListener {
     } else if (e.getActionCommand().equals("cerrarsesion")) {
       vb.getVi().setVisible(false);
       vb.setVisible(true);
+      vb.getVa().setVisible(false);
     } else if (e.getActionCommand().equals("pdf")) {
       try {
         m.generarPDF();
@@ -107,7 +109,13 @@ public class Controlador implements ActionListener {
         JOptionPane.showMessageDialog(null, "Error al generar el PDF");
       }
     } else if (e.getActionCommand().equals("eliminar")) {
-      m.eliminar(vb.getVa().getPlu().getlistaUsuarios().getSelectedValue());
+      eliminar();
+    } else if (e.getActionCommand().equals("informacion")) {
+      if (p2 instanceof Mujer) {
+        new VentanaInfoMujer((Mujer) p2).setVisible(true);
+      } else {
+        new VentanaInfoHombre((Hombre) p2).setVisible(true);
+      }
     }
   }
 
@@ -117,8 +125,7 @@ public class Controlador implements ActionListener {
     File m = f.getSelectedFile();
     if (m != null) {
       ImageIcon a = new ImageIcon(m.toString());
-      Icon icono = new ImageIcon(a.getImage());
-      vb.getVrh().getFoto().setIcon(icono);
+      vb.getVrh().setFoto_(a);
     }
   }
 
@@ -128,20 +135,34 @@ public class Controlador implements ActionListener {
     File m = f.getSelectedFile();
     if (m != null) {
       ImageIcon a = new ImageIcon(m.toString());
-      Icon icono = new ImageIcon(a.getImage());
-      vb.getVrh().getFoto().setIcon(icono);
+      vb.getVrm().setFoto_(a);
     }
   }
 
   public void iniciarSesion() {
     vb.getVl().setVisible(false);
-    if (m.buscarContraseña(vb.getVl().getUsuario_().getText(), vb.getVl().getContraseña_().getText()) == true) {
+    if (vb.getVl().getUsuario_().getText().equals("tinderbos") && vb.getVl().getContraseña_().getText().equals("bostinder123")) {
+      vb.getVa().setVisible(true);
+      vb.getVl().setVisible(false);
+      DefaultListModel<String> modelo = new DefaultListModel<>();
+      for (Persona p : m.getUsuarios()) {
+        modelo.addElement(p.getUsuario());
+      }
+      vb.getVa().getPlu().setModeloLista(modelo);
+      vb.getVa().getPlu().getlistaUsuarios().setModel(modelo);
+    } else if (m.buscarContraseña(vb.getVl().getUsuario_().getText(), vb.getVl().getContraseña_().getText()) == true) {
       p1 = m.buscarUsuario(vb.getVl().getUsuario_().getText());
       p1.validarEdad();
       if (m.buscarUsuario(vb.getVl().getUsuario_().getText()).getEstado() == 'M') {
         JOptionPane.showMessageDialog(null, "USUARIO MENOR DE EDAD, VUELVE CUANDO TENGAS 18 AÑOS");
       } else {
         vb.getVi().setVisible(true);
+        p2 = m.siguientePersona(p1);
+        p2.setImagen(m.generarFoto(p2));
+        vb.getVi().getFoto_().setIcon(p2.getImagen());
+        vb.getVi().getNombre().setText(p2.getNombre());
+        vb.getVi().getEdad().setText(Integer.toString(p2.getEdad()));
+        vb.getVi().getApellido().setText(p2.getApellido1());
       }
     } else {
       JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVALIDOS");
@@ -149,6 +170,13 @@ public class Controlador implements ActionListener {
     }
     vb.getVl().getUsuario_().setText("");
     vb.getVl().getContraseña_().setText("");
+  }
+
+  public void eliminar() {
+    String toDelete = vb.getVa().getPlu().getlistaUsuarios().getSelectedValue();
+    m.eliminar(toDelete);
+    vb.getVa().getPlu().getModeloLista().removeElement(toDelete);
+    vb.getVa().getPlu().getlistaUsuarios().setModel(vb.getVa().getPlu().getModeloLista());
   }
 
   public void guardarPersona() {
@@ -186,20 +214,25 @@ public class Controlador implements ActionListener {
         e1.printStackTrace();
       }
     }
+
+
   }
 
   public void like() {
-    Persona p2 = m.siguientePersona(p1);
     m.darLike(p1, p2);
-    vb.getVi().getFoto_().setIcon(m.generarFoto(p1, p2));
+
+    p2 = m.siguientePersona(p1);
+    p2.setImagen(m.generarFoto(p2));
+    vb.getVi().getFoto_().setIcon(p2.getImagen());
     vb.getVi().getNombre().setText(p2.getNombre());
     vb.getVi().getEdad().setText(Integer.toString(p2.getEdad()));
     vb.getVi().getApellido().setText(p2.getApellido1());
   }
 
   public void dislike() {
-    Persona p2 = m.siguientePersona(p1);
-    vb.getVi().getFoto_().setIcon(m.generarFoto(p1, p2));
+    p2 = m.siguientePersona(p1);
+    p2.setImagen(m.generarFoto(p2));
+    vb.getVi().getFoto_().setIcon(p2.getImagen());
     vb.getVi().getNombre().setText(p2.getNombre());
     vb.getVi().getEdad().setText(Integer.toString(p2.getEdad()));
     vb.getVi().getApellido().setText(p2.getApellido1());
@@ -212,7 +245,7 @@ public class Controlador implements ActionListener {
     } else if (vb.getVl().getUsuario_().getText().length() == 0) {
       p1 = m.buscarUsuario(vb.getVuc().getUsuario_().getText());
     }
-    Persona p2 = m.siguientePersona(p1);
+    p2 = m.siguientePersona(p1);
     vb.getVi().getNombre().setText(p2.getNombre());
     vb.getVi().getApellido().setText(p2.getApellido1());
     vb.getVi().getEdad().setText(Integer.toString(p2.getEdad()));

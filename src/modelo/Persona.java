@@ -23,9 +23,21 @@ public abstract class Persona implements Serializable
 	protected char estado;
 	protected Icon imagen;
 
+	/**
+	 * Constructor de la clase persona para la creacion de un objeto
+	 *
+	 * @param nombre          nombre != null y != ""
+	 * @param id              id!=0 y id>0
+	 * @param apellido1       apellido1!=null y !=""
+	 * @param apellido2       apellido2!=null y !=""
+	 * @param sexo            sexo='H' o 'M'
+	 * @param usuario         usuario != null y != ""
+	 * @param contraseña      contraseña != null y != ""
+	 * @param correo          correo != null y != ""
+	 * @param fechaNacimiento fechaNacimiento != "" y != null
+	 */
 	public Persona(String nombre, long id, String apellido1, String apellido2, char sexo, String usuario,
-								 String contraseña, String correo, String fechaNacimiento)
-	{
+								 String contraseña, String correo, String fechaNacimiento) {
 		this.nombre = nombre;
 		this.id = id;
 		this.apellido1 = apellido1;
@@ -37,9 +49,9 @@ public abstract class Persona implements Serializable
 		this.fechaNacimiento = LocalDate.parse(fechaNacimiento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		this.estado = 'D';
 		this.edad = calcularEdad();
-		if (this.edad >=18){
+		if (this.edad >= 18) {
 			this.estado = 'D';
-		} else{
+		} else {
 			this.estado = 'M';
 		}
 		this.matches = 0;
@@ -48,6 +60,24 @@ public abstract class Persona implements Serializable
 
 	}
 
+	/**
+	 * Constructor completo de la clase
+	 *
+	 * @param nombre
+	 * @param edad
+	 * @param id
+	 * @param apellido1
+	 * @param apellido2
+	 * @param sexo
+	 * @param usuario
+	 * @param contraseña
+	 * @param correo
+	 * @param fechaNacimiento
+	 * @param likesRecibidos
+	 * @param likesOtorgados
+	 * @param matches
+	 * @param estado
+	 */
 	public Persona(String nombre, int edad, long id, String apellido1, String apellido2, char sexo, String usuario,
 								 String contraseña, String correo, String fechaNacimiento, int likesRecibidos, int likesOtorgados,
 								 int matches, char estado)
@@ -76,144 +106,280 @@ public abstract class Persona implements Serializable
 	}
 
 	/**
-	 * Calcula la edad de el objeto a partir de
+	 * Calcula la edad de el objeto a partir de la fecha de nacimiento
 	 *
-	 * @return
+	 * @return la edad calculada
 	 */
 	public int calcularEdad(){
 		String tiempoDesde = fechaNacimiento.until(LocalDate.now()).toString();
 		return Integer.parseInt((tiempoDesde.charAt(1) + "" + tiempoDesde.charAt(2)));
 	}
-	
+
+	/**
+	 * Obtiene el nombre de una persona
+	 *
+	 * @return nombre
+	 */
 	public String getNombre() {
 		return nombre;
 	}
 
+	/**
+	 * Modifica el nombre de una persona
+	 *
+	 * @param nombre
+	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
+	/**
+	 * Obtiene la edad de la persona
+	 *
+	 * @return edad
+	 */
 	public int getEdad() {
 		return edad;
 	}
 
+	/**
+	 * Modifica la edad de una persona
+	 *
+	 * @param edad
+	 */
 	public void setEdad(int edad) {
 		this.edad = edad;
 	}
 
-	public long getId() {
+	/**
+	 * Obtiene el id de la pesona
+	 * @return id
+   */
+  public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	/**
+	 * Modifica el id de la persona
+	 *
+	 * @param id
+	 */
+  public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getApellido1() {
+	/**
+	 * Obtiene el primer apellido de la persona
+	 * @return apellido1
+	 */
+  public String getApellido1() {
 		return apellido1;
 	}
 
+	/**
+	 * modifica el primer apellido de la persona
+	 *
+	 * @param apellido1
+	 */
 	public void setApellido1(String apellido1) {
 		this.apellido1 = apellido1;
 	}
 
-	public String getApellido2() {
+	/**
+	 * Obtiene el segundo apellido de la persona
+	 * @return apellido2
+   */
+  public String getApellido2() {
 		return apellido2;
 	}
 
+	/**
+	 * modifica el segundo apellido de la persona
+	 *
+	 * @param apellido2
+	 */
 	public void setApellido2(String apellido2) {
 		this.apellido2 = apellido2;
 	}
 
+	/**
+	 * Obtiene el sexo de la persona
+	 * @return sexo
+	 */
 	public char getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(char sexo) {
+	/**
+	 * Modifica el sexo de la persona
+	 * @param sexo
+   */
+  public void setSexo(char sexo) {
 		this.sexo = sexo;
 	}
 
-	public String getUsuario() {
+	/**
+	 * Obtiene el usuario de una persona
+	 * @return usuario
+   */
+  public String getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(String usuario) {
+	/**
+	 * Modifica el usuario de una persona
+	 * @param usuario
+   */
+  public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 
-	public String getContraseña() {
+	/**
+	 * Obtiene la contraseña de una persona
+	 * @return contraseña
+   */
+  public String getContraseña() {
 		return contraseña;
 	}
 
-	public void setContraseña(String contraseña) {
+	/**
+	 * Modifica la contraseña de la persona
+	 *
+	 * @param contraseña
+	 */
+  public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
 	}
 
+	/**
+	 * Obtiene el correo de la persona
+	 * @return correo
+	 */
 	public String getCorreo() {
 		return correo;
 	}
 
-	public void setCorreo(String correo) {
+	/**
+	 * Modifica el correo de la persona
+	 * @param correo
+   */
+  public void setCorreo(String correo) {
 		this.correo = correo;
 	}
 
-	public LocalDate getFechaNacimiento() {
+	/**
+	 * Obtiene la fecha actual
+	 * @return fechaNacimiento
+   */
+  public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
+	/**
+	 * Modifica la fecha
+	 *
+	 * @param fechaNacimiento
+	 */
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public int getLikesRecibidos() {
+	/**
+	 * Obtiene los likes recibidos a una personas
+	 * @return likesRecibidos
+   */
+  public int getLikesRecibidos() {
 		return likesRecibidos;
 	}
 
-	public void setLikesRecibidos(int likesRecibidos) {
+	/**
+	 * Modifica los likes recibidos
+	 * @param likesRecibidos
+   */
+  public void setLikesRecibidos(int likesRecibidos) {
 		this.likesRecibidos = likesRecibidos;
 	}
 
-	public int getLikesOtorgados() {
+	/**
+	 * Obtiene los likes otorgados
+	 * @return likesOtorgados
+   */
+  public int getLikesOtorgados() {
 		return likesOtorgados;
 	}
 
-	public void setLikesOtorgados(int likesOtorgados) {
+	/**
+	 * Modifica los likes Otorgados
+	 * @param likesOtorgados
+   */
+  public void setLikesOtorgados(int likesOtorgados) {
 		this.likesOtorgados = likesOtorgados;
 	}
 
+	/**
+	 * Obtiene los match de una persona
+   * @return matches
+	 */
 	public int getMatches() {
 		return matches;
 	}
 
-	public void setMatches(int matches) {
+	/**
+	 * Modifica los match de una persona
+	 * @param matches
+   */
+  public void setMatches(int matches) {
 		this.matches = matches;
 	}
 
+	/**
+	 * Obtiene el estado de una persona
+   * @return estado
+	 */
 	public char getEstado() {
 		return estado;
 	}
 
-	public void setEstado(char estado) {
+	/**
+	 * Modifica el estado de una persona
+	 * @param estado
+   */
+  public void setEstado(char estado) {
 		this.estado = estado;
 	}
 
-	@Override
-	public String toString() {
+	/**
+	 * toString de la clase Persona
+   */
+  @Override
+  public String toString() {
 		return "Persona [nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", apellido1=" + apellido1
 			+ ", apellido2=" + apellido2 + ", sexo=" + sexo + ", usuario=" + usuario + ", contraseña=" + contraseña
 			+ ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento.getDayOfMonth() + "/" + fechaNacimiento.getMonth() + "/" + fechaNacimiento.getYear() + ", likesRecibidos=" + likesRecibidos
-				+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]\n" ;
+			+ ", likesOtorgados=" + likesOtorgados + ", matches=" + matches + ", estado=" + estado + "]\n";
 	}
 
+	/**
+	 * Obtiene el icono de la persona
+   *
+   * @return imagen
+	 */
 	public Icon getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(Icon imagen) {
+	/**
+	 * Modifica el icono de la persona
+	 * @param imagen
+   */
+  public void setImagen(Icon imagen) {
 		this.imagen = imagen;
 	}
 
-	public void validarEdad() {
+	/**
+	 * Metodo que valida la edad con ayuda del metodo calcularEdad
+   */
+  public void validarEdad() {
 		if (edad != calcularEdad()) {
 			edad = calcularEdad();
 		}

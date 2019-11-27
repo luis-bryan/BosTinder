@@ -45,7 +45,7 @@ public class VentanaLogueo extends JFrame {
 		usuario.setFont(fuente);
 		usuario_ = new JTextField();
 
-    contraseña = new JLabel("CONTRASEñA:");
+    contraseña = new JLabel("CONTRASEÑA:");
     contraseña.setFont(fuente);
     contraseña_ = new JPasswordField();
 
